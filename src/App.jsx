@@ -50,7 +50,7 @@ const WeddingSite = () => {
         <div className="h-2 bg-purple-200 w-full" />
         
         <div className="p-8">
-          <h1 className="text-4xl text-center text-purple-900 mb-2 font-light italic">Alex & Jordan</h1>
+          <h1 className="text-4xl text-center text-purple-900 mb-2 font-light italic">Dan & Lorraine </h1>
           <p className="text-center text-[10px] tracking-[0.3em] uppercase text-purple-400 mb-8 font-sans">October 24, 2026</p>
 
           {status === "SUCCESS" ? (
