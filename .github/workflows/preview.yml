@@ -4,34 +4,31 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
 
-concurrency: preview-${{ github.ref }}
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Only build if the PR isn't being closed
       - name: Install and Build
         if: github.event.action != 'closed'
         env:
-            GITHUB_EVENT_NAME: ${{ github.event_name }} # Passes the signal to Vite
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
           npm install
-          npm run build
+          # We force the base path to be relative for the preview subfolder
+          npm run build -- --base=/pr-preview/pr-${{ github.event.number }}/
 
       - name: Deploy Preview
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: dist
-          # This creates a folder on your server called 'pr-preview' 
-          # so it doesn't overwrite your main wedding site.
-          umbrella-dir: pr-preview 
+          umbrella-dir: pr-preview
           action: auto
-          pages-base-url: lorraineanddaniel.com
-          pages-base-path: /
