@@ -87,7 +87,7 @@ const WeddingSite = () => {
           {/* Hero Section */}
           <header className="h-[60vh] flex flex-col items-center justify-center text-center px-4">
             <p className="text-purple-400 tracking-[0.3em] uppercase text-[10px] mb-6 font-sans font-bold">The Union of</p>
-            <h1 className="text-6xl md:text-8xl text-purple-900 mb-4 font-light italic">Dan & Lorraine</h1>
+            <h1 className="text-6xl md:text-8xl text-purple-900 mb-4 font-light italic">Lorraine & Daniel</h1>
             <div className="h-px w-24 bg-purple-200 mx-auto mb-6" />
             <p className="text-lg text-slate-500 tracking-widest uppercase italic font-sans">Mexican Heart • Goan Soul</p>
             <p className="mt-8 font-sans tracking-widest text-[10px] text-slate-400">OCTOBER 24, 2026 • FREMONT, CA</p>
