@@ -33,3 +33,5 @@ jobs:
           # so it doesn't overwrite your main wedding site.
           umbrella-dir: pr-preview 
           action: auto
+          pages-base-url: https://lorraineanddaniel.com
+          pages-base-path: /pr-preview
