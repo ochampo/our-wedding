@@ -19,6 +19,8 @@ jobs:
       # Only build if the PR isn't being closed
       - name: Install and Build
         if: github.event.action != 'closed'
+        env:
+            GITHUB_EVENT_NAME: ${{ github.event_name }} # Passes the signal to Vite
         run: |
           npm install
           npm run build
