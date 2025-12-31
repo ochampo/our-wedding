@@ -1,13 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig(({ command, mode }) => {
-  // If we are building for a PR Preview, we need a relative base path
-  // so it works in the /pr-preview/pr-X/ subfolder
-  const isPreview = process.env.GITHUB_EVENT_NAME === 'pull_request';
-
+export default defineConfig(({ command }) => {
   return {
     plugins: [react()],
-    base: isPreview ? './' : '/', 
+    // Use relative paths (./) when building for production.
+    // This allows the site to work at lorraineanddaniel.com/ AND 
+    // lorraineanddaniel.com/pr-preview/pr-2/ automatically.
+    base: command === 'build' ? './' : '/',
   }
 })
