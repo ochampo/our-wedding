@@ -23,8 +23,7 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
           npm install
-          # We force the base path to be relative for the preview subfolder
-          npm run build -- --base=/pr-preview/pr-${{ github.event.number }}/
+          npm run build
 
       - name: Deploy Preview
         uses: rossjrw/pr-preview-action@v1
