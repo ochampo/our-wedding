@@ -1,11 +1,11 @@
-name: Deploy Preview
+name: Deploy PR Previews
 
 on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
 
 permissions:
-  contents: write    # This fixes the 403 error
+  contents: write
   pull-requests: write
 
 jobs:
@@ -25,6 +25,8 @@ jobs:
         with:
           source-dir: dist
           umbrella-dir: pr-preview
+          # This replaces 'branch' and fixes the 'Unexpected input' error
+          preview-branch: gh-pages 
+          # This fixes the 'deprecated' warning
+          pages-base-url: lorraineanddaniel.com 
           action: auto
-          branch: gh-pages   # The Action will recreate this branch for you
-          custom-url: lorraineanddaniel.com
