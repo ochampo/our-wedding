@@ -26,5 +26,5 @@ jobs:
           source-dir: dist
           umbrella-dir: pr-preview
           action: auto
-          branch: gh-pages   # The Action will recreate this branch for you
+          branch: test-preview-feature-2   # The Action will recreate this branch for you
           custom-url: lorraineanddaniel.com
