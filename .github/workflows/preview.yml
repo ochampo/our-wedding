@@ -1,31 +1,23 @@
-name: Deploy PR Previews
+name: Deploy Preview
 
 on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
   pull-requests: write
 
 jobs:
-  deploy-preview:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
       - name: Install and Build
-        # We pass the GITHUB variables so Vite can use them in vite.config.js
-        env:
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_REF: ${{ github.ref }}
         run: |
           npm install
           npm run build
@@ -36,5 +28,4 @@ jobs:
           source-dir: dist
           umbrella-dir: pr-preview
           action: auto
-          branch: test-preview-feature-2
           custom-url: lorraineanddaniel.com
