@@ -98,9 +98,9 @@ const WeddingSite = () => {
             <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
               <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
                 <Calendar className="mx-auto mb-4 text-purple-300" />
-                <h3 className="text-2xl mb-2 text-purple-900 font-light italic">Holly Spirit church</h3>
+                <h3 className="text-2xl mb-2 text-purple-900 font-light italic">Cermony</h3>
                 <p className="text-slate-600 font-sans text-sm">2:00 PM • Catholic Mass</p>
-                <p className="font-bold mt-2 text-purple-800">The Bridges San Ramon</p>
+                <p className="font-bold mt-2 text-purple-800">Holy spirit church</p>
               </div>
               <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
                 <GlassWater className="mx-auto mb-4 text-purple-300" />
