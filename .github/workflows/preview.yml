@@ -5,13 +5,11 @@ on:
     types: [opened, reopened, synchronize, closed]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write    # This fixes the 403 error
   pull-requests: write
 
 jobs:
-  build-and-deploy:
+  deploy-preview:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,4 +26,5 @@ jobs:
           source-dir: dist
           umbrella-dir: pr-preview
           action: auto
+          branch: gh-pages   # The Action will recreate this branch for you
           custom-url: lorraineanddaniel.com
