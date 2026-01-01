@@ -36,4 +36,4 @@ jobs:
           source-dir: dist
           umbrella-dir: pr-preview
           action: auto
-          custom-url: https://lorraineanddaniel.com
+          custom-url: lorraineanddaniel.com
