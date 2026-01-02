@@ -65,15 +65,22 @@ const WeddingSite = () => {
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
           <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
             <Calendar className="mx-auto mb-4 text-purple-300" />
-            <h3 className="text-2xl mb-2 text-purple-900 font-light italic">Holly Spirit church</h3>
+            <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Ceremony</h3>
             <p className="text-slate-600 font-sans text-sm">2:00 PM • Catholic Mass</p>
-            <p className="font-bold mt-2 text-purple-800">The Bridges San Ramon</p>
+            <p className="font-bold mt-2 text-purple-800">Holly Spirit church</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Catholic+Church,+Fremont" target="_blank" rel="noopener noreferrer" className="hover:underline">
+            <p className="text-slate-500 text-sm mt-1">41139 Fremont Blvd, Fremont, CA 94538</p>
+            </a> 
           </div>
           <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
             <GlassWater className="mx-auto mb-4 text-purple-300" />
             <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Reception</h3>
             <p className="text-slate-600 font-sans text-sm">5:30 PM • Dinner & Dancing</p>
-            <p className="font-bold mt-2 text-purple-800">Hacienda de las Flores</p>
+            <p className="font-bold mt-2 text-purple-800">The Bridges</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=9000+S+Gale+Ridge+Rd,+San+Ramon" target="_blank" rel="noopener noreferrer" className="hover:underline">
+            <p className="text-slate-500 text-sm mt-1">9000 S Gale Ridge Rd, San Ramon</p>
+            </a>
+            
           </div>
         </div>
       </section>
