@@ -104,9 +104,9 @@ const WeddingSite = () => {
               </div>
               <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
                 <GlassWater className="mx-auto mb-4 text-purple-300" />
-                <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Reception</h3>
+                <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Receptio</h3>
                 <p className="text-slate-600 font-sans text-sm">5:30 PM • Dinner & Dancing</p>
-                <p className="font-bold mt-2 text-purple-800">Hacienda de las Flores</p>
+                <p className="font-bold mt-2 text-purple-800">the Bridges San Ramon</p>
               </div>
             </div>
           </section>
