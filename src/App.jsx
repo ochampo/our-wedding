@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, GlassWater, Search, Music, Check, AlertCircle, X, BookOpen, MapPin, Car, Gift } from 'lucide-react';
+import { Heart, Calendar, GlassWater, Search, Music, Check, AlertCircle, X, BookOpen, MapPin, Car, Gift, HelpCircle } from 'lucide-react';
 
 const WeddingSite = () => {
   const [currentPage, setCurrentPage] = useState('HOME');
@@ -85,9 +85,9 @@ const WeddingSite = () => {
       </section>
     </main>
   );
+
   const renderRSVP = () => (
     <main className="animate-in fade-in duration-700">
-      {/* RSVP FORM CONTENT HERE */}
       <section className="py-24 px-6 bg-white">
       <Heart className="mx-auto text-purple-200 mb-6" size={40} />  
       <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">RSVP</h2>
@@ -146,7 +146,6 @@ const WeddingSite = () => {
           )}
         </div>
       </section>
-      
     </main>
   );
 
@@ -154,35 +153,21 @@ const WeddingSite = () => {
     <main className="max-w-2xl mx-auto px-6 py-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <BookOpen className="mx-auto text-purple-200 mb-6" size={40} />
       <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Our Story</h2>
-      
       <div className="space-y-12 text-slate-600 leading-relaxed text-lg">
-        {/* Story Bullet Point 1 */}
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2">The First Hello</h3>
-          <p>
-            It all began in 2018. What started as a simple conversation quickly turned into an evening that neither of us wanted to end.
-          </p>
+          <p>It all began in 2018. What started as a simple conversation quickly turned into an evening that neither of us wanted to end.</p>
         </div>
-
-        {/* Story Bullet Point 2 */}
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2">Two Worlds, One Heart</h3>
-          <p>
-            Merging Dan’s Mexican heritage with Lorraine’s Goan roots meant a lot of incredible food, 
-            rich traditions, and a shared love for family. We discovered that our values are exactly the same.
-          </p>
+          <p>Merging Dan’s Mexican heritage with Lorraine’s Goan roots meant a lot of incredible food, rich traditions, and a shared love for family.</p>
         </div>
-
-        {/* Story Bullet Point 3 */}
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2">The Proposal</h3>
-          <p>
-            Under the California stars, Dan asked the most important question of his life. 
-            Through tears of joy, Lorraine said yes, beginning our greatest adventure yet.
-          </p>
+          <p>Under the California stars, Dan asked the most important question of his life. Through tears of joy, Lorraine said yes.</p>
         </div>
       </div>
     </main>
@@ -211,23 +196,36 @@ const WeddingSite = () => {
     <main className="max-w-2xl mx-auto px-6 py-24 text-center animate-in fade-in duration-700">
       <Heart className="mx-auto text-purple-200 mb-6" size={40} />
       <h2 className="text-5xl text-purple-900 mb-6 font-light italic">Gift</h2>
-      <p className="text-slate-600 text-lg mb-12">
-        Your presence is the greatest gift. If you wish to honor us with a gift, we have set up a honeymoon fund.
-      </p>
-      
-      {/* Venmo Card with QR Area */}
+      <p className="text-slate-600 text-lg mb-12">Your presence is the greatest gift. If you wish to honor us with a gift, we have set up a honeymoon fund.</p>
       <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm max-w-sm mx-auto">
         <h3 className="text-purple-900 font-bold mb-1 text-xl">Venmo</h3>
         <p className="text-slate-500 text-sm mb-6">@Your-Venmo-Handle</p>
-        
-        {/* Placeholder for QR Code */}
         <div className="w-44 h-44 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl mx-auto flex items-center justify-center mb-6">
           <span className="text-[10px] text-slate-400 uppercase tracking-widest">QR Code Image</span>
         </div>
+        <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase">Open Venmo</button>
+      </div>
+    </main>
+  );
 
-        <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase">
-          Open Venmo
-        </button>
+  // --- NEW Q&A SECTION ---
+  const renderQA = () => (
+    <main className="max-w-3xl mx-auto px-6 py-24 animate-in fade-in duration-700">
+      <HelpCircle className="mx-auto text-purple-200 mb-6" size={40} />
+      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Questions & Answers</h2>
+      
+      <div className="space-y-8">
+        {[
+          { q: "What is the dress code?", a: "We'd love to see our family and friends get dressed up for our big day. The dress code is Semi-Formal or Cocktail attire." },
+          { q: "Are kids invited?", a: "While we love your little ones, our wedding will be an adults-only event so that everyone can relax and enjoy the evening." },
+          { q: "Is there parking available?", a: "Yes, both the church and the reception venue have ample free parking available for all guests." },
+          { q: "What time should I arrive?", a: "The ceremony begins promptly at 2:00 PM. We recommend arriving 15-20 minutes early to find your seat." }
+        ].map((item, i) => (
+          <div key={i} className="bg-white p-8 rounded-2xl border border-purple-50 shadow-sm">
+            <h3 className="text-purple-900 font-bold mb-3 font-sans uppercase tracking-wider text-sm">{item.q}</h3>
+            <p className="text-slate-600 leading-relaxed">{item.a}</p>
+          </div>
+        ))}
       </div>
     </main>
   );
@@ -239,6 +237,7 @@ const WeddingSite = () => {
       case 'TRAVEL': return renderTravel();
       case 'GIFT': return renderGift();
       case 'RSVP': return renderRSVP();
+      case 'QA': return renderQA();
       default: return renderHome();
     }
   };
@@ -247,30 +246,23 @@ const WeddingSite = () => {
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif">
       <div className="h-3 bg-purple-200 opacity-40" />
 
-      {/* NAVIGATION BAR - SWAPPED */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
-          
-          {/* 1. TABS ON THE LEFT */}
           <div className="flex gap-4 md:gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
-            {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GIFT'].map((tab) => (
+            {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GIFT', 'QA'].map((tab) => (
               <button 
                 key={tab}
                 onClick={() => setCurrentPage(tab)}
                 className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1" : "hover:text-purple-400"}
               >
-                {tab === 'HOME' ? 'The Wedding' : tab.charAt(0) + tab.slice(1).toLowerCase()}
+                {tab === 'HOME' ? 'The Wedding' : tab === 'QA' ? 'Q&A' : tab.charAt(0) + tab.slice(1).toLowerCase()}
               </button>
             ))}
           </div>
-
-          {/* 2. LOGO ON THE RIGHT */}
           <span className="text-purple-900 italic text-xl">D & L</span>
-          
         </div>
       </nav>
 
-      {/* DYNAMIC CONTENT */}
       {renderContent()}
 
       <footer className="py-20 text-center text-slate-300 text-[10px] tracking-[0.6em] uppercase font-sans">
