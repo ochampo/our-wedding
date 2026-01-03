@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, GlassWater, Search, Music, Check, AlertCircle, X, BookOpen, MapPin, Car, Gift, HelpCircle } from 'lucide-react';
+import { Heart, Calendar, GlassWater, Search, Music, Check, AlertCircle, X, BookOpen, MapPin, Car, Gift, HelpCircle, Users } from 'lucide-react';
 
 const WeddingSite = () => {
   const [currentPage, setCurrentPage] = useState('HOME');
-  const [allGuests, setAllGuests] = useState([]);
+  const [allGuests, setAllGuests] = useState([]); 
   const [rsvpMap, setRsvpMap] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedName, setSelectedName] = useState("");
+  const [selectedParty, setSelectedParty] = useState([]); 
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [status, setStatus] = useState("IDLE");
 
@@ -22,31 +22,41 @@ const WeddingSite = () => {
       .catch(err => console.error("Fetch error:", err));
   }, []);
 
-  const handleSelectName = (name) => {
-    setSelectedName(name);
-    const key = name.toLowerCase().trim();
+  const handleSelectName = (guest) => {
+    const party = allGuests.filter(g => g.partyId === guest.partyId);
+    setSelectedParty(party);
+    const key = guest.name.toLowerCase().trim();
     setIsDuplicate(!!rsvpMap[key]); 
+    setSearchTerm(""); 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("SENDING");
     const formData = new FormData(e.target);
-    const data = {
-      name: selectedName,
-      attendance: formData.get('attendance'),
-      dietary: formData.get('dietary') || "None",
+    const responses = selectedParty.map((guest, index) => ({
+      name: guest.name,
+      attendance: formData.get(`attendance-${index}`),
+      dietary: formData.get(`dietary-${index}`) || "None",
       music: formData.get('music') || "None",
       date: new Date().toLocaleString()
-    };
+    }));
+
     try {
-      await fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(data) });
+      await fetch(GOOGLE_URL, { 
+        method: "POST", 
+        mode: "no-cors", 
+        body: JSON.stringify({ partyResponse: responses }) 
+      });
       setStatus("SUCCESS");
     } catch (error) { setStatus("ERROR"); }
   };
 
+  // OPTIMIZATION: Only show top 6 results to keep the 175+ guest list fast
   const filteredResults = searchTerm.length > 2 
-    ? allGuests.filter(name => name.toLowerCase().includes(searchTerm.toLowerCase().trim()))
+    ? allGuests
+        .filter(g => g.name.toLowerCase().includes(searchTerm.toLowerCase().trim()))
+        .slice(0, 6) 
     : [];
 
   // --- PAGE SECTIONS ---
@@ -68,8 +78,8 @@ const WeddingSite = () => {
             <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Ceremony</h3>
             <p className="text-slate-600 font-sans text-sm">2:00 PM • Catholic Mass</p>
             <p className="font-bold mt-2 text-purple-800">Holy Spirit Church</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Catholic+Church,+Fremont" target="_blank" rel="noopener noreferrer" className="hover:underline">
-            <p className="text-slate-500 text-sm mt-1">41139 Fremont Blvd, Fremont, CA 94538</p>
+            <a href="https://maps.google.com/?q=41139+Fremont+Blvd,+Fremont,+CA+94538" target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <p className="text-slate-500 text-sm mt-1">41139 Fremont Blvd, Fremont, CA 94538</p>
             </a> 
           </div>
           <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
@@ -77,8 +87,8 @@ const WeddingSite = () => {
             <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Reception</h3>
             <p className="text-slate-600 font-sans text-sm">5:30 PM • Dinner & Dancing</p>
             <p className="font-bold mt-2 text-purple-800">Pavilion Room at The Bridges Golf Club</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=9000+S+Gale+Ridge+Rd,+San+Ramon" target="_blank" rel="noopener noreferrer" className="hover:underline">
-            <p className="text-slate-500 text-sm mt-1">9000 S Gale Ridge Rd, San Ramon</p>
+            <a href="https://maps.google.com/?q=9000+S+Gale+Ridge+Rd,+San+Ramon,+CA" target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <p className="text-slate-500 text-sm mt-1">9000 S Gale Ridge Rd, San Ramon</p>
             </a>          
           </div>
         </div>
@@ -89,31 +99,32 @@ const WeddingSite = () => {
   const renderRSVP = () => (
     <main className="animate-in fade-in duration-700">
       <section className="py-24 px-6 bg-white">
-      <Heart className="mx-auto text-purple-200 mb-6" size={40} />  
-      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">RSVP</h2>
-        <div className="max-w-md mx-auto">
+        <Heart className="mx-auto text-purple-200 mb-6" size={40} />  
+        <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">RSVP</h2>
+        <div className="max-w-xl mx-auto">
           {status === "SUCCESS" ? (
-            <div className="text-center p-12 bg-purple-50 rounded-3xl border border-purple-100">
+            <div className="text-center p-12 bg-purple-50 rounded-3xl border border-purple-100 animate-in zoom-in">
               <Heart className="mx-auto text-purple-400 mb-4 animate-pulse" />
-              <p className="text-2xl text-purple-900 italic">See you there, {selectedName.split(' ')[0]}!</p>
+              <p className="text-2xl text-purple-900 italic font-light">Thank you! See you there!</p>
             </div>
           ) : (
             <div className="min-h-[300px]">
-              {!selectedName ? (
+              {selectedParty.length === 0 ? (
                 <div className="space-y-6">
                   <div className="relative">
                     <input 
                       type="text" 
                       placeholder="Search your name..."
-                      className="w-full py-4 px-12 bg-purple-50 rounded-2xl outline-none font-sans text-lg border border-purple-100 focus:border-purple-300 transition-all"
+                      className="w-full py-4 px-12 bg-purple-50 rounded-2xl outline-none border border-purple-100 focus:border-purple-300 transition-all text-lg font-sans"
+                      value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <Search className="absolute left-4 top-5 text-purple-300" size={18} />
                   </div>
                   <div className="space-y-2">
-                    {filteredResults.map((name, i) => (
-                      <button key={i} onClick={() => handleSelectName(name)} className="w-full p-4 text-left bg-white border border-purple-50 rounded-xl hover:bg-purple-50 flex items-center justify-between">
-                        <span className="text-slate-700">{name}</span>
+                    {filteredResults.map((guest, i) => (
+                      <button key={i} onClick={() => handleSelectName(guest)} className="w-full p-4 text-left bg-white border border-purple-50 rounded-xl hover:bg-purple-50 flex items-center justify-between transition-all">
+                        <span className="text-slate-700 font-medium">{guest.name}</span>
                         <Check size={16} className="text-purple-200" />
                       </button>
                     ))}
@@ -123,22 +134,30 @@ const WeddingSite = () => {
                 <div className="p-10 bg-amber-50 rounded-3xl border border-amber-100 text-center animate-in zoom-in">
                   <AlertCircle className="mx-auto text-amber-500 mb-4" size={32} />
                   <h3 className="text-xl font-bold text-amber-900 mb-2 italic">Already RSVP'ed</h3>
-                  <button onClick={() => setSelectedName("")} className="mt-8 text-[10px] uppercase tracking-widest text-amber-700 font-bold underline">Try another name</button>
+                  <button onClick={() => setSelectedParty([])} className="mt-8 text-[10px] uppercase tracking-widest text-amber-700 font-bold underline">Try another name</button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="p-4 bg-purple-50 rounded-2xl border border-purple-100 flex justify-between items-center">
-                    <span className="font-bold text-purple-900 text-lg">{selectedName}</span>
-                    <button type="button" onClick={() => setSelectedName("")} className="text-purple-300"><X size={20}/></button>
+                <form onSubmit={handleSubmit} className="space-y-8 animate-in slide-in-from-bottom-4">
+                   <div className="flex justify-between items-center border-b border-purple-100 pb-4">
+                    <div className="flex items-center gap-2">
+                        <Users className="text-purple-400" size={20} />
+                        <span className="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-sans font-bold">Party RSVP</span>
+                    </div>
+                    <button type="button" onClick={() => setSelectedParty([])} className="text-purple-300"><X size={20}/></button>
                   </div>
-                  <select name="attendance" className="w-full py-2 bg-transparent border-b border-purple-100 outline-none font-sans text-lg">
-                    <option value="yes">Joyfully Accepts</option>
-                    <option value="no">Regretfully Declines</option>
-                  </select>
-                  <input name="dietary" className="w-full py-2 bg-transparent border-b border-purple-100 outline-none font-sans text-lg" placeholder="Dietary Restrictions" />
-                  <input name="music" className="w-full py-2 bg-transparent border-b border-purple-100 outline-none font-sans text-lg" placeholder="Song Request" />
-                  <button type="submit" className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] hover:bg-purple-800 transition-all shadow-xl shadow-purple-100 uppercase">
-                    {status === "SENDING" ? "Submitting..." : "Confirm RSVP"}
+                  {selectedParty.map((member, idx) => (
+                    <div key={idx} className="p-6 bg-purple-50/50 rounded-2xl border border-purple-100 space-y-4">
+                      <p className="font-bold text-purple-900 text-lg font-serif italic">{member.name}</p>
+                      <select name={`attendance-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans">
+                        <option value="yes">Joyfully Accepts</option>
+                        <option value="no">Regretfully Declines</option>
+                      </select>
+                      <input name={`dietary-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-sm" placeholder="Dietary Restrictions" />
+                    </div>
+                  ))}
+                  <input name="music" className="w-full py-3 bg-white px-4 rounded-xl border border-purple-100 outline-none font-sans" placeholder="Song Request for the Dance Floor" />
+                  <button type="submit" className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all">
+                    {status === "SENDING" ? "Submitting..." : "Confirm Party RSVP"}
                   </button>
                 </form>
               )}
@@ -162,12 +181,12 @@ const WeddingSite = () => {
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2">Two Worlds, One Heart</h3>
-          <p>Merging Dan’s Mexican heritage with Lorraine’s Goan roots meant a lot of incredible food, rich traditions, and a shared love for family.</p>
+          <p>Merging Dan’s Mexican heritage with Lorraine’s Goan roots meant a lot of incredible food, rich traditions, and a shared love for family. We discovered that our values are exactly the same.</p>
         </div>
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2">The Proposal</h3>
-          <p>Under the California stars, Dan asked the most important question of his life. Through tears of joy, Lorraine said yes.</p>
+          <p>Under the California stars, Dan asked the most important question of his life. Through tears of joy, Lorraine said yes, beginning our greatest adventure yet.</p>
         </div>
       </div>
     </main>
@@ -208,13 +227,11 @@ const WeddingSite = () => {
     </main>
   );
 
-  // --- NEW Q&A SECTION ---
   const renderQA = () => (
     <main className="max-w-3xl mx-auto px-6 py-24 animate-in fade-in duration-700">
       <HelpCircle className="mx-auto text-purple-200 mb-6" size={40} />
-      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Questions & Answers</h2>
-      
-      <div className="space-y-8">
+      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Q & A</h2>
+      <div className="space-y-6">
         {[
           { q: "What is the dress code?", a: "We'd love to see our family and friends get dressed up for our big day. The dress code is Semi-Formal or Cocktail attire." },
           { q: "Are kids invited?", a: "While we love your little ones, our wedding will be an adults-only event so that everyone can relax and enjoy the evening." },
@@ -222,7 +239,7 @@ const WeddingSite = () => {
           { q: "What time should I arrive?", a: "The ceremony begins promptly at 2:00 PM. We recommend arriving 15-20 minutes early to find your seat." }
         ].map((item, i) => (
           <div key={i} className="bg-white p-8 rounded-2xl border border-purple-50 shadow-sm">
-            <h3 className="text-purple-900 font-bold mb-3 font-sans uppercase tracking-wider text-sm">{item.q}</h3>
+            <h4 className="text-purple-900 font-bold mb-3 uppercase text-[10px] tracking-widest font-sans">{item.q}</h4>
             <p className="text-slate-600 leading-relaxed">{item.a}</p>
           </div>
         ))}
@@ -233,11 +250,11 @@ const WeddingSite = () => {
   const renderContent = () => {
     switch(currentPage) {
       case 'HOME': return renderHome();
+      case 'RSVP': return renderRSVP();
+      case 'QA': return renderQA();
       case 'STORY': return renderStory();
       case 'TRAVEL': return renderTravel();
       case 'GIFT': return renderGift();
-      case 'RSVP': return renderRSVP();
-      case 'QA': return renderQA();
       default: return renderHome();
     }
   };
@@ -245,26 +262,23 @@ const WeddingSite = () => {
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif">
       <div className="h-3 bg-purple-200 opacity-40" />
-
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div className="flex gap-4 md:gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <div className="flex gap-4 md:gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400 overflow-x-auto">
             {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GIFT', 'QA'].map((tab) => (
               <button 
                 key={tab}
                 onClick={() => setCurrentPage(tab)}
-                className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1" : "hover:text-purple-400"}
+                className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1 whitespace-nowrap" : "hover:text-purple-400 whitespace-nowrap"}
               >
                 {tab === 'HOME' ? 'The Wedding' : tab === 'QA' ? 'Q&A' : tab.charAt(0) + tab.slice(1).toLowerCase()}
               </button>
             ))}
           </div>
-          <span className="text-purple-900 italic text-xl">D & L</span>
+          <span className="text-purple-900 italic text-xl ml-4">D & L</span>
         </div>
       </nav>
-
       {renderContent()}
-
       <footer className="py-20 text-center text-slate-300 text-[10px] tracking-[0.6em] uppercase font-sans">
         #TheDanLorraineUnion
       </footer>
