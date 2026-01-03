@@ -79,15 +79,19 @@ const WeddingSite = () => {
             <p className="font-bold mt-2 text-purple-800">The Bridges</p>
             <a href="https://www.google.com/maps/search/?api=1&query=9000+S+Gale+Ridge+Rd,+San+Ramon" target="_blank" rel="noopener noreferrer" className="hover:underline">
             <p className="text-slate-500 text-sm mt-1">9000 S Gale Ridge Rd, San Ramon</p>
-            </a>
-            
+            </a>          
           </div>
         </div>
       </section>
-
+    </main>
+  );
+  const renderRSVP = () => (
+    <main className="animate-in fade-in duration-700">
+      {/* RSVP FORM CONTENT HERE */}
       <section className="py-24 px-6 bg-white">
+      <Heart className="mx-auto text-purple-200 mb-6" size={40} />  
+      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">RSVP</h2>
         <div className="max-w-md mx-auto">
-          <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">RSVP</h2>
           {status === "SUCCESS" ? (
             <div className="text-center p-12 bg-purple-50 rounded-3xl border border-purple-100">
               <Heart className="mx-auto text-purple-400 mb-4 animate-pulse" />
@@ -142,6 +146,7 @@ const WeddingSite = () => {
           )}
         </div>
       </section>
+      
     </main>
   );
 
@@ -233,6 +238,7 @@ const WeddingSite = () => {
       case 'STORY': return renderStory();
       case 'TRAVEL': return renderTravel();
       case 'GIFT': return renderGift();
+      case 'RSVP': return renderRSVP();
       default: return renderHome();
     }
   };
@@ -247,7 +253,7 @@ const WeddingSite = () => {
           
           {/* 1. TABS ON THE LEFT */}
           <div className="flex gap-4 md:gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
-            {['HOME', 'STORY', 'TRAVEL', 'GIFT'].map((tab) => (
+            {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GIFT'].map((tab) => (
               <button 
                 key={tab}
                 onClick={() => setCurrentPage(tab)}
