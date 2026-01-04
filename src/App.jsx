@@ -9,8 +9,34 @@ const WeddingSite = () => {
   const [selectedParty, setSelectedParty] = useState([]); 
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [status, setStatus] = useState("IDLE");
+  
+  // NEW: Countdown State
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwuZswizk1UnCT9_osHPsl8tK_lar3moXAmzY2TN37G466UAXCNX1TRECdE5Fiuw0V0/exec"; 
+
+  // NEW: Countdown Logic
+  useEffect(() => {
+    const targetDate = new Date("July 3, 2026 14:00:00").getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(interval);
+      } else {
+        setTimeLeft({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     fetch(GOOGLE_URL)
@@ -52,7 +78,6 @@ const WeddingSite = () => {
     } catch (error) { setStatus("ERROR"); }
   };
 
-  // OPTIMIZATION: Only show top 6 results to keep the 175+ guest list fast
   const filteredResults = searchTerm.length > 2 
     ? allGuests
         .filter(g => g.name.toLowerCase().includes(searchTerm.toLowerCase().trim()))
@@ -63,12 +88,28 @@ const WeddingSite = () => {
 
   const renderHome = () => (
     <main className="animate-in fade-in duration-700">
-      <header className="h-[50vh] flex flex-col items-center justify-center text-center px-4">
+      <header className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
         <p className="text-purple-400 tracking-[0.3em] uppercase text-[10px] mb-6 font-sans font-bold">The Union of</p>
         <h1 className="text-6xl md:text-8xl text-purple-900 mb-4 font-light italic">Lorraine & Daniel</h1>
         <div className="h-px w-24 bg-purple-200 mx-auto mb-6" />
-        <p className="text-lg text-slate-500 tracking-widest uppercase italic font-sans">Mexican Heart • Goan Soul</p>
-        <p className="mt-8 font-sans tracking-widest text-[10px] text-slate-400">July 3rd, 2026 • FREMONT, CA</p>
+        <p className="text-lg text-slate-500 tracking-widest uppercase italic font-sans mb-12">Mexican Heart • Goan Soul</p>
+        
+        {/* NEW: Countdown UI */}
+        <div className="flex gap-4 md:gap-8 mb-12 animate-in zoom-in duration-1000">
+          {[
+            { label: 'Days', value: timeLeft.days },
+            { label: 'Hours', value: timeLeft.hours },
+            { label: 'Mins', value: timeLeft.minutes },
+            { label: 'Secs', value: timeLeft.seconds }
+          ].map((item, i) => (
+            <div key={i} className="w-16 md:w-20">
+              <span className="block text-2xl md:text-3xl text-purple-900 font-light italic">{item.value}</span>
+              <span className="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-400 font-sans font-bold">{item.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <p className="font-sans tracking-widest text-[10px] text-slate-400 uppercase">July 3rd, 2026 • FREMONT, CA</p>
       </header>
 
       <section className="py-20 bg-purple-50/50 px-6 border-y border-purple-100/50">
