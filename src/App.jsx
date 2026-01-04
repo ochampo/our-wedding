@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { Heart, Calendar, GlassWater, Search, Music, Check, AlertCircle, X, BookOpen, MapPin, Car, Gift, HelpCircle, Users, Image as ImageIcon, Menu } from 'lucide-react';
 
 const WeddingSite = () => {
@@ -13,6 +14,9 @@ const WeddingSite = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwuZswizk1UnCT9_osHPsl8tK_lar3moXAmzY2TN37G466UAXCNX1TRECdE5Fiuw0V0/exec"; 
+  // VENMO MODAL STATE
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const venmoUrl = "https://venmo.com/u/ochampo";
 
   useEffect(() => {
     const targetDate = new Date("July 3, 2026 14:00:00").getTime();
@@ -227,17 +231,157 @@ const WeddingSite = () => {
       </div>
     </main>
   );
-
   const renderGift = () => (
-    <main className="max-w-2xl mx-auto px-6 py-24 text-center animate-in fade-in duration-700">
+  <main className="max-w-4xl mx-auto px-6 py-24 animate-in fade-in duration-700">
+    <Gift className="mx-auto text-purple-200 mb-6" size={40} />
+    <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Registry</h2>   
+    
+    <p className="text-center text-slate-600 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+      Your presence is the greatest gift. If you wish to honor us with a gift, 
+      we have set up honeymoon funds for both of us.
+    </p>
+    
+    {/* GRID CONTAINER: 1 column on mobile, 2 columns on medium screens+ */}
+    <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      
+      {/* ACCOUNT 1: Lorraine */}
+      <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center flex flex-col items-center">        
+        <span className="text-purple-400 text-[10px] uppercase tracking-widest font-bold mb-2">Daniel's Fund</span>
+        <p className="text-slate-500 text-sm mb-6 font-medium italic">@ochampo</p>
+        
+        <div className="p-4 bg-slate-50 rounded-2xl mb-6 border border-slate-100 shadow-inner">
+          <QRCodeSVG 
+            value="https://venmo.com/u/ochampo"
+            size={140}
+            fgColor="#008CFF"
+            level="H"
+          />
+        </div>
+
+        <a 
+          href="https://venmo.com/u/ochampo" 
+          target="_blank" 
+          rel="noreferrer" 
+          className="w-full"
+        >
+          <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase hover:bg-[#0074d6] transition-all shadow-md active:scale-95">
+            Venmo Daniel
+          </button>
+        </a>
+      </div>
+
+      {/* ACCOUNT 2: Lorraine */}
+      <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center flex flex-col items-center">        
+        <span className="text-purple-400 text-[10px] uppercase tracking-widest font-bold mb-2">Lorraine's Fund</span>
+        <p className="text-slate-500 text-sm mb-6 font-medium italic">@lorrainegoveas</p>
+        
+        <div className="p-4 bg-slate-50 rounded-2xl mb-6 border border-slate-100 shadow-inner">
+          <QRCodeSVG 
+            value="https://venmo.com/u/lorrainegoveas" // REPLACE WITH ACTUAL HANDLE
+            size={140}
+            fgColor="#008CFF"
+            level="H"
+          />
+        </div>
+
+        <a 
+          href="https://venmo.com/u/lorrainegoveas" // REPLACE WITH ACTUAL HANDLE
+          target="_blank" 
+          rel="noreferrer" 
+          className="w-full"
+        >
+          <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase hover:bg-[#0074d6] transition-all shadow-md active:scale-95">
+            Venmo Lorraine
+          </button>
+        </a>
+      </div>
+
+    </div>
+
+    <p className="mt-12 text-center text-slate-400 text-[10px] uppercase tracking-[0.2em]">
+      Thank you for your generosity
+    </p>
+  </main>
+);
+  const renderGift2 = () => (
+    <main className="max-w-4xl mx-auto px-6 py-24 animate-in fade-in duration-700">
       <Gift className="mx-auto text-purple-200 mb-6" size={40} />
-      <h2 className="text-5xl text-purple-900 mb-6 font-light italic">Registry</h2>
-      <p className="text-slate-600 text-lg mb-12">Your presence is the greatest gift. If you wish to honor us with a gift, we have set up a honeymoon fund.</p>
-      <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm max-w-sm mx-auto">
-        <h3 className="text-purple-900 font-bold mb-1 text-xl font-sans uppercase tracking-widest">Venmo</h3>
-        <p className="text-slate-500 text-sm mb-6">@Your-Venmo-Handle</p>
-        <div className="w-44 h-44 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl mx-auto flex items-center justify-center mb-6 text-[10px] text-slate-400 uppercase tracking-widest">QR CODE</div>
-        <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase">Open Venmo</button>
+      <h2 className="text-5xl text-center text-blue-300 mb-12 font-light italic">Venmo</h2>   
+      <p className="text-center text-slate-600 text-lg mb-12">Your presence is the greatest gift. If you wish to honor us with a gift, we have set up a honeymoon fund via Venmo.</p>
+      
+      <div className="max-w-xs mx-auto">
+        <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center">        
+          <p className="text-slate-500 text-sm mb-6">@ochampo</p>
+          
+          {/* QR Code replaces the dashed box */}
+          <div className="p-4 bg-slate-50 rounded-2xl mb-6 flex justify-center border border-slate-100">
+              <QRCodeSVG 
+                value={venmoUrl}
+                size={160}
+                fgColor="#008CFF"
+                level="H"
+              />
+          </div>
+
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase hover:bg-[#0074d6] transition-colors shadow-lg"
+          >
+            Open Venmo Link
+          </button>
+        </div>
+      </div>
+
+      {/* MODAL FOR VENMO */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white w-full max-w-xs p-8 rounded-3xl shadow-2xl flex flex-col items-center">
+            <h3 className="text-[#008CFF] font-bold text-lg mb-2">Honeymoon Fund</h3>
+            <p className="text-gray-400 text-[10px] tracking-widest uppercase mb-6">Scan to contribute</p>
+            
+            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+              <QRCodeSVG value={venmoUrl} size={180} fgColor="#008CFF" level="H" />
+            </div>
+
+            <a 
+              href={venmoUrl} 
+              target="_blank" 
+              rel="noreferrer"
+              className="mt-6 text-[#008CFF] font-bold underline"
+            >
+              Open in App
+            </a>
+
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="mt-8 text-gray-400 text-[10px] font-bold uppercase tracking-widest"
+            >
+              [ Close ]
+            </button>
+          </div>
+        </div>
+      )}
+    </main>
+  );
+
+  const renderGift3 = () => (
+    <main className="max-w-4xl mx-auto px-6 py-24 animate-in fade-in duration-700">
+      <Gift className="mx-auto text-purple-200 mb-6" size={40} />
+      <h2 className="text-5xl text-center text-blue-300 mb-12 font-light italic">Venmo</h2>   
+      <p className="text-center text-slate-600 text-lg mb-12">Your presence is the greatest gift. If you wish to honor us with a gift, we have set up a honeymoon fund.</p>
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center">        
+          <p className="text-slate-500 text-sm mb-6">@ochampo</p>
+          <div className="w-44 h-44 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl mx-auto flex items-center justify-center mb-6 text-[10px] text-slate-400 uppercase tracking-widest">QR CODE</div>
+          <a href="https://venmo.com/u/ochampo">
+          <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase">Open Venmo</button>
+          </a>
+        </div>
+        <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center">
+          <p className="text-slate-500 text-sm mb-6">@Your-Venmo-Handle</p>
+          <div className="w-44 h-44 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl mx-auto flex items-center justify-center mb-6 text-[10px] text-slate-400 uppercase tracking-widest">QR CODE</div>
+          <button className="w-full py-4 bg-[#008CFF] text-white rounded-full font-bold tracking-widest text-[10px] uppercase">Open Venmo</button>
+        </div>
       </div>
     </main>
   );
