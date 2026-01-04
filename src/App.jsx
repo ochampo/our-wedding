@@ -245,7 +245,6 @@ const WeddingSite = () => {
       
       {/* ACCOUNT 1: Lorraine */}
       <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center flex flex-col items-center">        
-        <span className="text-purple-400 text-[10px] uppercase tracking-widest font-bold mb-2">Daniel's Fund</span>
         <p className="text-slate-500 text-sm mb-6 font-medium italic">@ochampo</p>
         
         <div className="p-4 bg-slate-50 rounded-2xl mb-6 border border-slate-100 shadow-inner">
@@ -271,7 +270,6 @@ const WeddingSite = () => {
 
       {/* ACCOUNT 2: Lorraine */}
       <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-sm text-center flex flex-col items-center">        
-        <span className="text-purple-400 text-[10px] uppercase tracking-widest font-bold mb-2">Lorraine's Fund</span>
         <p className="text-slate-500 text-sm mb-6 font-medium italic">@lorrainegoveas</p>
         
         <div className="p-4 bg-slate-50 rounded-2xl mb-6 border border-slate-100 shadow-inner">
