@@ -275,7 +275,7 @@ const WeddingSite = () => {
               </button>
             ))}
           </div>
-          <span className="text-purple-900 italic text-xl ml-4">D & L</span>
+          <span className="hidden md:inline text-purple-900 italic text-xl ml-4">D & L</span>
         </div>
       </nav>
       {renderContent()}
