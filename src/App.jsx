@@ -99,46 +99,103 @@ const WeddingSite = () => {
 
   // --- RENDER FUNCTIONS ---
 
-  const renderHome = () => (
-    <main className="animate-in fade-in duration-700">
-      <header className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
-        <p className="text-purple-400 tracking-[0.3em] uppercase text-[10px] mb-6 font-sans font-bold">The Union of</p>
-        <h1 className="text-6xl md:text-8xl text-purple-900 mb-4 font-light italic">Lorraine & Daniel</h1>
-        <div className="h-px w-24 bg-purple-200 mx-auto mb-6" />
-        <p className="text-lg text-slate-500 tracking-widest uppercase italic font-sans mb-12">Mexican Heart • Goan Soul</p>
+const renderHome = () => (
+    <main className="animate-in fade-in duration-1000">
+      
+      {/* --- HERO SECTION --- */}
+      <header className="h-screen w-full relative flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         
-        <div className="flex gap-4 md:gap-8 mb-12">
-          {[{l:'Days',v:timeLeft.days},{l:'Hours',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
-            <div key={i} className="text-center w-16 md:w-20">
-              <span className="block text-2xl md:text-3xl text-purple-900 font-light italic">{t.v}</span>
-              <span className="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-400 font-sans font-bold">{t.l}</span>
-            </div>
-          ))}
+        {/* 1. BACKGROUND LAYER */}
+        <div className="absolute inset-0 z-0">
+           {/* Replace with your image */}
+           <img 
+             src="./temp.jpeg" 
+             alt="Lorraine and Daniel" 
+             className="w-full h-full object-cover"
+           />
+           {/* Gradient Overlay: Essential for white text readability */}
+           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"></div>
+           <div className="absolute inset-0 bg-black/20"></div>
         </div>
-        <p className="font-sans tracking-widest text-[10px] text-slate-400 uppercase">July 3rd, 2026 • FREMONT, CA</p>
+
+        {/* 2. TEXT CONTENT */}
+        <div className="relative z-10 text-white space-y-8 mt-10">
+          
+          <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-300">
+            <p className="tracking-[0.4em] uppercase text-[10px] md:text-xs font-sans font-medium text-white/80 mb-4">
+              We're getting married
+            </p>
+            <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+              Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
+            </h1>
+          </div>
+
+          <div className="h-px w-16 bg-white/40 mx-auto" />
+          
+          <p className="text-xl md:text-2xl font-light italic tracking-wide text-white/90 drop-shadow-md animate-in slide-in-from-bottom-4 duration-1000 delay-500">
+            July 3, 2026 • Fremont, California
+          </p>
+
+          {/* Countdown */}
+          <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+            {[{l:'Days',v:timeLeft.days},{l:'Hrs',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
+              <div key={i} className="text-center">
+                <span className="block text-2xl md:text-4xl font-serif italic font-light drop-shadow-md">{t.v}</span>
+                <span className="block text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-0 right-0 text-center animate-bounce text-white/50">
+          <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
+        </div>
       </header>
       
-      <section className="py-20 bg-purple-50/50 px-6 border-y border-purple-100/50">
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-          <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
-            <Calendar className="mx-auto mb-4 text-purple-300" />
-            <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Ceremony</h3>
-            <p className="text-slate-600 font-sans text-sm">2:00 PM • Catholic Mass</p>
-            <p className="font-bold mt-2 text-purple-800">Holy Spirit Church</p>
-            <p className="text-slate-500 text-sm mt-1">41139 Fremont Blvd, Fremont, CA 94538</p>
-          </div>
-          <div className="bg-white p-10 rounded-2xl shadow-sm text-center border border-purple-100">
-            <GlassWater className="mx-auto mb-4 text-purple-300" />
-            <h3 className="text-2xl mb-2 text-purple-900 font-light italic">The Reception</h3>
-            <p className="text-slate-600 font-sans text-sm">5:30 PM • Dinner & Dancing</p>
-            <p className="font-bold mt-2 text-purple-800">Pavilion Room at The Bridges Golf Club</p>
-            <p className="text-slate-500 text-sm mt-1">9000 S Gale Ridge Rd, San Ramon</p>
-          </div>
+      {/* --- DETAILS SECTION (HYPERLINKED) --- */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 text-center">
+          
+          {/* Ceremony Link */}
+          <a 
+            href="https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group block p-8 rounded-3xl hover:bg-purple-50 transition-all duration-300 border border-transparent hover:border-purple-100 cursor-pointer"
+          >
+            <Calendar className="mx-auto mb-4 text-purple-200 group-hover:text-purple-400 transition-colors" size={32} />
+            <h3 className="text-3xl text-purple-900 font-light italic mb-2 group-hover:text-purple-600 transition-colors">The Ceremony</h3>
+            <p className="text-slate-400 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">2:00 PM</p>
+            <p className="text-lg text-slate-700 font-serif">Holy Spirit Church</p>
+            <div className="flex items-center justify-center gap-1 mt-2 text-slate-500 text-sm group-hover:text-purple-500">
+              <MapPin size={14} />
+              <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">41139 Fremont Blvd, Fremont, CA</span>
+            </div>
+          </a>
+
+          {/* Reception Link */}
+          <a 
+            href="https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group block p-8 rounded-3xl hover:bg-purple-50 transition-all duration-300 border border-transparent hover:border-purple-100 cursor-pointer"
+          >
+            <GlassWater className="mx-auto mb-4 text-purple-200 group-hover:text-purple-400 transition-colors" size={32} />
+            <h3 className="text-3xl text-purple-900 font-light italic mb-2 group-hover:text-purple-600 transition-colors">The Reception</h3>
+            <p className="text-slate-400 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">5:30 PM</p>
+            <p className="text-lg text-slate-700 font-serif">The Bridges Golf Club</p>
+            <div className="flex items-center justify-center gap-1 mt-2 text-slate-500 text-sm group-hover:text-purple-500">
+              <MapPin size={14} />
+              <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">9000 S Gale Ridge Rd, San Ramon</span>
+            </div>
+          </a>
+
         </div>
       </section>
     </main>
   );
-
+      
   const renderRSVP = () => (
     <main className="py-24 px-6 animate-in fade-in duration-700">
       <Heart className="mx-auto text-purple-200 mb-6" size={40} />
@@ -218,7 +275,9 @@ const WeddingSite = () => {
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">The First Hello</h3>
-          <p>It all began in 2018. What started as a simple conversation quickly turned into an evening that neither of us wanted to end.</p>
+          <p>What started as a simple conversation quickly turned into an evening that neither of us wanted to end.</p>
+          <p>From that moment on, we knew there was something special between us.</p>
+          <p>Our first date at sala thai</p>
         </div>
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
