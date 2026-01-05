@@ -20,6 +20,61 @@ const WeddingSite = () => {
 
   const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwuZswizk1UnCT9_osHPsl8tK_lar3moXAmzY2TN37G466UAXCNX1TRECdE5Fiuw0V0/exec"; 
 
+
+  // --- REUSABLE DATA ---
+  const LOCATIONS = [
+    {
+      id: 'ceremony',
+      type: 'ceremony',
+      title: "The Ceremony",
+      time: "2:00 PM",
+      name: "Holy Spirit Church",
+      address: "41139 Fremont Blvd, Fremont, CA",
+      mapLink: "https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA",
+      icon: Calendar
+    },
+    {
+      id: 'reception',
+      type: 'reception',
+      title: "The Reception",
+      time: "5:30 PM",
+      name: "The Bridges Golf Club",
+      address: "9000 S Gale Ridge Rd, San Ramon",
+      mapLink: "https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon",
+      icon: GlassWater
+    }
+  ];
+
+  // --- REUSABLE COMPONENT ---
+  const LocationCard = ({ data, extraClass = "" }) => {
+    const Icon = data.icon;
+    return (
+      <a 
+        href={data.mapLink}
+        target="_blank" 
+        rel="noopener noreferrer"
+        className={`group block p-8 rounded-3xl hover:bg-purple-50 transition-all duration-300 border border-transparent hover:border-purple-100 cursor-pointer bg-white shadow-sm text-center ${extraClass}`}
+      >
+        <Icon className="mx-auto mb-4 text-purple-200 group-hover:text-purple-400 transition-colors" size={32} />
+        <h3 className="text-2xl md:text-3xl text-purple-900 font-light italic mb-2 group-hover:text-purple-600 transition-colors">
+          {data.title}
+        </h3>
+        {data.time && (
+          <p className="text-slate-400 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">
+            {data.time}
+          </p>
+        )}
+        <p className="text-lg text-slate-700 font-serif">{data.name}</p>
+        <div className="flex items-center justify-center gap-1 mt-2 text-slate-500 text-sm group-hover:text-purple-500">
+          <MapPin size={14} />
+          <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">
+            {data.address}
+          </span>
+        </div>
+      </a>
+    );
+  };
+
   // --- EFFECTS ---
 
   // Countdown Timer
@@ -152,49 +207,17 @@ const renderHome = () => (
           <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
         </div>
       </header>
-      
-      {/* --- DETAILS SECTION (HYPERLINKED) --- */}
+      {/* DETAILS SECTION - Now using the Reusable Component! */}
       <section className="py-24 bg-white px-6">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 text-center">
-          
-          {/* Ceremony Link */}
-          <a 
-            href="https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group block p-8 rounded-3xl hover:bg-purple-50 transition-all duration-300 border border-transparent hover:border-purple-100 cursor-pointer"
-          >
-            <Calendar className="mx-auto mb-4 text-purple-200 group-hover:text-purple-400 transition-colors" size={32} />
-            <h3 className="text-3xl text-purple-900 font-light italic mb-2 group-hover:text-purple-600 transition-colors">The Ceremony</h3>
-            <p className="text-slate-400 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">2:00 PM</p>
-            <p className="text-lg text-slate-700 font-serif">Holy Spirit Church</p>
-            <div className="flex items-center justify-center gap-1 mt-2 text-slate-500 text-sm group-hover:text-purple-500">
-              <MapPin size={14} />
-              <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">41139 Fremont Blvd, Fremont, CA</span>
-            </div>
-          </a>
-
-          {/* Reception Link */}
-          <a 
-            href="https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group block p-8 rounded-3xl hover:bg-purple-50 transition-all duration-300 border border-transparent hover:border-purple-100 cursor-pointer"
-          >
-            <GlassWater className="mx-auto mb-4 text-purple-200 group-hover:text-purple-400 transition-colors" size={32} />
-            <h3 className="text-3xl text-purple-900 font-light italic mb-2 group-hover:text-purple-600 transition-colors">The Reception</h3>
-            <p className="text-slate-400 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">5:30 PM</p>
-            <p className="text-lg text-slate-700 font-serif">The Bridges Golf Club</p>
-            <div className="flex items-center justify-center gap-1 mt-2 text-slate-500 text-sm group-hover:text-purple-500">
-              <MapPin size={14} />
-              <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">9000 S Gale Ridge Rd, San Ramon</span>
-            </div>
-          </a>
-
+          {LOCATIONS.map(loc => (
+            <LocationCard key={loc.id} data={loc} />
+          ))}
         </div>
       </section>
     </main>
   );
+    
       
   const renderRSVP = () => (
     <main className="py-24 px-6 animate-in fade-in duration-700">
@@ -294,21 +317,15 @@ const renderHome = () => (
   );
 
   const renderTravel = () => (
-    <main className="max-w-4xl mx-auto px-6 py-24 animate-in fade-in duration-700">
+    <main className="max-w-5xl mx-auto px-6 py-24 animate-in fade-in duration-700 flex flex-col justify-center">
       <MapPin className="mx-auto text-purple-200 mb-6" size={40} />
       <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Travel & Stay</h2>
-      <div className="grid md:grid-cols-2 gap-8 text-center">
-        <div className="bg-purple-50 p-10 rounded-2xl border border-purple-100">
-          <Car className="mx-auto mb-4 text-purple-300" />
-          <h3 className="text-2xl mb-2 text-purple-900 italic">The Venue</h3>
-          <p className="text-slate-600">Hacienda de las Flores<br/>3300 Moraga Rd, Moraga, CA</p>
-        </div>
-        <div className="bg-purple-50 p-10 rounded-2xl border border-purple-100">
-          <Calendar className="mx-auto mb-4 text-purple-300" />
-          <h3 className="text-2xl mb-2 text-purple-900 italic">Stay</h3>
-          <p className="text-slate-600">Hyatt Regency Fremont<br/>Mention "D&L Wedding" for group rates.</p>
-        </div>
-      </div>
+      {/* 1. Reuse the Venue Cards */}
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
+        {LOCATIONS.map(loc => (
+          <LocationCard key={loc.id} data={loc} extraClass="bg-purple-50/50 border-purple-100" />
+        ))}
+      </div>  
     </main>
   );
 
