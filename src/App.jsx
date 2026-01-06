@@ -521,7 +521,7 @@ const renderHome = () => (
           </div>
 
           {/* Right Side: Logo initials */}
-          <span className="text-purple-900 italic text-xl">D & L</span>
+          <span className="text-purple-900 italic text-xl">L & D</span>
         </div>
       </nav>
 
