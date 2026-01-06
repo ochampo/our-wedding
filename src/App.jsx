@@ -5,21 +5,55 @@ import {
   AlertCircle, X, BookOpen, MapPin, Car, Gift, 
   HelpCircle, Users, Image as ImageIcon, Menu 
 } from 'lucide-react';
+import SHA256 from 'crypto-js/sha256';
+const LoginScreen = ({ onLogin }) => {
+const [input, setInput] = useState("");
+const [error, setError] = useState(false);
 
-// Put this outside your component
-const simpleHash = (str) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // 1. Calculate the hash using the library
+    // toString() is needed to convert the math object to a text string
+    const inputHash = SHA256(input.toLowerCase().trim()).toString();
+    
+    // 2. Compare it to the hash of "july3"
+    // (I calculated this hash for you below)
+    const SECRET_HASH = "dfa3569a46b1a13c24c9f385da140f4763a3fbb70f8eebe0f29ba535145d32ca";
+
+    if (inputHash === SECRET_HASH) { 
+      onLogin();
+    } else {
+      setError(true);
+      setInput("");
+    }
+  };
+
+  return (
+    <div className="h-screen w-full bg-purple-900 flex flex-col items-center justify-center px-6">
+      <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-sm text-center">
+        <p className="text-purple-900 italic font-serif text-2xl mb-2">Lorraine & Daniel</p>
+        <p className="text-slate-500 text-xs uppercase tracking-widest mb-6">Guest Access</p>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input 
+            type="password" 
+            value={input}
+            onChange={(e) => { setInput(e.target.value); setError(false); }}
+            placeholder="Password"
+            className="w-full p-3 bg-purple-50 border border-purple-100 rounded-xl outline-none text-center text-purple-900"
+          />
+          {error && <p className="text-red-400 text-xs">Incorrect password</p>}
+          <button type="submit" className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold uppercase tracking-widest text-[10px]">
+            Enter Site
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
-const hashValue = simpleHash("july3");
-console.log(simpleHash("july3"))
-
 const WeddingSite = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   // --- STATE MANAGEMENT ---
   const [currentPage, setCurrentPage] = useState('HOME');
   const [allGuests, setAllGuests] = useState([]); 
@@ -432,7 +466,9 @@ const renderHome = () => (
   };
 
   // --- MAIN RENDER ---
-
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+  }
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden">
       <div className="h-3 bg-purple-200 opacity-40" />
