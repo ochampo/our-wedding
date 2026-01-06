@@ -6,6 +6,19 @@ import {
   HelpCircle, Users, Image as ImageIcon, Menu 
 } from 'lucide-react';
 
+// Put this outside your component
+const simpleHash = (str) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+};
+const hashValue = simpleHash("july3");
+console.log(simpleHash("july3"))
+
 const WeddingSite = () => {
   // --- STATE MANAGEMENT ---
   const [currentPage, setCurrentPage] = useState('HOME');
