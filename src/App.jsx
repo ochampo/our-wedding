@@ -72,6 +72,7 @@ const WeddingSite = () => {
 
 // NEW (Works in Vite)
   const GOOGLE_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+  console.log("My URL is:", GOOGLE_URL);
   // --- REUSABLE DATA ---
   const LOCATIONS = [
     {
