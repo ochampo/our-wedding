@@ -65,9 +65,13 @@ const WeddingSite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwuZswizk1UnCT9_osHPsl8tK_lar3moXAmzY2TN37G466UAXCNX1TRECdE5Fiuw0V0/exec"; 
 
 
+  // OLD (Causes white screen in Vite)
+// const GOOGLE_URL = process.env.REACT_APP_GOOGLE_SCRIPT_URL;
+
+// NEW (Works in Vite)
+  const GOOGLE_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
   // --- REUSABLE DATA ---
   const LOCATIONS = [
     {
