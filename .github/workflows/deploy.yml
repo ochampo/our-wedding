@@ -25,6 +25,8 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+        env:
+          VITE_GOOGLE_SCRIPT_URL: ${{ secrets.VITE_GOOGLE_SCRIPT_URL }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
