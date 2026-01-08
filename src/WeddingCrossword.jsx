@@ -206,20 +206,21 @@ const WeddingCrossword = () => {
       <PenTool className="mx-auto text-purple-200 mb-6" size={40} />
       <h2 className="text-5xl text-center text-purple-900 mb-8 font-light italic">Crossword</h2>
       
-      <div className="bg-white p-4 md:p-8 rounded-3xl border border-purple-100 shadow-xl">
+      <div className="bg-white p-2 md:p-8 rounded-3xl border border-purple-100 shadow-xl">
         <div className="text-center mb-8">
           <p className="text-[10px] uppercase tracking-widest text-slate-400">
             Tap twice to switch direction
           </p>
         </div>
 
-        {/* GRID - 14x14 Layout */}
-        <div className="flex justify-center mb-10 overflow-x-auto">
+        {/* GRID - NOW 100% FLUID RESPONSIVE */}
+        <div className="w-full max-w-lg mx-auto mb-10">
           <div 
-            className="grid bg-purple-100 border-2 border-purple-900 shadow-md shrink-0"
+            className="grid bg-purple-100 border-2 border-purple-900 shadow-md w-full aspect-square"
             style={{ 
-              gridTemplateColumns: `repeat(14, minmax(20px, 30px))`, // Adjusted for 14 cols
-              gridTemplateRows: `repeat(14, minmax(20px, 30px))`,
+              // THIS IS THE FIX: Use fractions (fr) instead of pixels
+              gridTemplateColumns: `repeat(14, 1fr)`, 
+              gridTemplateRows: `repeat(14, 1fr)`,
               gap: '1px'
             }}
           >
@@ -248,7 +249,7 @@ const WeddingCrossword = () => {
                 return (
                   <div key={`${r}-${c}`} className={`relative w-full h-full transition-colors duration-300 ${bgClass}`}>
                     {cellNum && (
-                      <span className={`absolute top-0.5 left-0.5 text-[6px] md:text-[8px] leading-none font-bold pointer-events-none z-10 ${isCorrect ? 'text-emerald-700' : 'text-purple-900'}`}>
+                      <span className={`absolute top-[1px] left-[1px] text-[6px] md:text-[9px] leading-none font-bold pointer-events-none z-10 ${isCorrect ? 'text-emerald-700' : 'text-purple-900'}`}>
                         {cellNum}
                       </span>
                     )}
@@ -261,8 +262,8 @@ const WeddingCrossword = () => {
                       onChange={(e) => handleChange(r, c, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(e, r, c)}
                       className={`
-                        w-full h-full text-center font-sans font-bold text-[10px] md:text-sm uppercase outline-none
-                        caret-purple-500 cursor-pointer p-0 rounded-none bg-transparent
+                        w-full h-full text-center font-sans font-bold text-[9px] md:text-sm uppercase outline-none
+                        caret-transparent cursor-pointer p-0 rounded-none bg-transparent
                         ${isCorrect && !isActive ? 'text-emerald-800' : 'text-slate-800'}
                       `}
                     />
