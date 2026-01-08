@@ -6,6 +6,7 @@ import {
   HelpCircle, Users, Image as ImageIcon, Menu 
 } from 'lucide-react';
 import SHA256 from 'crypto-js/sha256';
+import WeddingCrossword from './WeddingCrossword';
 const LoginScreen = ({ onLogin }) => {
 const [input, setInput] = useState("");
 const [error, setError] = useState(false);
@@ -465,6 +466,7 @@ const renderHome = () => (
       case 'GALLERY': return renderGallery();
       case 'GIFT': return renderGift();
       case 'QA': return renderQA();
+      case 'GAMES': return <WeddingCrossword />;
       default: return renderHome();
     }
   };
@@ -483,9 +485,9 @@ const renderHome = () => (
           <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-purple-300">
             <X size={32}/>
           </button>
-          {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA'].map((tab) => (
+          {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES'].map((tab) => (
             <button key={tab} onClick={() => navigateTo(tab)} className="text-3xl text-purple-900 italic hover:text-purple-400">
-              {tab === 'HOME' ? 'The Wedding' : tab === 'QA' ? 'Q&A' : tab.charAt(0) + tab.slice(1).toLowerCase()}
+              {tab === 'HOME' ? 'The Wedding' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'Games' : tab.charAt(0) + tab.slice(1).toLowerCase()}
             </button>
           ))}
         </div>
@@ -513,13 +515,13 @@ const renderHome = () => (
 
           {/* Center: Desktop Menu (Hidden on mobile) */}
           <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
-            {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA'].map((tab) => (
+            {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES'].map((tab) => (
               <button 
                 key={tab} 
                 onClick={() => navigateTo(tab)} 
                 className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1" : "hover:text-purple-400"}
               >
-                {tab === 'HOME' ? 'Wedding' : tab === 'QA' ? 'Q&A' : tab.charAt(0) + tab.slice(1).toLowerCase()}
+                {tab === 'HOME' ? 'Wedding' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'Games' : tab.charAt(0) + tab.slice(1).toLowerCase()}
               </button>
             ))}
           </div>
