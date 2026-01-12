@@ -355,13 +355,22 @@ const renderHome = () => (
         </div>
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
-          <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">Two Worlds, One Heart</h3>
+          <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">Two Worlds, One Heart, Family</h3>
           <p>Merging Dan’s Mexican heritage with Lorraine’s Goan roots meant a lot of incredible food, rich traditions, and a shared love for family. We discovered that our values are exactly the same.</p>
+          <p>Lorraine introduction to the family, and the family embraced her with open arms, making her feel like part of the extended family from day one.</p>
+          <p>Dan's introduction to the family, and the family embraced him with open arms, making him feel like part of the extended family from day one.</p>
+        </div>
+        <div className="relative pl-8 border-l-2 border-purple-100">
+          <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
+          <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">Travels </h3>
+          <p>From the beaches of Mexico to the historic streets of buddapest, our travels have been filled with adventure and discovery. Each trip has strengthened our bond and created memories that we will cherish forever.</p>
+          <p>These experiences have not only enriched our lives but have also deepened our love for each other, as we navigate the world hand in hand.</p>
         </div>
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">The Proposal</h3>
-          <p>Under the California stars, Dan asked the most important question of his life. Through tears of joy, Lorraine said yes, beginning our greatest adventure yet.</p>
+          <p>On a beautiful day in <b>FREMONT</b>, Dan planned a special day right in Lorraine's parents <B>BACKYARD</B>. As we waited for her lorraine to arrive, Dan nervously got down on one knee and asked Lorraine to marry him.</p>
+          <p>Overwhelmed with joy, she said yes! It was a moment filled with love, laughter, and the promise of a lifetime together. We celebrated with a romantic picnic, savoring the beginning of our new chapter as fiancés.</p>
         </div>
       </div>
     </main>
