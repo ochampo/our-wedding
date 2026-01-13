@@ -363,13 +363,14 @@ const renderHome = () => (
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">Travels </h3>
-          <p>From the beaches of Mexico to the historic streets of buddapest, our travels have been filled with adventure and discovery. Each trip has strengthened our bond and created memories that we will cherish forever.</p>
+          <p>From the beaches of Mexico to the historic streets of buddapest, our travels have been filled with adventure,discovery and pasteries. Each trip has strengthened our bond and created memories that we will cherish forever.</p>
           <p>These experiences have not only enriched our lives but have also deepened our love for each other, as we navigate the world hand in hand.</p>
+          <p>We knew we were meant together after our first trip to Hawii, that's where dan figured out that lorraine had huge sweet thooth for <b>DONUTS</b>.</p>
         </div>
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">The Proposal</h3>
-          <p>On a beautiful day in <b>FREMONT</b>, Dan planned a special day right in Lorraine's parents <B>BACKYARD</B>. As we waited for her lorraine to arrive, Dan nervously got down on one knee and asked Lorraine to marry him.</p>
+          <p>On a beautiful day in <b>FREMONT</b>, Dan planned a special day right in Lorraine's parents <b>BACKYARD</b>. As we waited for her lorraine to arrive, Dan nervously got down on one knee and asked Lorraine to marry him.</p>
           <p>Overwhelmed with joy, she said yes! It was a moment filled with love, laughter, and the promise of a lifetime together. We celebrated with a romantic picnic, savoring the beginning of our new chapter as fiancés.</p>
         </div>
       </div>
