@@ -350,7 +350,7 @@ const renderHome = () => (
         <div className="relative pl-8 border-l-2 border-purple-100">
           <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
           <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">From Bumble to Lake Elizabeth</h3>
-          <p>We first connected on Bumble, eager to see if the spark was real. We met for dinner at Sala Thai, and almost immediately, the chemistry was undeniable. Not ready to say goodbye after dinner, we decided to take a walk around Lake Elizabeth.</p>
+          <p>We first connected on Bumble, eager to see if the spark was real. We met for dinner at <b>SalaThai</b>, and almost immediately, the chemistry was undeniable. Not ready to say goodbye after dinner, we decided to take a walk around Lake Elizabeth.</p>
           <p>As we walked and talked, a simple introduction turned into the realization that we had found something rare. It was an evening we didn't want to end, and looking back, it was the moment we both realized we were the perfect match.</p>
         </div>
         <div className="relative pl-8 border-l-2 border-purple-100">
