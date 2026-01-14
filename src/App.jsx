@@ -7,13 +7,15 @@ import {
 } from 'lucide-react';
 import SHA256 from 'crypto-js/sha256';
 import WeddingCrossword from './WeddingCrossword';
-const LoginScreen = ({ onLogin }) => {
-const [input, setInput] = useState("");
-const [error, setError] = useState(false);
+import { Loader } from 'lucide-react';
+const LoginScreen = ({ onLogin, isLoading}) => {
+  const [input, setInput] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
+    if (isLoading) return; // Prevent multiple submissions
     // 1. Calculate the hash using the library
     // toString() is needed to convert the math object to a text string
     const inputHash = SHA256(input.toLowerCase().trim()).toString();
@@ -45,8 +47,19 @@ const [error, setError] = useState(false);
             className="w-full p-3 bg-purple-50 border border-purple-100 rounded-xl outline-none text-center text-purple-900"
           />
           {error && <p className="text-red-400 text-xs">Incorrect password</p>}
-          <button type="submit" className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold uppercase tracking-widest text-[10px]">
-            Enter Site
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            className={`w-full py-3 bg-purple-900 text-white rounded-xl font-bold uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 transition-all ${isLoading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-800"}`}
+          >
+            {isLoading ? (
+              <>
+                <Loader className="animate-spin" size={16} /> 
+                Unlocking...
+              </>
+            ) : (
+              "Enter Site"
+            )}
           </button>
         </form>
       </div>
@@ -65,6 +78,7 @@ const WeddingSite = () => {
   const [status, setStatus] = useState("IDLE");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isLoadingData, setIsLoadingData] = useState(false);
 
 
 
@@ -153,13 +167,23 @@ const WeddingSite = () => {
 // New function: Only runs when called manually
   const loadWeddingData = () => {
     console.log("Password accepted. Fetching guest list..."); // Optional debug log
-    fetch(GOOGLE_URL)
+    return fetch(GOOGLE_URL)
       .then(res => res.json())
       .then(data => {
         setAllGuests(data.invited || []);
         setRsvpMap(data.rsvpMap || {});
       })
       .catch(err => console.error("Fetch error:", err));
+  };
+
+  const handleLogin = () => {
+    setIsLoadingData(true); // 1. Start Spinner
+    
+    loadWeddingData().then(() => {
+      // 2. Wait for Google to finish
+      setIsLoadingData(false); // Stop Spinner
+      setIsAuthenticated(true); // Show Home Page
+    });
   };
 
   // --- HANDLERS ---
@@ -485,11 +509,13 @@ const renderHome = () => (
   // --- MAIN RENDER ---
   // NEW CODE
 if (!isAuthenticated) {
-  return <LoginScreen onLogin={() => {
-    setIsAuthenticated(true); // 1. Show the site
-    loadWeddingData();        // 2. NOW fetch the sensitive data
-  }} />;
-}
+    return (
+      <LoginScreen 
+        onLogin={handleLogin} 
+        isLoading={isLoadingData} 
+      />
+    );
+  }
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden">
       <div className="h-3 bg-purple-200 opacity-40" />
