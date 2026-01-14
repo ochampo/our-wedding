@@ -150,7 +150,9 @@ const WeddingSite = () => {
   }, []);
 
   // Fetch Guest List
-  useEffect(() => {
+// New function: Only runs when called manually
+  const loadWeddingData = () => {
+    console.log("Password accepted. Fetching guest list..."); // Optional debug log
     fetch(GOOGLE_URL)
       .then(res => res.json())
       .then(data => {
@@ -158,7 +160,7 @@ const WeddingSite = () => {
         setRsvpMap(data.rsvpMap || {});
       })
       .catch(err => console.error("Fetch error:", err));
-  }, []);
+  };
 
   // --- HANDLERS ---
 
@@ -481,9 +483,13 @@ const renderHome = () => (
   };
 
   // --- MAIN RENDER ---
-  if (!isAuthenticated) {
-    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
-  }
+  // NEW CODE
+if (!isAuthenticated) {
+  return <LoginScreen onLogin={() => {
+    setIsAuthenticated(true); // 1. Show the site
+    loadWeddingData();        // 2. NOW fetch the sensitive data
+  }} />;
+}
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden">
       <div className="h-3 bg-purple-200 opacity-40" />
