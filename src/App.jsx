@@ -10,6 +10,9 @@ import QA from './QA.jsx';
 import RenderGift from './RenderGift.jsx';
 import RenderGallery from './RenderGallery.jsx';
 import { Loader } from 'lucide-react';
+import RenderTravel from './RenderTravel.jsx';
+import { LOCATIONS } from './data/WeddingData';
+import  LocationCard  from './components/LocationCard';
 const LoginScreen = ({ onLogin, isLoading}) => {
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
@@ -89,61 +92,6 @@ const WeddingSite = () => {
 
 // NEW (Works in Vite)
   const GOOGLE_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
-  // --- REUSABLE DATA ---
-  const LOCATIONS = [
-    {
-      id: 'ceremony',
-      type: 'ceremony',
-      title: "The Ceremony",
-      time: "2:00 PM",
-      name: "Holy Spirit Church",
-      address: "41139 Fremont Blvd, Fremont, CA",
-      mapLink: "https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA",
-      icon: Calendar
-    },
-    {
-      id: 'reception',
-      type: 'reception',
-      title: "The Reception",
-      time: "5:30 PM",
-      name: "The Bridges Golf Club",
-      address: "9000 S Gale Ridge Rd, San Ramon",
-      mapLink: "https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon",
-      icon: GlassWater
-    }
-  ];
-
-  // --- REUSABLE COMPONENT ---
-  const LocationCard = ({ data, extraClass = "" }) => {
-    const Icon = data.icon;
-    return (
-      <a 
-        href={data.mapLink}
-        target="_blank" 
-        rel="noopener noreferrer"
-        className={`group block p-8 rounded-3xl hover:bg-purple-50 transition-all duration-300 border border-transparent hover:border-purple-100 cursor-pointer bg-white shadow-sm text-center ${extraClass}`}
-      >
-        <Icon className="mx-auto mb-4 text-purple-200 group-hover:text-purple-400 transition-colors" size={32} />
-        <h3 className="text-2xl md:text-3xl text-purple-900 font-light italic mb-2 group-hover:text-purple-600 transition-colors">
-          {data.title}
-        </h3>
-        {data.time && (
-          <p className="text-slate-400 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">
-            {data.time}
-          </p>
-        )}
-        <p className="text-lg text-slate-700 font-serif">{data.name}</p>
-        <div className="flex items-center justify-center gap-1 mt-2 text-slate-500 text-sm group-hover:text-purple-500">
-          <MapPin size={14} />
-          <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">
-            {data.address}
-          </span>
-        </div>
-      </a>
-    );
-  };
-
-  // --- EFFECTS ---
 
   // Countdown Timer
   useEffect(() => {
@@ -404,25 +352,13 @@ const renderHome = () => (
       </div>
     </main>
   );
-
-  const renderTravel = () => (
-    <main className="max-w-5xl mx-auto px-6 py-24 animate-in fade-in duration-700 flex flex-col justify-center">
-      <MapPin className="mx-auto text-purple-200 mb-6" size={40} />
-      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Travel & Stay</h2>
-      {/* 1. Reuse the Venue Cards */}
-      <div className="grid md:grid-cols-2 gap-8 mb-12">
-        {LOCATIONS.map(loc => (
-          <LocationCard key={loc.id} data={loc} extraClass="bg-purple-50/50 border-purple-100" />
-        ))}
-      </div>  
-    </main>
-  );
+  
   const renderContent = () => {
     switch(currentPage) {
       case 'HOME': return renderHome();
       case 'RSVP': return renderRSVP();
       case 'STORY': return renderStory();
-      case 'TRAVEL': return renderTravel();
+      case 'TRAVEL': return <RenderTravel />;
       case 'GALLERY': return <RenderGallery />;
       case 'GIFT': return <RenderGift />;
       case 'QA': return <QA />;
