@@ -1,24 +1,26 @@
-// NOTE: We are NOT importing 'vitest' here to avoid conflict errors.
-// If you get "describe is not defined", uncomment the line below:
- import { describe, test, expect } from 'vitest';
-const SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL; // <--- PASTE YOUR GOOGLE SCRIPT URL HERE
+// src/__tests__/rsvp.test.js
+import { describe, test, expect } from 'vitest';
+const SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
 describe('RSVP Verification Test', () => {
-  
-  // Set timeout to 60 seconds
+
+  // Use a helper to log exact time elapsed
+  const startTime = Date.now();
+  const log = (msg) => {
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    console.log(`[ ⏱️ ${elapsed}s ] ${msg}`);
+  };
+
   test('should write data and verify it exists', async () => {
     
-    // 1. Create a unique batch ID (so we don't count old data)
     const uniqueBatchId = `Test-${Date.now()}`;
-    const numberOfRequests = 5;
+    const numberOfRequests = 20; // Increased load
     const requestPromises = [];
-    
-    // We will track exactly what names we sent
     const expectedNames = [];
 
-    console.log(`Starting Batch: ${uniqueBatchId}`);
+    log(`STARTING BATCH: ${uniqueBatchId}`);
 
-    // 2. Fire 5 Requests (Fire & Forget)
+    // --- PHASE 1: SENDING ---
     for (let i = 0; i < numberOfRequests; i++) {
       const name = `${uniqueBatchId}-User-${i+1}`;
       expectedNames.push(name.toLowerCase()); 
@@ -27,57 +29,71 @@ describe('RSVP Verification Test', () => {
         partyResponse: [{
           name: name,
           attendance: "Yes",
-          dietary: "Testing",
-          music: "Verification Jam",
+          dietary: "Debug Mode", 
           date: new Date().toISOString()
         }]
       };
 
-      // Send request but ignore errors (we only care if the data arrives)
+      // Create the cutoff switch
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+      log(`Firing request #${i+1}...`);
+
       const req = fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(() => "Ignored");
+      })
+      .then(() => clearTimeout(timeoutId))
+      .catch((e) => {
+        if (e.name === 'AbortError') return; 
+      });
 
       requestPromises.push(req);
     }
 
-    // Wait for requests to go out
+    log(`Waiting for all ${numberOfRequests} fetch calls to complete/abort...`);
     await Promise.all(requestPromises);
+    log(`PHASE 1 COMPLETE: All requests fired.`);
 
-    // 3. THE WAITING ROOM (Critical Step)
-    // We wait 15 seconds to give Google's LockService time to process the queue.
-    console.log("Requests sent. Waiting 15s for Google to write data...");
-    await new Promise(r => setTimeout(r, 15000));
+    // --- PHASE 2: WAITING ---
+    log(`PHASE 2 START: Entering 20s waiting room...`);
+    // We break this into chunks so you can see it's alive
+    for(let i=1; i<=20; i++) {
+        await new Promise(r => setTimeout(r, 1000));
+        if(i % 5 === 0) log(`... waited ${i} seconds ...`);
+    }
+    log(`PHASE 2 COMPLETE: Wait finished.`);
 
-    // 4. VERIFY (The "Read" Request)
-    console.log("Reading spreadsheet to verify...");
+    // --- PHASE 3: VERIFYING ---
+    log(`PHASE 3 START: Fetching spreadsheet data...`);
     
-    // Fetch the current list of RSVPs
     const response = await fetch(SCRIPT_URL); 
-    const json = await response.json();
-    const rsvpMap = json.rsvpMap; // This assumes your doGet returns { rsvpMap: ... }
-
-    // 5. Check if our unique names are there
-    let successCount = 0;
-    expectedNames.forEach(name => {
-      // We check if the name exists in the map
-      if (rsvpMap && rsvpMap[name]) {
-        successCount++;
-      } else {
-        console.log(`Still waiting for: ${name}`);
-      }
-    });
-
-    console.log(`Result: Found ${successCount} / ${numberOfRequests} names.`);
+    log(`Received response headers. Parsing JSON...`);
     
-    // PASS if we found all 5
-    // If this fails, it means the Lock is too slow or the script crashed
-    if (successCount !== numberOfRequests) {
-        throw new Error(`Only found ${successCount} of ${numberOfRequests} names in the sheet.`);
+    const json = await response.json();
+    log(`JSON Parsed. Checking names...`);
+    
+    const rsvpMap = json.rsvpMap; 
+    let successCount = 0;
+
+    if (!rsvpMap) {
+      log(`CRITICAL FAILURE: rsvpMap is undefined!`);
+      throw new Error("Server returned bad data");
     }
 
-  }, 60000); // 60s Timeout
+    expectedNames.forEach(name => {
+      if (rsvpMap[name]) successCount++;
+    });
+
+    log(`PHASE 3 COMPLETE: Found ${successCount}/${numberOfRequests}`);
+
+    if (successCount !== numberOfRequests) {
+        throw new Error(`Only found ${successCount} names.`);
+    }
+
+  }, 120000); // 120s Timeout
 });
