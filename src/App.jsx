@@ -307,7 +307,7 @@ const renderHome = () => (
                   </div>
                 ))}
                 <input name="music" className="w-full py-3 bg-white px-4 rounded-xl border border-purple-100 outline-none font-sans" placeholder="Song Request for the Dance Floor" />
-                <button type="submit" className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all">
+                <button type="submit" disabled={status === "SENDING" || status === "SUCCESS"}  className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all">
                   {status === "SENDING" ? "Submitting..." : "Confirm Party RSVP"}
                 </button>
               </form>
