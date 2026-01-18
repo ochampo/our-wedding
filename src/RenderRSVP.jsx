@@ -7,14 +7,31 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [status, setStatus] = useState("IDLE");
 
+  // --- NEW: Track attendance for each guest so we can require food ---
+  const [attendanceStates, setAttendanceStates] = useState({});
+
   const handleSelectName = (guest) => {
     const party = allGuests.filter(g => g.partyId === guest.partyId);
     setSelectedParty(party);
     
-    // Simple check: have they RSVP'd before?
+    // Initialize everyone as "yes" (since that is the default dropdown value)
+    const initialStates = {};
+    party.forEach((_, index) => {
+      initialStates[index] = 'yes'; 
+    });
+    setAttendanceStates(initialStates);
+
+    // Check for duplicates
     const key = guest.name.toLowerCase().trim();
     setIsDuplicate(!!rsvpMap[key]); 
     setSearchTerm(""); 
+  };
+
+  const handleAttendanceChange = (index, value) => {
+    setAttendanceStates(prev => ({
+      ...prev,
+      [index]: value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -25,7 +42,8 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     const responses = selectedParty.map((guest, index) => ({
       name: guest.name,
       attendance: formData.get(`attendance-${index}`),
-      food: formData.get(`food-${index}`), // <--- NEW FIELD
+      // If they decline, we force food to be "Not Applicable" to keep data clean
+      food: formData.get(`attendance-${index}`) === 'no' ? 'N/A' : formData.get(`food-${index}`),
       dietary: formData.get(`dietary-${index}`) || "None",
       music: formData.get('music') || "None",
       date: new Date().toLocaleString()
@@ -97,30 +115,47 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                   <button type="button" onClick={() => setSelectedParty([])} className="text-purple-300"><X size={20}/></button>
                 </div>
                 
-                {selectedParty.map((member, idx) => (
-                  <div key={idx} className="p-6 bg-purple-50 rounded-2xl border border-purple-100 space-y-4">
-                    <p className="font-bold text-purple-900 font-serif italic text-lg">{member.name}</p>
-                    
-                    <select name={`attendance-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-700">
-                      <option value="yes">Joyfully Accepts</option>
-                      <option value="no">Regretfully Declines</option>
-                    </select>
+                {selectedParty.map((member, idx) => {
+                  // Helper variable to see if this specific person is attending
+                  const isAttending = attendanceStates[idx] === 'yes';
 
-                    {/* --- NEW FOOD DROPDOWN --- */}
-                    <div className="relative">
-                       <Utensils className="absolute left-0 top-2 text-purple-200" size={16} />
-                       <select name={`food-${idx}`} className="w-full py-2 pl-6 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-700 text-sm">
-                         <option value="" disabled selected>Select Entrée...</option>
-                         <option value="Braised Short Ribs">Braised Short Ribs</option>
-                         <option value="Miso Glazed Salmon">Miso Glazed Salmon</option>
-                         <option value="Wild Mushroom Risotto (V)">Wild Mushroom Risotto (V)</option>
-                         <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
-                       </select>
+                  return (
+                    <div key={idx} className="p-6 bg-purple-50 rounded-2xl border border-purple-100 space-y-4">
+                      <p className="font-bold text-purple-900 font-serif italic text-lg">{member.name}</p>
+                      
+                      {/* Attendance Select with onChange handler */}
+                      <select 
+                        name={`attendance-${idx}`} 
+                        className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-700"
+                        onChange={(e) => handleAttendanceChange(idx, e.target.value)}
+                        defaultValue="yes"
+                      >
+                        <option value="yes">Joyfully Accepts</option>
+                        <option value="no">Regretfully Declines</option>
+                      </select>
+
+                      {/* Food Select: REQUIRED if Attending, DISABLED if Declining */}
+                      <div className={`relative transition-opacity duration-300 ${!isAttending ? 'opacity-50' : 'opacity-100'}`}>
+                         <Utensils className="absolute left-0 top-2 text-purple-200" size={16} />
+                         <select 
+                           name={`food-${idx}`} 
+                           className="w-full py-2 pl-6 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-700 text-sm invalid:text-slate-400"
+                           required={isAttending} // <--- The Magic Logic
+                           disabled={!isAttending}
+                           defaultValue=""
+                         >
+                           <option value="" disabled>Select Entrée{isAttending ? ' (Required)' : ''}...</option>
+                           <option value="Braised Short Ribs">Braised Short Ribs</option>
+                           <option value="Miso Glazed Salmon">Miso Glazed Salmon</option>
+                           <option value="Wild Mushroom Risotto (V)">Wild Mushroom Risotto (V)</option>
+                           <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
+                         </select>
+                      </div>
+
+                      <input name={`dietary-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-sm" placeholder="Dietary Restrictions" />
                     </div>
-
-                    <input name={`dietary-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-sm" placeholder="Dietary Restrictions" />
-                  </div>
-                ))}
+                  );
+                })}
 
                 <input name="music" className="w-full py-3 bg-white px-4 rounded-xl border border-purple-100 outline-none font-sans" placeholder="Song Request for the Dance Floor" />
                 
