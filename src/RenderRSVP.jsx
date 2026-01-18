@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { Heart, Search, Check, AlertCircle, Users, X } from 'lucide-react';
+import { Heart, Search, Check, AlertCircle, Users, X, Utensils } from 'lucide-react';
 
 const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
-  // --- LOCAL STATE (Moved from Main File) ---
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedParty, setSelectedParty] = useState([]);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [status, setStatus] = useState("IDLE");
 
-  // --- HANDLERS (Moved from Main File) ---
   const handleSelectName = (guest) => {
-    // Logic: Find everyone with the same partyId
     const party = allGuests.filter(g => g.partyId === guest.partyId);
     setSelectedParty(party);
     
-    // Logic: Check if they already RSVP'd
+    // Simple check: have they RSVP'd before?
     const key = guest.name.toLowerCase().trim();
     setIsDuplicate(!!rsvpMap[key]); 
     setSearchTerm(""); 
@@ -25,10 +22,10 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     setStatus("SENDING");
     const formData = new FormData(e.target);
     
-    // Build the response object
     const responses = selectedParty.map((guest, index) => ({
       name: guest.name,
       attendance: formData.get(`attendance-${index}`),
+      food: formData.get(`food-${index}`), // <--- NEW FIELD
       dietary: formData.get(`dietary-${index}`) || "None",
       music: formData.get('music') || "None",
       date: new Date().toLocaleString()
@@ -46,7 +43,6 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     }
   };
 
-  // Logic: Filter guests based on search input
   const filteredResults = searchTerm.length > 2 
     ? allGuests.filter(g => g.name.toLowerCase().includes(searchTerm.toLowerCase().trim())).slice(0, 6) 
     : [];
@@ -100,17 +96,34 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                   </div>
                   <button type="button" onClick={() => setSelectedParty([])} className="text-purple-300"><X size={20}/></button>
                 </div>
+                
                 {selectedParty.map((member, idx) => (
                   <div key={idx} className="p-6 bg-purple-50 rounded-2xl border border-purple-100 space-y-4">
                     <p className="font-bold text-purple-900 font-serif italic text-lg">{member.name}</p>
-                    <select name={`attendance-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans">
+                    
+                    <select name={`attendance-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-700">
                       <option value="yes">Joyfully Accepts</option>
                       <option value="no">Regretfully Declines</option>
                     </select>
+
+                    {/* --- NEW FOOD DROPDOWN --- */}
+                    <div className="relative">
+                       <Utensils className="absolute left-0 top-2 text-purple-200" size={16} />
+                       <select name={`food-${idx}`} className="w-full py-2 pl-6 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-700 text-sm">
+                         <option value="" disabled selected>Select Entrée...</option>
+                         <option value="Braised Short Ribs">Braised Short Ribs</option>
+                         <option value="Miso Glazed Salmon">Miso Glazed Salmon</option>
+                         <option value="Wild Mushroom Risotto (V)">Wild Mushroom Risotto (V)</option>
+                         <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
+                       </select>
+                    </div>
+
                     <input name={`dietary-${idx}`} className="w-full py-2 bg-transparent border-b border-purple-200 outline-none font-sans text-sm" placeholder="Dietary Restrictions" />
                   </div>
                 ))}
+
                 <input name="music" className="w-full py-3 bg-white px-4 rounded-xl border border-purple-100 outline-none font-sans" placeholder="Song Request for the Dance Floor" />
+                
                 <button type="submit" disabled={status === "SENDING" || status === "SUCCESS"}  className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all">
                   {status === "SENDING" ? "Submitting..." : "Confirm Party RSVP"}
                 </button>
