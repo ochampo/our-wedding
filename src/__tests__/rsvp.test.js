@@ -29,6 +29,7 @@ describe('RSVP Verification Test', () => {
         partyResponse: [{
           name: name,
           attendance: "Yes",
+          food: "Chicken",
           dietary: "Debug Mode", 
           date: new Date().toISOString()
         }]
