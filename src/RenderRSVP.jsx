@@ -1,36 +1,52 @@
 import React, { useState } from 'react';
-import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare } from 'lucide-react';
+import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock } from 'lucide-react';
 
 const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState("IDLE");
   const [selectedPartyData, setSelectedPartyData] = useState([]);
+  
+  // NEW: Local memory to track submissions during this session
+  // This prevents users from re-registering after clicking "Back to Search"
+  const [recentlySubmitted, setRecentlySubmitted] = useState({});
+
+  // Form State
   const [attendanceStates, setAttendanceStates] = useState({});
   const [selectedGuests, setSelectedGuests] = useState({});
 
   // --- HANDLERS ---
   const handleSelectName = (guest) => {
-    // 1. Find party members
-    const partyMembers = allGuests.filter(g => g.partyId === guest.partyId);
+    let partyMembers = allGuests.filter(g => g.partyId === guest.partyId);
+
+    // SORT: Move searched guest to top
+    partyMembers.sort((a, b) => {
+        return a.name === guest.name ? -1 : b.name === guest.name ? 1 : 0;
+    });
     
-    // 2. Merge with existing Google Sheet data
     const mergedData = partyMembers.map(member => {
         const key = member.name.toLowerCase().trim();
-        const foundData = rsvpMap[key]; 
+        // CHECK 1: Database (rsvpMap)
+        // CHECK 2: Local Memory (recentlySubmitted)
+        const foundData = rsvpMap[key] || recentlySubmitted[key]; 
+        
         return { ...member, existingRSVP: foundData || null };
     });
 
-    // 3. Initialize State
     const initialStates = {};
     const initialSelection = {};
-    
+
     mergedData.forEach((member, index) => {
-      initialStates[index] = 'yes'; 
-      // Only check the box if they haven't RSVP'd yet
+      initialStates[index] = 'yes';
+      
+      // LOGIC: If existing RSVP -> Unselected. If Name Matches -> Selected. Else -> Unselected.
       if (member.existingRSVP) {
           initialSelection[index] = false; 
       } else {
-          initialSelection[index] = true;
+          if (member.name === guest.name) {
+              initialSelection[index] = true;
+          } else {
+              initialSelection[index] = false;
+          }
       }
     });
     
@@ -88,6 +104,14 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
         body: JSON.stringify({ partyResponse: responses }) 
       });
 
+      // 1. Update the Local Memory so subsequent searches know these people are done
+      const newRecentSubmissions = { ...recentlySubmitted };
+      responses.forEach(r => {
+          newRecentSubmissions[r.name.toLowerCase().trim()] = r;
+      });
+      setRecentlySubmitted(newRecentSubmissions);
+
+      // 2. Update the View to show the Summary
       const updatedDataForDisplay = selectedPartyData.map((member) => {
          const newResponse = responses.find(r => r.name === member.name);
          return {
@@ -98,19 +122,12 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
       
       setSelectedPartyData(updatedDataForDisplay);
       
-      // Clear selections for those just submitted
+      // 3. Uncheck everyone in the form state
       const newSelections = {};
-      updatedDataForDisplay.forEach((m, i) => {
-         // If they have data now, uncheck them.
-         if (m.existingRSVP || responses.find(r => r.name === m.name)) {
-             newSelections[i] = false;
-         } else {
-             newSelections[i] = true;
-         }
-      });
+      updatedDataForDisplay.forEach((_, i) => newSelections[i] = false);
       setSelectedGuests(newSelections);
 
-      setStatus("SUCCESS");
+      setStatus("SUCCESS"); 
 
     } catch (error) { 
       setStatus("ERROR"); 
@@ -121,7 +138,12 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     ? allGuests.filter(g => g.name.toLowerCase().includes(searchTerm.toLowerCase().trim())).slice(0, 6) 
     : [];
 
-  const isPartyComplete = selectedPartyData.length > 0 && selectedPartyData.every(m => m.existingRSVP);
+  const isPartyComplete = selectedPartyData.length > 0 
+    && selectedPartyData.every(m => m.existingRSVP);
+
+  // Show Summary if Party is Complete OR if we just submitted successfully
+  const showSummaryView = isPartyComplete || status === "SUCCESS";
+
   const getAttendanceLabel = (val) => val === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines';
 
   return (
@@ -155,34 +177,52 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
           </div>
         )}
 
-        {/* VIEW 2: COMPLETE SUMMARY (Everyone finished) */}
-        {isPartyComplete && (
+        {/* VIEW 2: SUMMARY */}
+        {selectedPartyData.length > 0 && showSummaryView && (
           <div className="space-y-6 animate-in zoom-in-95 duration-500">
              {status === "SUCCESS" && (
                 <div className="p-4 bg-green-100 text-green-800 rounded-xl text-center mb-4 border border-green-200">
-                    <p className="font-bold">RSVP Updated!</p>
+                    <p className="font-bold">Thank you! Your RSVP has been sent.</p>
                 </div>
             )}
             <div className="p-8 bg-purple-50 rounded-3xl border border-purple-100">
               <div className="flex items-center gap-3 mb-6 border-b border-purple-200 pb-4">
                 <CalendarCheck className="text-purple-600" size={24} />
-                <h3 className="text-xl font-bold text-purple-900 font-serif italic">RSVP Complete</h3>
+                <h3 className="text-xl font-bold text-purple-900 font-serif italic">Party Status</h3>
               </div>
               <div className="space-y-6">
-                 {selectedPartyData.map((member, idx) => (
-                    <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0">
-                         <div className="flex justify-between items-center mb-1">
-                            <span className="font-bold text-purple-900 text-lg">{member.name}</span>
-                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{getAttendanceLabel(member.existingRSVP.attendance)}</span>
-                         </div>
-                         {member.existingRSVP.attendance === 'yes' && (
-                             <div className="text-sm text-slate-600 pl-2 border-l-2 border-purple-200">
-                                 <p>Plate: {member.existingRSVP.food}</p>
-                                 {member.existingRSVP.dietary && member.existingRSVP.dietary !== "None" && <p className="italic text-xs">Dietary: {member.existingRSVP.dietary}</p>}
+                 {selectedPartyData.map((member, idx) => {
+                    // PENDING GUESTS
+                    if (!member.existingRSVP) {
+                        return (
+                            <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0 flex justify-between items-center opacity-50">
+                                <span className="font-bold text-slate-500 text-lg">{member.name}</span>
+                                <div className="flex items-center gap-1 text-slate-400">
+                                    <Clock size={14} />
+                                    <span className="text-xs uppercase tracking-wider font-bold">Pending</span>
+                                </div>
+                            </div>
+                        );
+                    }
+
+                    // COMPLETED GUESTS
+                    return (
+                        <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0">
+                             <div className="flex justify-between items-center mb-1">
+                                <span className="font-bold text-purple-900 text-lg">{member.name}</span>
+                                <span className={`text-xs font-bold uppercase tracking-wider ${member.existingRSVP.attendance === 'yes' ? 'text-green-600' : 'text-slate-400'}`}>
+                                    {getAttendanceLabel(member.existingRSVP.attendance)}
+                                </span>
                              </div>
-                         )}
-                    </div>
-                 ))}
+                             {member.existingRSVP.attendance === 'yes' && (
+                                 <div className="text-sm text-slate-600 pl-2 border-l-2 border-purple-200 mt-2">
+                                     <p>Plate: {member.existingRSVP.food}</p>
+                                     {member.existingRSVP.dietary && member.existingRSVP.dietary !== "None" && <p className="italic text-xs">Dietary: {member.existingRSVP.dietary}</p>}
+                                 </div>
+                             )}
+                        </div>
+                    );
+                 })}
               </div>
             </div>
             <div className="text-center">
@@ -191,16 +231,10 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
           </div>
         )}
 
-        {/* VIEW 3: FORM (Mixed View) */}
-        {!isPartyComplete && selectedPartyData.length > 0 && (
+        {/* VIEW 3: FORM */}
+        {selectedPartyData.length > 0 && !showSummaryView && (
           <form onSubmit={handleSubmit} className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
             
-            {status === "SUCCESS" && (
-                <div className="p-4 bg-green-100 text-green-800 rounded-xl text-center border border-green-200">
-                    <p className="font-bold">RSVP Saved! You can respond for others now.</p>
-                </div>
-            )}
-
             <div className="flex justify-between items-center border-b border-purple-100 pb-4">
               <div className="flex items-center gap-2">
                 <Users className="text-purple-400" size={20} />
@@ -211,25 +245,19 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
             
             {selectedPartyData.map((member, idx) => {
               const alreadyRegistered = !!member.existingRSVP;
-              const isSelected = selectedGuests[idx]; 
-              const isAttending = attendanceStates[idx] === 'yes';
-
-              // --- 1. ALREADY REGISTERED (READ ONLY DISPLAY) ---
+              
+              // --- 1. LOCKED CARD (ALREADY REGISTERED) ---
               if (alreadyRegistered) {
                   return (
                     <div key={idx} className="p-6 bg-purple-50/50 border border-purple-100 rounded-2xl relative">
-                        <div className="absolute top-4 right-4 text-green-600">
+                         <div className="absolute top-4 right-4 text-green-600">
                              <Check size={20} />
                         </div>
-                        
                         <p className="font-bold text-purple-900 font-serif italic text-lg opacity-80 mb-2">{member.name}</p>
-                        
                         <div className="space-y-1">
                             <span className={`text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider ${member.existingRSVP.attendance === 'yes' ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-500'}`}>
                                 {getAttendanceLabel(member.existingRSVP.attendance)}
                             </span>
-
-                            {/* DISPLAY THE PLATE HERE */}
                             {member.existingRSVP.attendance === 'yes' && (
                                 <div className="mt-3 text-sm text-slate-600 flex items-start gap-2">
                                     <Utensils size={14} className="mt-1 text-purple-300"/>
@@ -246,7 +274,10 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                   )
               }
 
-              // --- 2. NOT REGISTERED (EDITABLE FORM) ---
+              // --- 2. EDITABLE FORM CARD ---
+              const isSelected = selectedGuests[idx]; 
+              const isAttending = attendanceStates[idx] === 'yes';
+
               return (
                 <div key={idx} className={`p-6 rounded-2xl border transition-all duration-300 ${isSelected ? 'bg-purple-50 border-purple-100 opacity-100' : 'bg-slate-50 border-slate-100 opacity-60'}`}>
                   
@@ -255,7 +286,9 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                     <div className={`text-purple-600 transition-transform duration-200 ${isSelected ? 'scale-110' : 'scale-100 text-slate-300'}`}>
                         {isSelected ? <CheckSquare size={24} /> : <Square size={24} />}
                     </div>
-                    <p className={`font-bold font-serif italic text-lg ${isSelected ? 'text-purple-900' : 'text-slate-500'}`}>{member.name}</p>
+                    <p className={`font-bold font-serif italic text-lg ${isSelected ? 'text-purple-900' : 'text-slate-500'}`}>
+                        {member.name} 
+                    </p>
                   </div>
                   
                   {/* INPUTS */}
@@ -289,7 +322,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                               <input 
                                 name={`dietary-${idx}`} 
                                 className="w-full py-2 mt-2 bg-transparent border-b border-purple-200 outline-none font-sans text-sm" 
-                                placeholder="Dietary Restrictions?" 
+                                placeholder="Dietary Restrictions?"
                               />
                           </div>
                       )}
@@ -299,7 +332,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
             })}
             
             <button type="submit" disabled={status === "SENDING"}  className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all">
-              {status === "SENDING" ? "Submitting..." : "Submit Selected"}
+              {status === "SENDING" ? "Submitting..." : "Confirm RSVP"}
             </button>
           </form>
         )}
