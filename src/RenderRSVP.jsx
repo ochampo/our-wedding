@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock } from 'lucide-react';
 
 const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
+  // --- STATE ---
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState("IDLE");
   const [selectedPartyData, setSelectedPartyData] = useState([]);
   
-  // NEW: Local memory to track submissions during this session
-  // This prevents users from re-registering after clicking "Back to Search"
+  // Local memory to track submissions during this session
   const [recentlySubmitted, setRecentlySubmitted] = useState({});
 
   // Form State
@@ -18,27 +18,35 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   const handleSelectName = (guest) => {
     let partyMembers = allGuests.filter(g => g.partyId === guest.partyId);
 
-    // SORT: Move searched guest to top
-    partyMembers.sort((a, b) => {
-        return a.name === guest.name ? -1 : b.name === guest.name ? 1 : 0;
-    });
-    
-    const mergedData = partyMembers.map(member => {
+    // 1. MERGE DATA
+    let mergedData = partyMembers.map(member => {
         const key = member.name.toLowerCase().trim();
-        // CHECK 1: Database (rsvpMap)
-        // CHECK 2: Local Memory (recentlySubmitted)
         const foundData = rsvpMap[key] || recentlySubmitted[key]; 
-        
         return { ...member, existingRSVP: foundData || null };
     });
 
+    // 2. FORM SORTING (Pending & Match at Top)
+    // This sorting is optimized for the ENTRY FORM.
+    mergedData.sort((a, b) => {
+        // Priority 1: Exact Match (Top)
+        if (a.name === guest.name) return -1;
+        if (b.name === guest.name) return 1;
+
+        // Priority 2: Pending (Top) vs Done (Bottom)
+        const aIsDone = !!a.existingRSVP;
+        const bIsDone = !!b.existingRSVP;
+
+        if (aIsDone === bIsDone) return 0; 
+        if (!aIsDone && bIsDone) return -1; // Pending comes first in Form
+        return 1; 
+    });
+
+    // 3. INITIALIZE FORM
     const initialStates = {};
     const initialSelection = {};
 
     mergedData.forEach((member, index) => {
-      initialStates[index] = 'yes';
-      
-      // LOGIC: If existing RSVP -> Unselected. If Name Matches -> Selected. Else -> Unselected.
+      initialStates[index] = 'yes'; 
       if (member.existingRSVP) {
           initialSelection[index] = false; 
       } else {
@@ -52,7 +60,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     
     setAttendanceStates(initialStates);
     setSelectedGuests(initialSelection);
-    setSelectedPartyData(mergedData);
+    setSelectedPartyData(mergedData); 
     setSearchTerm(""); 
   };
 
@@ -104,14 +112,12 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
         body: JSON.stringify({ partyResponse: responses }) 
       });
 
-      // 1. Update the Local Memory so subsequent searches know these people are done
       const newRecentSubmissions = { ...recentlySubmitted };
       responses.forEach(r => {
           newRecentSubmissions[r.name.toLowerCase().trim()] = r;
       });
       setRecentlySubmitted(newRecentSubmissions);
 
-      // 2. Update the View to show the Summary
       const updatedDataForDisplay = selectedPartyData.map((member) => {
          const newResponse = responses.find(r => r.name === member.name);
          return {
@@ -122,7 +128,6 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
       
       setSelectedPartyData(updatedDataForDisplay);
       
-      // 3. Uncheck everyone in the form state
       const newSelections = {};
       updatedDataForDisplay.forEach((_, i) => newSelections[i] = false);
       setSelectedGuests(newSelections);
@@ -141,10 +146,21 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   const isPartyComplete = selectedPartyData.length > 0 
     && selectedPartyData.every(m => m.existingRSVP);
 
-  // Show Summary if Party is Complete OR if we just submitted successfully
   const showSummaryView = isPartyComplete || status === "SUCCESS";
 
   const getAttendanceLabel = (val) => val === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines';
+
+  // --- SPECIAL SORT FOR SUMMARY VIEW ---
+  // Create a copy of the data sorted specifically for the Summary.
+  // Rule: Completed (Done) -> Top, Pending -> Bottom
+  const summaryViewData = [...selectedPartyData].sort((a, b) => {
+      const aDone = !!a.existingRSVP;
+      const bDone = !!b.existingRSVP;
+      
+      if (aDone && !bDone) return -1; // Done comes first
+      if (!aDone && bDone) return 1;  // Pending goes last
+      return 0;
+  });
 
   return (
     <main className="py-24 px-6 animate-in fade-in duration-700">
@@ -153,7 +169,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
       
       <div className="max-w-xl mx-auto">
         
-        {/* VIEW 1: SEARCH */}
+        {/* --- VIEW 1: SEARCH --- */}
         {selectedPartyData.length === 0 && (
           <div className="space-y-6">
             <div className="relative">
@@ -177,7 +193,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
           </div>
         )}
 
-        {/* VIEW 2: SUMMARY */}
+        {/* --- VIEW 2: SUMMARY (Sorted: Done First) --- */}
         {selectedPartyData.length > 0 && showSummaryView && (
           <div className="space-y-6 animate-in zoom-in-95 duration-500">
              {status === "SUCCESS" && (
@@ -191,35 +207,37 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                 <h3 className="text-xl font-bold text-purple-900 font-serif italic">Party Status</h3>
               </div>
               <div className="space-y-6">
-                 {selectedPartyData.map((member, idx) => {
-                    // PENDING GUESTS
-                    if (!member.existingRSVP) {
+                 {/* USE summaryViewData HERE INSTEAD OF selectedPartyData */}
+                 {summaryViewData.map((member, idx) => {
+                    
+                    // A. COMPLETED GUESTS (Top)
+                    if (member.existingRSVP) {
                         return (
-                            <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0 flex justify-between items-center opacity-50">
-                                <span className="font-bold text-slate-500 text-lg">{member.name}</span>
-                                <div className="flex items-center gap-1 text-slate-400">
-                                    <Clock size={14} />
-                                    <span className="text-xs uppercase tracking-wider font-bold">Pending</span>
-                                </div>
+                            <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0">
+                                 <div className="flex justify-between items-center mb-1">
+                                    <span className="font-bold text-purple-900 text-lg">{member.name}</span>
+                                    <span className={`text-xs font-bold uppercase tracking-wider ${member.existingRSVP.attendance === 'yes' ? 'text-green-600' : 'text-slate-400'}`}>
+                                        {getAttendanceLabel(member.existingRSVP.attendance)}
+                                    </span>
+                                 </div>
+                                 {member.existingRSVP.attendance === 'yes' && (
+                                     <div className="text-sm text-slate-600 pl-2 border-l-2 border-purple-200 mt-2">
+                                         <p>Plate: {member.existingRSVP.food}</p>
+                                         {member.existingRSVP.dietary && member.existingRSVP.dietary !== "None" && <p className="italic text-xs">Dietary: {member.existingRSVP.dietary}</p>}
+                                     </div>
+                                 )}
                             </div>
                         );
                     }
 
-                    // COMPLETED GUESTS
+                    // B. PENDING GUESTS (Bottom)
                     return (
-                        <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0">
-                             <div className="flex justify-between items-center mb-1">
-                                <span className="font-bold text-purple-900 text-lg">{member.name}</span>
-                                <span className={`text-xs font-bold uppercase tracking-wider ${member.existingRSVP.attendance === 'yes' ? 'text-green-600' : 'text-slate-400'}`}>
-                                    {getAttendanceLabel(member.existingRSVP.attendance)}
-                                </span>
-                             </div>
-                             {member.existingRSVP.attendance === 'yes' && (
-                                 <div className="text-sm text-slate-600 pl-2 border-l-2 border-purple-200 mt-2">
-                                     <p>Plate: {member.existingRSVP.food}</p>
-                                     {member.existingRSVP.dietary && member.existingRSVP.dietary !== "None" && <p className="italic text-xs">Dietary: {member.existingRSVP.dietary}</p>}
-                                 </div>
-                             )}
+                        <div key={idx} className="border-b border-purple-100 pb-4 last:border-0 last:pb-0 flex justify-between items-center opacity-40">
+                            <span className="font-bold text-slate-500 text-lg">{member.name}</span>
+                            <div className="flex items-center gap-1 text-slate-400">
+                                <Clock size={14} />
+                                <span className="text-xs uppercase tracking-wider font-bold">Pending</span>
+                            </div>
                         </div>
                     );
                  })}
@@ -231,7 +249,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
           </div>
         )}
 
-        {/* VIEW 3: FORM */}
+        {/* --- VIEW 3: FORM (Sorted: Pending First) --- */}
         {selectedPartyData.length > 0 && !showSummaryView && (
           <form onSubmit={handleSubmit} className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
             
@@ -246,7 +264,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
             {selectedPartyData.map((member, idx) => {
               const alreadyRegistered = !!member.existingRSVP;
               
-              // --- 1. LOCKED CARD (ALREADY REGISTERED) ---
+              // LOCKED CARD
               if (alreadyRegistered) {
                   return (
                     <div key={idx} className="p-6 bg-purple-50/50 border border-purple-100 rounded-2xl relative">
@@ -274,14 +292,14 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                   )
               }
 
-              // --- 2. EDITABLE FORM CARD ---
+              // EDITABLE FORM CARD
               const isSelected = selectedGuests[idx]; 
               const isAttending = attendanceStates[idx] === 'yes';
 
               return (
                 <div key={idx} className={`p-6 rounded-2xl border transition-all duration-300 ${isSelected ? 'bg-purple-50 border-purple-100 opacity-100' : 'bg-slate-50 border-slate-100 opacity-60'}`}>
                   
-                  {/* HEADER WITH CHECKBOX */}
+                  {/* HEADER */}
                   <div className="flex items-center gap-3 mb-4 cursor-pointer" onClick={() => toggleGuestSelection(idx)}>
                     <div className={`text-purple-600 transition-transform duration-200 ${isSelected ? 'scale-110' : 'scale-100 text-slate-300'}`}>
                         {isSelected ? <CheckSquare size={24} /> : <Square size={24} />}
