@@ -305,7 +305,7 @@ const WeddingSite = () => {
               </button>
               {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES', 'PARTY'].map((tab) => (
                 <button key={tab} onClick={() => navigateTo(tab)} className="text-3xl text-purple-900 italic hover:text-purple-400">
-                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab.charAt(0) + tab.slice(1).toUpperCase()}
+                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab === 'PARTY' ? 'WEDDING PARTY' : tab.charAt(0) + tab.slice(1).toUpperCase()}
                 </button>
               ))}
             </div>
@@ -336,7 +336,7 @@ const WeddingSite = () => {
                     onClick={() => navigateTo(tab)} 
                     className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1" : "hover:text-purple-400"}
                   >
-                    {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab.charAt(0) + tab.slice(1).toUpperCase()}
+                    {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab === 'PARTY' ? 'WEDDING PARTY' : tab.charAt(0) + tab.slice(1).toUpperCase()}
                   </button>
                 ))}
               </div>
