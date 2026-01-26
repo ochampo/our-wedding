@@ -14,6 +14,7 @@ import RenderRSVP from './RenderRSVP.jsx';
 import { LOCATIONS } from './data/WeddingData';
 import LocationCard from './components/LocationCard';
 import RenderStory from './RenderStory.jsx';
+import RenderParty from './RenderParty.jsx';
 
 // --- NEW COMPONENT: CURTAIN REVEAL LOGIN ---
 const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
@@ -274,6 +275,7 @@ const WeddingSite = () => {
       case 'GIFT': return <RenderGift />;
       case 'QA': return <QA />;
       case 'GAMES': return <WeddingCrossword />;
+      case 'PARTY': return <RenderParty />;
       default: return renderHome();
     }
   };
@@ -301,7 +303,7 @@ const WeddingSite = () => {
               <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-purple-300">
                 <X size={32}/>
               </button>
-              {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES'].map((tab) => (
+              {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES', 'PARTY'].map((tab) => (
                 <button key={tab} onClick={() => navigateTo(tab)} className="text-3xl text-purple-900 italic hover:text-purple-400">
                   {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab.charAt(0) + tab.slice(1).toUpperCase()}
                 </button>
@@ -328,7 +330,7 @@ const WeddingSite = () => {
 
               {/* Center: Desktop Menu */}
               <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
-                {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES'].map((tab) => (
+                {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES', 'PARTY'].map((tab) => (
                   <button 
                     key={tab} 
                     onClick={() => navigateTo(tab)} 
