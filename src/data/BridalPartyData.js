@@ -8,7 +8,7 @@ export const PARTY_DATA = {
     },
   ],
   bridesmaids: [
-    { name: "Sahar", role: "Maid of Honor", bio: "The bride's sister and partner in crime.", img: "https://placehold.co/400x400/purple/white?text=Sahar" },
+    { name: "Sahar", role: "Maid of Honor", bio: "The bride's sister and partner in crime.", img: "https://placehold.co/400x400/purple/white?text=Sahar"},
     { name: "Priya", role: "Bridesmaid", bio: "College roommate and coffee addict.", img: "https://placehold.co/400x400/purple/white?text=Priya" },
     { name: "Nerida", role: "Bridesmaid", bio: "Met at yoga class in 2018.", img: "https://placehold.co/400x400/purple/white?text=Nerida" },
     { name: "Shrimathi", role: "Bridesmaid", bio: "Work bestie and karaoke queen.", img: "https://placehold.co/400x400/purple/white?text=Shrimathi" },
