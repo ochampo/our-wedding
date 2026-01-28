@@ -204,7 +204,9 @@ const WeddingSite = () => {
         <div className="absolute inset-0 z-0">
            {/* Replace with your image */}
            <img 
-             src="./temp.jpeg" 
+           //coverphoto5
+           //coverphoto11
+             src="./sunset.jpg" 
              alt="Lorraine and Daniel" 
              className="w-full h-full object-cover"
            />
@@ -214,10 +216,10 @@ const WeddingSite = () => {
         </div>
 
         {/* 2. TEXT CONTENT */}
-        <div className="relative z-10 text-white space-y-8 mt-10">
+        <div className="relative z-10 text-white space-y-8 mt-80">
           
           <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-300">
-            <p className="tracking-[0.4em] uppercase text-[10px] md:text-xs font-sans font-medium text-white/80 mb-4">
+            <p className="tracking-[0.4em] uppercase text-[10px] md:text-xs font-sans font-medium text-white/80 mb-0">
               We're getting married
             </p>
             <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
