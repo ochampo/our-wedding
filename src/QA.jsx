@@ -4,7 +4,7 @@ import {
 const renderQA = () => (
     <main className="max-w-3xl mx-auto px-6 py-24 animate-in fade-in duration-700">
       <HelpCircle className="mx-auto text-purple-200 mb-6" size={40} />
-      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Q & A</h2>
+      <h2 className="text-3xl md:text-4xl text-center text-purple-900 mb-8 font-medium tracking-tight">Q & A</h2>
       <div className="space-y-6">
         {[
           { q: "What is the dress code?", a: "We'd love to see our family and friends get dressed up for our big day. The dress code is Semi-Formal or Cocktail attire." },
