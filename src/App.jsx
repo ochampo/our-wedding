@@ -206,7 +206,7 @@ const WeddingSite = () => {
            <img 
            //coverphoto5
            //coverphoto11
-             src="./sunset.jpg" 
+             src="./CoverPhoto.jpg" 
              alt="Lorraine and Daniel" 
              className="w-full h-full object-cover"
            />
