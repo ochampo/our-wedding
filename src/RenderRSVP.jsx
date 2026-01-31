@@ -331,9 +331,9 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                                 defaultValue=""
                               >
                                 <option value="" disabled>Select Entrée...</option>
-                                <option value="Braised Short Ribs">Filet Mignon, roasted shallot confit, merlot thyme reduction, Roasted Garlic Mashed Potatoes</option>
-                                <option value="Miso Glazed Salmon">Forest Mushroom Chicken, trio of mushrooms, shallots, thyme and marsala, Roasted Fingerling Potatoes</option>
-                                <option value="Wild Mushroom Risotto (V)">Wild Mushroom Risotto (V)</option>
+                                <option value="Filet Mignon">Filet Mignon, roasted shallot confit, merlot thyme reduction, Roasted Garlic Mashed Potatoes</option>
+                                <option value="Forest Mushroom Chicken">Forest Mushroom Chicken, trio of mushrooms, shallots, thyme and marsala, Roasted Fingerling Potatoes</option>
+                                <option value="Spinach and Cheese Ravioli (V)">Spinach and Cheese Ravioli, Roasted Red Pepper Pesto Garnished with Grilled Vegetable (V)</option>
                                 <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
                               </select>
                               
