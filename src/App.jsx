@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Heart, X, Menu } from 'lucide-react';
+import { X, Menu } from 'lucide-react';
 
 // --- CUSTOM COMPONENTS ---
 import WeddingCrossword from './WeddingCrossword';
@@ -13,6 +13,7 @@ import LocationCard from './components/LocationCard';
 import RenderStory from './RenderStory.jsx';
 import RenderParty from './RenderParty.jsx';
 import CurtainLogin from './CurtainLogin.jsx';
+import FallingHearts from './FallingHearts.jsx';
 
 // --- MAIN SITE COMPONENT ---
 const WeddingSite = () => {
@@ -147,6 +148,7 @@ const WeddingSite = () => {
 
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden relative">
+      <FallingHearts />
       <style>{`
         .curtain-texture {
           background-color: #5b3a6e;
@@ -208,7 +210,7 @@ const WeddingSite = () => {
           {renderContent()}
 
           <footer className="py-20 text-center text-slate-300 text-[10px] tracking-[0.6em] uppercase font-sans">
-            #TheDanLorraineUnion
+            <p>© 2026 Lorraine Goveas & Daniel Ocampo</p>
           </footer>
         </div>
       )}
