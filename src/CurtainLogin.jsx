@@ -3,7 +3,7 @@ import { Loader, Heart } from 'lucide-react';
 import SHA256 from 'crypto-js/sha256';
 
 // REPLACE THIS WITH YOUR UPLOADED FILE PATH
-import WeddingArchBg from './components/images/floral/currtain.jpg'; 
+import WeddingArchBg from './components/images/Floral/curtain.jpg'; 
 
 const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
   const [input, setInput] = useState("");
