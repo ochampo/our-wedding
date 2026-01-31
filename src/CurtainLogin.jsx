@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Heart, Loader } from 'lucide-react';
 import SHA256 from 'crypto-js/sha256';
-
+import Flower from "./components/images/Floral/Moraea_polystachya_flowers.png";
 const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   // Your local floral image path
-  const FLORAL_PATH = "/src/components/images/Floral/Moraea_polystachya_flowers.png";
+  const FLORAL_PATH = Flower;
 
   useEffect(() => {
     if (isOpen) setIsFadingOut(true);
