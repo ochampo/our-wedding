@@ -305,10 +305,19 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                                 defaultValue=""
                               >
                                 <option value="" disabled>Select Entrée...</option>
-                                <option value="Filet Mignon">Filet Mignon</option>
-                                <option value="Forest Mushroom Chicken">Forest Mushroom Chicken</option>
-                                <option value="Spinach and Cheese Ravioli (V)">Spinach and Cheese Ravioli (V)</option>
-                                <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
+                                {member.smallMeal ? (
+                                  <>
+                                    <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
+                                    <option value="No Meal">No Meal</option>
+                                  </>
+                                ) : (
+                                  <>
+                                    <option value="Filet Mignon">Filet Mignon</option>
+                                    <option value="Forest Mushroom Chicken">Forest Mushroom Chicken</option>
+                                    <option value="Spinach and Cheese Ravioli (V)">Spinach and Cheese Ravioli (V)</option>
+                                    <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
+                                  </>
+                                )}
                               </select>
 
                               <input
