@@ -3,7 +3,7 @@ import { Loader, Heart, Eye, EyeOff } from 'lucide-react';
 import SHA256 from 'crypto-js/sha256';
 
 // Your specific image path
-import WeddingArchBg from './components/images/Floral/curtain3.png';
+import WeddingArchBg from './components/images/Floral/curtain4.png';
 
 const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
   const [input, setInput] = useState("");
@@ -52,22 +52,22 @@ const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
       <div className={`fixed inset-0 z-[100] overflow-hidden flex items-center justify-center bg-transparent transition-all duration-1000 ${isOpen ? 'pointer-events-none' : ''}`}>
 
         {/* === LEFT CURTAIN PANEL === */}
-        <div className={`absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden z-20 ${curtainTransition} ${isOpen ? '-translate-x-full' : 'translate-x-0'}`}>
+        <div className={`curtain-left absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden z-20 ${curtainTransition} ${isOpen ? '-translate-x-full' : 'translate-x-0'}`}>
           <img
             src={WeddingArchBg}
             alt="Left Curtain"
-            className="absolute top-0 left-0 h-full w-[200%] max-w-none object-cover object-top"
+            className="curtain-image absolute top-0 left-0 h-full w-[200%] max-w-none object-cover object-top"
             draggable="false"
           />
           <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black/10 to-transparent pointer-events-none" />
         </div>
 
         {/* === RIGHT CURTAIN PANEL === */}
-        <div className={`absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden z-20 ${curtainTransition} ${isOpen ? 'translate-x-full' : 'translate-x-0'}`}>
+        <div className={`curtain-right absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden z-20 ${curtainTransition} ${isOpen ? 'translate-x-full' : 'translate-x-0'}`}>
           <img
             src={WeddingArchBg}
             alt="Right Curtain"
-            className="absolute top-0 left-[-100%] h-full w-[200%] max-w-none object-cover object-top"
+            className="curtain-image absolute top-0 left-[-100%] h-full w-[200%] max-w-none object-cover object-top"
             draggable="false"
           />
           <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black/10 to-transparent pointer-events-none" />
