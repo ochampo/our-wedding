@@ -14,7 +14,7 @@ describe('RSVP Verification Test', () => {
   test('should write data and verify it exists', async () => {
     
     const uniqueBatchId = `Test-${Date.now()}`;
-    const numberOfRequests = 20; // Increased load
+    const numberOfRequests = 50; // Increased load
     const requestPromises = [];
     const expectedNames = [];
 
@@ -60,13 +60,13 @@ describe('RSVP Verification Test', () => {
     await Promise.all(requestPromises);
     log(`PHASE 1 COMPLETE: All requests fired.`);
 
-    // --- PHASE 2: WAITING ---
-    log(`PHASE 2 START: Entering 20s waiting room...`);
-    // We break this into chunks so you can see it's alive
-    for(let i=1; i<=20; i++) {
-        await new Promise(r => setTimeout(r, 1000));
-        if(i % 5 === 0) log(`... waited ${i} seconds ...`);
-    }
+   // --- PHASE 2: WAITING ---
+  const waitSeconds = 60; // Increased from 20 to 60
+  log(`PHASE 2 START: Entering ${waitSeconds}s waiting room...`);
+  for(let i = 1; i <= waitSeconds; i++) {
+    await new Promise(r => setTimeout(r, 1000));
+    if(i % 5 === 0) log(`... waited ${i} seconds ...`);
+  }
     log(`PHASE 2 COMPLETE: Wait finished.`);
 
     // --- PHASE 3: VERIFYING ---
@@ -96,5 +96,5 @@ describe('RSVP Verification Test', () => {
         throw new Error(`Only found ${successCount} names.`);
     }
 
-  }, 120000); // 120s Timeout
+  }, 1200000); // 120s Timeout
 });

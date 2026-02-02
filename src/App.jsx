@@ -83,43 +83,44 @@ const WeddingSite = () => {
   // --- RENDER FUNCTIONS ---
   const renderHome = () => (
     <main className="animate-in fade-in duration-1000">
-      <header className="h-screen w-full relative flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    
+      <header className="h-screen w-full relative flex flex-col items-center justify-between py-16 text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
-           <img src="./CoverPhoto.jpg" alt="Lorraine and Daniel" className="w-full h-full object-cover" />
-           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"></div>
-           <div className="absolute inset-0 bg-black/20"></div>
+        <img src="./CoverPhoto.jpg" alt="Lorraine and Daniel" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
         </div>
-
-        <div className="relative z-10 text-white space-y-8 mt-10">
-          <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-300">
-            <p className="tracking-[0.4em] uppercase text-[10px] md:text-xs font-sans font-medium text-white/80 mb-4">
-              We're getting married
-            </p>
-            <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
-              Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
-            </h1>
-          </div>
-
-          <div className="h-px w-16 bg-white/40 mx-auto" />
-
-          <p className="text-xl md:text-2xl font-light italic tracking-wide text-white/90 drop-shadow-md animate-in slide-in-from-bottom-4 duration-1000 delay-500">
-            July 3, 2026 • Fremont, California
+     {/* 1. TOP SECTION: "We're getting married" moved away from the center */}
+       <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
+          <p className="tracking-[0.5em] uppercase text-[10px] md:text-xs font-sans font-semibold text-white/90">
+          We're getting married
           </p>
-
-          <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
-            {[{l:'Days',v:timeLeft.days},{l:'Hrs',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
-              <div key={i} className="text-center">
-                <span className="block text-2xl md:text-4xl font-serif italic font-light drop-shadow-md">{t.v}</span>
-                <span className="block text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.l}</span>
-              </div>
-            ))}
-          </div>
         </div>
-
-        <div className="absolute bottom-10 left-0 right-0 text-center animate-bounce text-white/50">
-          <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
+     {/* 2. BOTTOM SECTION: Names and Countdown pushed lower */}
+     <div className="relative z-10 text-white space-y-6 mb-12">
+       <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
+       <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+         Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
+       </h1>
+      
+        <div className="h-px w-16 bg-white/40 mx-auto my-6" />
+        <p className="text-xl md:text-2xl font-light italic tracking-wide text-white/90 drop-shadow-md">
+        July 3, 2026 • Fremont, California
+        </p>
         </div>
-      </header>
+      <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-4 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+      {[{l:'Days',v:timeLeft.days},{l:'Hrs',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
+        <div key={i} className="text-center">
+          <span className="block text-2xl md:text-4xl font-serif italic font-light">{t.v}</span>
+          <span className="block text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.l}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+  {/* Scroll Indicator */}
+  <div className="absolute bottom-6 left-0 right-0 text-center animate-bounce text-white/50">
+    <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
+  </div>
+</header>
 
       <section className="py-24 bg-white px-6">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 text-center">
