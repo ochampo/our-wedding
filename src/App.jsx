@@ -83,52 +83,87 @@ const WeddingSite = () => {
   // --- RENDER FUNCTIONS ---
   const renderHome = () => (
     <main className="animate-in fade-in duration-1000">
-    
+      
+      {/* 1. HERO SECTION (Unchanged) */}
       <header className="h-screen w-full relative flex flex-col items-center justify-between py-16 text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
-        <img src="./CoverPhoto.jpg" alt="Lorraine and Daniel" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
+          <img src="./CoverPhoto.jpg" alt="Lorraine and Daniel" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
         </div>
-     {/* 1. TOP SECTION: "We're getting married" moved away from the center */}
-       <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
+        
+        <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
           <p className="tracking-[0.5em] uppercase text-[10px] md:text-xs font-sans font-semibold text-white/90">
-          We're getting married
+            We're getting married
           </p>
         </div>
-     {/* 2. BOTTOM SECTION: Names and Countdown pushed lower */}
-     <div className="relative z-10 text-white space-y-6 mb-12">
-       <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
-       <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
-         Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
-       </h1>
-      
-        <div className="h-px w-16 bg-white/40 mx-auto my-6" />
-        <p className="text-xl md:text-2xl font-light italic tracking-wide text-white/90 drop-shadow-md">
-        July 3, 2026 • Fremont, California
-        </p>
-        </div>
-      <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-4 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
-      {[{l:'Days',v:timeLeft.days},{l:'Hrs',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
-        <div key={i} className="text-center">
-          <span className="block text-2xl md:text-4xl font-serif italic font-light">{t.v}</span>
-          <span className="block text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.l}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-  {/* Scroll Indicator */}
-  <div className="absolute bottom-6 left-0 right-0 text-center animate-bounce text-white/50">
-    <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
-  </div>
-</header>
 
+        <div className="relative z-10 text-white space-y-6 mb-12">
+          <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
+            <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+              Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
+            </h1>
+            <div className="h-px w-16 bg-white/40 mx-auto my-6" />
+            <p className="text-xl xl:text-2xl font-light italic tracking-wide text-white/90 drop-shadow-md">
+              July 3, 2026
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-4 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+            {[{l:'Days',v:timeLeft.days},{l:'Hrs',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
+              <div key={i} className="text-center">
+                <span className="block text-2xl md:text-4xl font-serif italic font-light">{t.v}</span>
+                <span className="block text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute bottom-6 left-0 right-0 text-center animate-bounce text-white/50">
+          <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
+        </div>
+      </header>
+
+      {/* 2. LOCATIONS SECTION (Priority #1) */}
+      {/* Kept White for high contrast and importance */}
       <section className="py-24 bg-white px-6">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 text-center">
-          {LOCATIONS.map(loc => (
-            <LocationCard key={loc.id} data={loc} />
-          ))}
+        <div className="max-w-5xl mx-auto">
+           <h2 className="text-3xl font-light italic text-purple-900 text-center mb-12">
+            The Venues
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
+            {LOCATIONS.map(loc => (
+              <LocationCard key={loc.id} data={loc} />
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* 3. OUR STORY SECTION */}
+      {/* Changed to Gray/Slate background for visual separation */}
+      <section className="py-24 bg-slate-50 border-y border-purple-50 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-light italic text-purple-900 mb-6">
+            Our Story
+          </h2>
+          <div className="h-px w-12 bg-purple-200 mx-auto mb-12" />
+          <RenderStory />
+        </div>
+      </section>
+
+      {/* 4. GAMES SECTION */}
+      {/* Back to White background */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-serif italic text-purple-900 mb-4">
+            How Well Do You Know Us?
+          </h2>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-12">
+            Take the Wedding Crossword Challenge
+          </p>
+          <WeddingCrossword /> 
+        </div>
+      </section>
+
     </main>
   );
 
@@ -136,13 +171,9 @@ const WeddingSite = () => {
     switch(currentPage) {
       case 'HOME': return renderHome();
       case 'RSVP': return <RenderRSVP allGuests={allGuests} rsvpMap={rsvpMap} googleScriptUrl={GOOGLE_URL} />;
-      case 'STORY': return <RenderStory />;
       case 'TRAVEL': return <RenderTravel />;
-      case 'GALLERY': return <RenderGallery />;
       case 'GIFT': return <RenderGift />;
       case 'QA': return <QA />;
-      case 'GAMES': return <WeddingCrossword />;
-      case 'PARTY': return <RenderParty />;
       default: return renderHome();
     }
   };
@@ -173,9 +204,9 @@ const WeddingSite = () => {
               <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-purple-300">
                 <X size={32}/>
               </button>
-              {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES', 'PARTY'].map((tab) => (
+              {['HOME','TRAVEL', 'GIFT', 'QA','RSVP'].map((tab) => (
                 <button key={tab} onClick={() => navigateTo(tab)} className="text-3xl text-purple-900 italic hover:text-purple-400">
-                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab === 'PARTY' ? 'WEDDING PARTY' : tab.charAt(0) + tab.slice(1).toUpperCase()}
+                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'PARTY' ? 'WEDDING PARTY' : tab.charAt(0) + tab.slice(1).toUpperCase()}
                 </button>
               ))}
             </div>
@@ -193,13 +224,13 @@ const WeddingSite = () => {
               </div>
 
               <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
-                {['HOME', 'RSVP', 'STORY', 'TRAVEL', 'GALLERY', 'GIFT', 'QA', 'GAMES', 'PARTY'].map((tab) => (
+                {['HOME', 'TRAVEL','QA','GIFT', 'RSVP'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => navigateTo(tab)}
                     className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1" : "hover:text-purple-400"}
                   >
-                    {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'GAMES' ? 'GAMES' : tab === 'PARTY' ? 'WEDDING PARTY' : tab.charAt(0) + tab.slice(1).toUpperCase()}
+                    {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab.charAt(0) + tab.slice(1).toUpperCase()}
                   </button>
                 ))}
               </div>
