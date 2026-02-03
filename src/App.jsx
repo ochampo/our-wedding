@@ -231,17 +231,35 @@ const WeddingSite = () => {
 
           {/* MAIN NAVIGATION BAR */}
           <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
+            <div className="max-w-6xl mx-auto flex justify-between items-center relative">
               
-              {/* 1. LEFT SIDE: Logo (Clickable -> HOME) */}
+              {/* 1. LEFT SIDE */}
+              <div className="flex items-center">
+                {/* Mobile: Hamburger Menu (Left) */}
+                <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400 p-1">
+                  <Menu size={24}/>
+                </button>
+
+                {/* Desktop: Logo (Left) */}
+                <button 
+                  onClick={() => navigateTo('HOME')} 
+                  className="hidden md:block text-purple-900 italic text-2xl hover:opacity-70 transition-opacity"
+                >
+                  L & D
+                </button>
+              </div>
+
+              {/* 2. CENTER (Absolute Positioned) */}
+              
+              {/* Mobile: Logo (Centered) */}
               <button 
                 onClick={() => navigateTo('HOME')} 
-                className="text-purple-900 italic text-xl md:text-2xl hover:opacity-70 transition-opacity"
+                className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-purple-900 italic text-xl"
               >
                 L & D
               </button>
 
-              {/* 2. CENTER: Navigation Links (Desktop Only) */}
+              {/* Desktop: Navigation Links (Centered) */}
               <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400 absolute left-1/2 -translate-x-1/2">
                 {['HOME', 'TRAVEL', 'QA', 'GIFT'].map((tab) => (
                   <button
@@ -254,18 +272,13 @@ const WeddingSite = () => {
                 ))}
               </div>
 
-              {/* 3. RIGHT SIDE: RSVP Button & Mobile Menu */}
-              <div className="flex items-center gap-4">
+              {/* 3. RIGHT SIDE: RSVP Button */}
+              <div>
                 <button 
                   onClick={() => navigateTo('RSVP')} 
                   className="bg-purple-900 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
                 >
                   RSVP
-                </button>
-                
-                {/* Mobile Menu Icon */}
-                <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400">
-                  <Menu size={24}/>
                 </button>
               </div>
 
