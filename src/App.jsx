@@ -89,24 +89,39 @@ const WeddingSite = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
         </div>
         
+        {/* Top Label */}
         <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
           <p className="tracking-[0.5em] uppercase text-[10px] md:text-xs font-sans font-semibold text-white/90">
             We're getting married
           </p>
         </div>
 
-        <div className="relative z-10 text-white space-y-6 mb-12">
+        {/* Center Content: Names & BIG DATE */}
+        <div className="relative z-10 text-white space-y-8 mb-12">
           <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
             <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
               Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
             </h1>
-            <div className="h-px w-16 bg-white/40 mx-auto my-6" />
-            <p className="text-xl xl:text-2xl font-light italic tracking-wide text-white/90 drop-shadow-md">
-              July 3, 2026
-            </p>
+            
+            <div className="h-px w-24 bg-white/60 mx-auto my-8" />
+            
+            {/* UPDATED: Bigger Date & Clearer Time */}
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-4xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
+                July 3, 2026
+              </p>
+              <div className="flex items-center gap-3 text-white/90">
+                <div className="h-px w-8 bg-white/60" />
+                <p className="text-sm md:text-lg uppercase tracking-[0.2em] font-sans font-bold">
+                  Ceremony Starts at 2:00 PM
+                </p>
+                <div className="h-px w-8 bg-white/60" />
+              </div>
+            </div>
           </div>
           
-          <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-4 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+          {/* Countdown */}
+          <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
             {[{l:'Days',v:timeLeft.days},{l:'Hrs',v:timeLeft.hours},{l:'Mins',v:timeLeft.minutes},{l:'Secs',v:timeLeft.seconds}].map((t,i)=>(
               <div key={i} className="text-center">
                 <span className="block text-2xl md:text-4xl font-serif italic font-light">{t.v}</span>
@@ -121,12 +136,18 @@ const WeddingSite = () => {
         </div>
       </header>
 
-      {/* 2. LOCATIONS SECTION */}
+      {/* 2. LOCATIONS & TIMELINE SECTION */}
       <section className="py-24 bg-white px-6">
         <div className="max-w-5xl mx-auto">
-           <h2 className="text-3xl font-light italic text-purple-900 text-center mb-12">
-            The Venues
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-light italic text-purple-900 mb-4">
+              The Wedding Itinerary
+            </h2>
+            <p className="text-slate-500 text-sm tracking-wide">
+              Please join us for the Ceremony followed by the Reception
+            </p>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
             {LOCATIONS.map(loc => (
               <LocationCard key={loc.id} data={loc} />
