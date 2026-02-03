@@ -5,13 +5,11 @@ import { X, Menu } from 'lucide-react';
 import WeddingCrossword from './WeddingCrossword';
 import QA from './QA.jsx';
 import RenderGift from './RenderGift.jsx';
-import RenderGallery from './RenderGallery.jsx';
 import RenderTravel from './RenderTravel.jsx';
 import RenderRSVP from './RenderRSVP.jsx';
 import { LOCATIONS } from './data/WeddingData';
 import LocationCard from './components/LocationCard';
 import RenderStory from './RenderStory.jsx';
-import RenderParty from './RenderParty.jsx';
 import CurtainLogin from './CurtainLogin.jsx';
 import FallingHearts from './FallingHearts.jsx';
 
@@ -84,7 +82,7 @@ const WeddingSite = () => {
   const renderHome = () => (
     <main className="animate-in fade-in duration-1000">
       
-      {/* 1. HERO SECTION (Unchanged) */}
+      {/* 1. HERO SECTION */}
       <header className="h-screen w-full relative flex flex-col items-center justify-between py-16 text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="./CoverPhoto.jpg" alt="Lorraine and Daniel" className="w-full h-full object-cover" />
@@ -123,8 +121,7 @@ const WeddingSite = () => {
         </div>
       </header>
 
-      {/* 2. LOCATIONS SECTION (Priority #1) */}
-      {/* Kept White for high contrast and importance */}
+      {/* 2. LOCATIONS SECTION */}
       <section className="py-24 bg-white px-6">
         <div className="max-w-5xl mx-auto">
            <h2 className="text-3xl font-light italic text-purple-900 text-center mb-12">
@@ -139,7 +136,6 @@ const WeddingSite = () => {
       </section>
 
       {/* 3. OUR STORY SECTION */}
-      {/* Changed to Gray/Slate background for visual separation */}
       <section className="py-24 bg-slate-50 border-y border-purple-50 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-light italic text-purple-900 mb-6">
@@ -151,7 +147,6 @@ const WeddingSite = () => {
       </section>
 
       {/* 4. GAMES SECTION */}
-      {/* Back to White background */}
       <section className="py-24 bg-white px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-serif italic text-purple-900 mb-4">
@@ -199,43 +194,60 @@ const WeddingSite = () => {
         <div className="animate-in fade-in duration-1000">
           <div className="h-3 bg-purple-200 opacity-40" />
 
+          {/* MOBILE OVERLAY MENU */}
           {isMenuOpen && (
             <div className="fixed inset-0 z-[100] bg-white animate-in slide-in-from-top-full duration-300 flex flex-col items-center justify-center space-y-8">
               <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-purple-300">
                 <X size={32}/>
               </button>
-              {['HOME','TRAVEL', 'GIFT', 'QA','RSVP'].map((tab) => (
+              {['HOME', 'TRAVEL', 'GIFT', 'QA'].map((tab) => (
                 <button key={tab} onClick={() => navigateTo(tab)} className="text-3xl text-purple-900 italic hover:text-purple-400">
-                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab === 'PARTY' ? 'WEDDING PARTY' : tab.charAt(0) + tab.slice(1).toUpperCase()}
+                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab}
                 </button>
               ))}
             </div>
           )}
 
+          {/* MAIN NAVIGATION BAR */}
           <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
-            <div className="max-w-5xl mx-auto flex justify-between items-center">
-              <div className="flex items-center gap-4">
-                <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400">
-                  <Menu size={24}/>
-                </button>
-                <button onClick={() => navigateTo('RSVP')} className="md:hidden bg-purple-900 text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md">
-                  RSVP
-                </button>
-              </div>
+            <div className="max-w-6xl mx-auto flex justify-between items-center">
+              
+              {/* 1. LEFT SIDE: Logo (Clickable -> HOME) */}
+              <button 
+                onClick={() => navigateTo('HOME')} 
+                className="text-purple-900 italic text-xl md:text-2xl hover:opacity-70 transition-opacity"
+              >
+                L & D
+              </button>
 
-              <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400">
-                {['HOME', 'TRAVEL','QA','GIFT', 'RSVP'].map((tab) => (
+              {/* 2. CENTER: Navigation Links (Desktop Only) */}
+              <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400 absolute left-1/2 -translate-x-1/2">
+                {['HOME', 'TRAVEL', 'QA', 'GIFT'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => navigateTo(tab)}
                     className={currentPage === tab ? "text-purple-600 border-b border-purple-600 pb-1" : "hover:text-purple-400"}
                   >
-                    {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab.charAt(0) + tab.slice(1).toUpperCase()}
+                    {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab}
                   </button>
                 ))}
               </div>
 
-              <span className="text-purple-900 italic text-xl">L & D</span>
+              {/* 3. RIGHT SIDE: RSVP Button & Mobile Menu */}
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => navigateTo('RSVP')} 
+                  className="bg-purple-900 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
+                >
+                  RSVP
+                </button>
+                
+                {/* Mobile Menu Icon */}
+                <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400">
+                  <Menu size={24}/>
+                </button>
+              </div>
+
             </div>
           </nav>
 
