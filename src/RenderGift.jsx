@@ -6,10 +6,9 @@ import {
 const renderGift = () => (
     <main className="max-w-4xl mx-auto px-6 py-24 animate-in fade-in duration-700">
       <Gift className="mx-auto text-purple-200 mb-6" size={40} />
-      <h2 className="text-5xl text-center text-blue-300 mb-12 font-light italic">Venmo</h2>   
+      <h2 className="text-5xl text-center text-purple-900 mb-12 font-light italic">Gift</h2>   
       <p className="text-center text-slate-600 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-        Your presence is the greatest gift. If you wish to honor us with a gift, 
-        we have set up honeymoon funds for both of us.
+        Your presence at our wedding is the greatest gift of all! If you would like to give something more, we kindly prefer a monetary gift to help us start our next chapter together. Thank you so much for your generosity and love.
       </p>
       
       <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">

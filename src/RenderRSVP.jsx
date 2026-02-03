@@ -165,6 +165,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
         <div className="text-center mb-12">
             <Heart className="mx-auto text-purple-300 mb-6" size={40} />
             <h2 className="text-6xl text-purple-900 font-serif italic">RSVP</h2>
+            <p className="mt-6 text-purple-500">Kindly RSVP by April 10th</p>
         </div>
 
         {/* --- VIEW 1: SEARCH --- */}
