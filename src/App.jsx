@@ -152,9 +152,6 @@ const WeddingSite = () => {
       {/* 3. OUR STORY SECTION */}
       <section className="py-24 bg-slate-50 border-y border-purple-50 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-light italic text-purple-900 mb-6">
-            Our Story
-          </h2>
           <div className="h-px w-12 bg-purple-200 mx-auto mb-12" />
           <RenderStory />
         </div>

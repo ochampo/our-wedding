@@ -1,5 +1,5 @@
 // src/weddingData.js
-import { Calendar, Component, GlassWater } from 'lucide-react'; // Import your icons here!
+import { Gem, PartyPopper } from 'lucide-react'; // Import your icons here!
 import HolySpiritChurch from "../components/images/holyspirit.jpeg"; // Import the image
 import Bridges from "../components/images/theBridges.jpg"; // Import the image
 export const LOCATIONS = [
@@ -11,7 +11,7 @@ export const LOCATIONS = [
     name: "Holy Spirit Church",
     address: "41139 Fremont Blvd, Fremont, CA",
     mapLink: "https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA",
-    icon: Calendar, // This reference works because we imported Calendar above
+    icon: Gem, // This reference works because we imported Calendar above
     image: HolySpiritChurch
   },
   {
@@ -22,7 +22,7 @@ export const LOCATIONS = [
     name: "The Bridges Golf Club",
     address: "9000 S Gale Ridge Rd, San Ramon",
     mapLink: "https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon",
-    icon: GlassWater, 
+    icon: PartyPopper, 
     image: Bridges
   }
 ];
