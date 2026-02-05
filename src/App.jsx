@@ -110,13 +110,6 @@ const WeddingSite = () => {
               <p className="text-4xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
                 July 3, 2026
               </p>
-              <div className="flex items-center gap-3 text-white/90">
-                <div className="h-px w-8 bg-white/60" />
-                <p className="text-sm md:text-lg uppercase tracking-[0.2em] font-sans font-bold">
-                  Ceremony Starts at 2:00 PM
-                </p>
-                <div className="h-px w-8 bg-white/60" />
-              </div>
             </div>
           </div>
           

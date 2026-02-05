@@ -32,7 +32,7 @@ const LocationCard = ({ data, extraClass = "" }) => {
         </h3>
         
         {data.time && (
-          <p className="text-slate-200 font-sans text-[10px] tracking-widest uppercase font-bold mb-4">
+          <p className="text-slate-200 font-sans text-[20px] tracking-widest uppercase font-bold mb-4">
             {data.time}
           </p>
         )}
