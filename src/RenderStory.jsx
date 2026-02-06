@@ -9,48 +9,23 @@ const RenderStory = () => (
       {/* Chapter 1 */}
       <div className="relative pl-8 border-l-2 border-purple-100">
         <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
-        <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">From Bumble to Lake Elizabeth</h3>
+        <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">From Bumble to Budapest</h3>
         <p className="mb-4">
-          We first connected on Bumble, eager to see if the spark was real. We met for dinner at <b>SALATHAI</b>, and almost immediately, the chemistry was undeniable. Not ready to say goodbye after the meal, we decided to take a walk around Lake Elizabeth.
-        </p>
+            Our story started the way a lot of modern love stories do: with a swipe on Bumble. What we didn’t know then was that one match would turn into forever.        </p>
         <p>
-          As we walked and talked, a simple introduction turned into the realization that we had found something rare. It was an evening we didn't want to end, and looking back, it was the moment we both realized we were the perfect match.
-        </p>
+          Our first date was at Sala Thai, and it didn’t take long to realize there was something special there. One date quickly turned into many—Latin dancing, hiking, axe throwing, trying new restaurants, and finding excuses to spend more time together. 
+          As time went on, we started collecting memories far beyond our city. We traveled together to Hawaii and Carmel, crossed continents to explore Prague, Vienna, and Budapest, and made many trips to Southern California to spend time with Dan's family. A few months into their relationship Dan ended up moving from San Jose to Fremont to be closer to Lorraine.</p>
       </div>
 
-      {/* Chapter 2 */}
-      <div className="relative pl-8 border-l-2 border-purple-100">
-        <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
-        <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">Two Worlds, One Heart</h3>
-        <p className="mb-4">
-          Merging Dan’s Mexican heritage with Lorraine’s Goan roots meant a lot of incredible food, rich traditions, and a shared love for family. Whether we are sharing spicy <b>TACOS</b> or savory curries, we discovered that our values are exactly the same.
-        </p>
-        <p>
-          With Dan being a determined <b>ARIES</b> and Lorraine bringing the balance, we fit together perfectly. Both families embraced the other with open arms from day one, making us feel like part of the extended family instantly.
-        </p>
-      </div>
-
-      {/* Chapter 3 */}
-      <div className="relative pl-8 border-l-2 border-purple-100">
-        <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
-        <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">Travels & Treats</h3>
-        <p className="mb-4">
-          From the beaches of Mexico to the historic <b>BRIDGES</b> of Budapest, our travels have been filled with adventure, discovery, and pastries. We have hunted for the best <b>COOKIES</b> across the globe, and each trip has strengthened our bond.
-        </p>
-        <p>
-          We knew we were meant to be together after our first trip to Hawaii; that is where Dan figured out that Lorraine had a huge sweet tooth for <b>DONUTS</b>. These experiences have not only enriched our lives but have also deepened our love for each other.
-        </p>
-      </div>
+    
 
       {/* Chapter 4 */}
       <div className="relative pl-8 border-l-2 border-purple-100">
         <span className="absolute -left-2.5 top-0 w-5 h-5 bg-purple-100 rounded-full border-4 border-white" />
         <h3 className="text-purple-900 font-bold mb-2 uppercase text-xs tracking-widest font-sans">The Proposal</h3>
         <p className="mb-4">
-          On a beautiful day in <b>JULY</b>, Dan planned a special surprise in <b>FREMONT</b>. He set the stage right in Lorraine's parents' <b>BACKYARD</b>. As we waited for Lorraine to arrive, Dan nervously got down on one knee.
-        </p>
-        <p>
-          Overwhelmed with joy, she said yes! It was a moment filled with love, laughter, and the promise of a lifetime together. We celebrated with a romantic picnic, savoring the beginning of our new chapter as fiancés.
+          While Lorraine was away celebrating her friend Crystal's bachelorette weekend, Dan was busy planning a surprise. He built a rose-covered arch in Lorraine's parents backyard and put together every detail while she was gone. The next day, while working from home, Lorraine decided to eat lunch in the backyard, only to be stopped by everyone before she could look around the corner.
+         After one of Lorraine's work meetings ended, she stepped out of her room and saw a trail of roses and lights leading into the backyard. At the end of the path, Dan was standing under the rose arch. He dropped down on one knee and popped the question and of course, she said yes.
         </p>
       </div>
 
