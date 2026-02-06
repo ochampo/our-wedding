@@ -7,7 +7,7 @@ const renderQA = () => (
       <h2 className="text-3xl md:text-4xl text-center text-purple-900 mb-8 font-medium tracking-tight">Q & A</h2>
       <div className="space-y-6">
         {[
-          { q: "What is the dress code?", a: "We'd love to see our family and friends get dressed up for our big day. The dress code is Semi-Formal or Cocktail attire. Please avoid wearing white, ivory and purple" },
+          { q: "What is the dress code?", a: "We'd love to see our family and friends get dressed up for our big day. The dress code is Semi-Formal or Cocktail attire. Please avoid wearing  purple, white and ivory." },
           { q: "Can I bring a plus one?", a: "As much as we’d love to celebrate with everyone, we’re only able to accommodate those listed on your invitation. Thank you for understanding and for being part of our special day!" },
           {q: "Are kids welcome?", a: "We love your little ones and have chosen to include the children of close family and friends. However, due to limited capacity, we kindly ask that only those listed on the invitation attend. We appreciate your understanding and can’t wait to celebrate together!"},
           { q: "Is there parking available?", a: "Yes, both the church and the reception venue have ample free parking available for all guests." },

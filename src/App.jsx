@@ -91,7 +91,7 @@ const WeddingSite = () => {
         
         {/* Top Label */}
         <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
-          <p className="tracking-[0.5em] uppercase text-[10px] md:text-xs font-sans font-semibold text-white/90">
+          <p className="tracking-[0.5em] uppercase text-[10px] md:text-base font-sans font-semibold text-white/90">
             We're getting married
           </p>
         </div>
@@ -103,7 +103,6 @@ const WeddingSite = () => {
               Lorraine <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> Daniel
             </h1>
             
-            <div className="h-px w-24 bg-white/60 mx-auto my-8" />
             
             {/* UPDATED: Bigger Date & Clearer Time */}
             <div className="flex flex-col items-center gap-3">
@@ -137,7 +136,7 @@ const WeddingSite = () => {
               The Wedding Itinerary
             </h2>
             <p className="text-slate-500 text-sm tracking-wide">
-              Please join us for the Ceremony followed by the Reception
+              Please join us for the ceremony followed by the reception.
             </p>
           </div>
 
@@ -150,9 +149,8 @@ const WeddingSite = () => {
       </section>
 
       {/* 3. OUR STORY SECTION */}
-      <section className="py-24 bg-slate-50 border-y border-purple-50 px-6">
+      <section className="py-18 bg-slate-50 border-y border-purple-50 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="h-px w-12 bg-purple-200 mx-auto mb-12" />
           <RenderStory />
         </div>
       </section>
