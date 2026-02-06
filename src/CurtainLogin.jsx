@@ -99,7 +99,7 @@ const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
                     w-full rounded-sm p-3 pr-10 text-center text-gray-800 outline-none text-xs tracking-[0.3em] font-sans transition-all shadow-inner uppercase
                     ${error
                       ? 'bg-red-50 border-2 border-red-500 placeholder:text-red-400 shake-animation'
-                      : 'bg-white/70 border border-white/50 placeholder:text-gray-500 focus:bg-white focus:border-pink-300'
+                      : 'bg-white/70 border border-white/50 placeholder:text-gray-500 focus:bg-white focus:border-purple-300'
                     }
                   `}
                 />

@@ -41,7 +41,7 @@ const LocationCard = ({ data, extraClass = "" }) => {
         
         <div className="flex items-center justify-center gap-1 mt-4 text-slate-200 text-sm group-hover:text-purple-300">
           <MapPin size={14} />
-          <span className="underline decoration-purple-200 underline-offset-4 group-hover:decoration-purple-400">
+          <span className="underline decoration-purple-200 text-base underline-offset-4 group-hover:decoration-purple-400">
             {data.address}
           </span>
         </div>

@@ -17,7 +17,7 @@ const renderQA = () => (
           {q: "Is there a cocktail hour?", a: "Yes! cocktail hour begins at 5:30pm followed by dinner and dancing at 6:30 pm"}
         ].map((item, i) => (
           <div key={i} className="bg-white p-8 rounded-2xl border border-purple-50 shadow-sm">
-            <h4 className="text-purple-900 font-bold mb-3 uppercase text-[10px] tracking-widest font-sans">{item.q}</h4>
+            <h4 className="text-purple-900 font-bold mb-3 uppercase text-[14px] tracking-widest font-sans">{item.q}</h4>
             <p className="text-slate-600 leading-relaxed">{item.a}</p>
           </div>
         ))}
