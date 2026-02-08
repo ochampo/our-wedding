@@ -7,7 +7,7 @@ export const LOCATIONS = [
     id: 'ceremony',
     type: 'ceremony',
     title: "The Ceremony",
-    time: "2:00 PM",
+    time: "2:00 PM - 3:00 PM",
     name: "Holy Spirit Church",
     address: "41139 Fremont Blvd, Fremont, CA",
     mapLink: "https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA",
