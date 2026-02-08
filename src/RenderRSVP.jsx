@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock } from 'lucide-react';
-
+import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock, Music } from 'lucide-react';
 const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   // --- STATE ---
   const [searchTerm, setSearchTerm] = useState("");
@@ -80,7 +79,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     e.preventDefault();
     setStatus("SENDING");
     const formData = new FormData(e.target);
-
+    const songRequest = formData.get('music');
     const responses = selectedPartyData
       .map((guest, index) => {
         if (!selectedGuests[index]) return null;
@@ -90,7 +89,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
           attendance: formData.get(`attendance-${index}`),
           food: formData.get(`attendance-${index}`) === 'no' ? 'N/A' : formData.get(`food-${index}`),
           dietary: formData.get(`dietary-${index}`) || "None",
-          music: formData.get('music') || "None",
+          music: formData.get(`music-${index}`) || "None",         
           date: new Date().toLocaleString()
         };
       })
@@ -220,6 +219,8 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                                      <div className="text-sm text-slate-600 pl-2 border-l-2 border-purple-200 mt-2">
                                           <p>Plate: {member.existingRSVP.food}</p>
                                           {member.existingRSVP.dietary && member.existingRSVP.dietary !== "None" && <p className="italic text-xs">Dietary: {member.existingRSVP.dietary}</p>}
+                                          {/* --- ADD THIS LINE --- */}
+                                          {member.existingRSVP.music && member.existingRSVP.music !== "None" && <p className="italic text-xs mt-1">🎵 {member.existingRSVP.music}</p>}
                                      </div>
                                  )}
                             </div>
@@ -326,13 +327,20 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                                 className="w-full py-2 mt-2 bg-transparent border-b border-purple-200 outline-none font-sans text-sm"
                                 placeholder="Dietary Restrictions?"
                               />
+                              <div className="relative mt-2">
+                                <Music className="absolute left-0 top-2 text-purple-200" size={16} />
+                                <input
+                                  name={`music-${idx}`}
+                                  className="w-full py-2 pl-6 bg-transparent border-b border-purple-200 outline-none font-sans text-sm placeholder:text-slate-400"
+                                  placeholder="Song Request?"
+                                />
+                              </div>
                           </div>
                       )}
                   </div>
                 </div>
               );
             })}
-
             <button type="submit" disabled={status === "SENDING"}  className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all">
               {status === "SENDING" ? "Submitting..." : "Confirm RSVP"}
             </button>
