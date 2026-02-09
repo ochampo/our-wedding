@@ -20,6 +20,7 @@ export const LOCATIONS = [
     title: "The Reception",
     time: "5:30 PM - 10:30 PM",
     name: "The Bridges Golf Club",
+    subName: "Garden Pavillion Room",
     address: "9000 S Gale Ridge Rd, San Ramon",
     mapLink: "https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon",
     icon: PartyPopper, 

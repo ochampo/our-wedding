@@ -38,6 +38,8 @@ const LocationCard = ({ data, extraClass = "" }) => {
         )}
         
         <p className="text-lg text-white font-serif">{data.name}</p>
+         <p className="text-base text-white font-serif">{data.subName}</p>
+
         
         <div className="flex items-center justify-center gap-1 mt-4 text-slate-200 text-sm group-hover:text-purple-300">
           <MapPin size={14} />
