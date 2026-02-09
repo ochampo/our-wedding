@@ -185,7 +185,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                 <div className="relative flex-1 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-purple-100">
                 <input
                     type="text"
-                    placeholder="Enter your full name..."
+                    placeholder="Enter name..."
                     value={searchTerm}
                     onChange={handleInputChange}
                     onKeyDown={(e) => e.key === 'Enter' && handleManualSearch()}
