@@ -182,12 +182,13 @@ const WeddingSite = () => {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
             {LOCATIONS.map(loc => {
               const { startDate, endDate } = parseTimeData(loc.time);
+              let title = loc.title.replace("The", "")
               return (
                 <div key={loc.id} className="flex flex-col items-center gap-6">
                   <LocationCard data={loc} />
                   <AddToCalendar
-                    title={`Wedding ${loc.title}: Lorraine & Daniel`}
-                    description={loc.type === 'ceremony' ? "Join us for the exchange of vows." : "Dinner, drinks, and dancing!"}
+                    title={` Lorraine & Daniel's Wedding ${title}`}
+                    description={loc.type === 'ceremony' ? "Join us for our nuptial mass." : "Dinner, drinks, and dancing!"}
                     location={loc.address}
                     startDate={startDate}
                     endDate={endDate}
