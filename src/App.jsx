@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { X, Menu } from 'lucide-react';
 
 // --- CUSTOM COMPONENTS ---
@@ -16,6 +17,9 @@ import AddToCalendar from './AddToCalendar.jsx';
 import { parseTimeData } from './utils/dateHelpers';
 
 const WeddingSite = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // --- AUTH & REVEAL STATE ---
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
@@ -25,15 +29,35 @@ const WeddingSite = () => {
   // --- CONTENT STATE ---
   const [allGuests, setAllGuests] = useState([]);
   const [rsvpMap, setRsvpMap] = useState({});
-  const [currentPage, setCurrentPage] = useState('HOME');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const GOOGLE_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
+  // Map routes to page names for nav highlighting
+  const getPageFromPath = (path) => {
+    switch (path) {
+      case '/': return 'HOME';
+      case '/rsvp': return 'RSVP';
+      case '/travel': return 'TRAVEL';
+      case '/gift': return 'GIFT';
+      case '/qa': return 'QA';
+      default: return 'HOME';
+    }
+  };
+
+  const currentPage = getPageFromPath(location.pathname);
+
   // --- NAVIGATION LOGIC ---
   const navigateTo = (page) => {
-    setCurrentPage(page);
+    const routes = {
+      'HOME': '/',
+      'RSVP': '/rsvp',
+      'TRAVEL': '/travel',
+      'GIFT': '/gift',
+      'QA': '/qa'
+    };
+    navigate(routes[page] || '/');
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
   };
@@ -90,10 +114,10 @@ const WeddingSite = () => {
       {/* 1. HERO SECTION */}
       <header className="h-screen w-full relative flex flex-col items-center justify-between py-16 text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="./CoverPhoto.jpg" 
-            alt="Lorraine and Daniel" 
-            className="w-full h-full object-cover" 
+          <img
+            src="./CoverPhoto.jpg"
+            alt="Lorraine and Daniel"
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
         </div>
@@ -107,8 +131,8 @@ const WeddingSite = () => {
         <div className="relative z-10 text-white space-y-8 mb-12">
           <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
             <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
-              Lorraine 
-              <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span> 
+              Lorraine
+              <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span>
               Daniel
             </h1>
             <div className="flex flex-col items-center gap-3 mt-4">
@@ -209,7 +233,7 @@ const WeddingSite = () => {
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden relative">
       <FallingHearts />
-      
+
       <style>{`
         .curtain-texture {
           background-color: #5b3a6e;
@@ -235,11 +259,11 @@ const WeddingSite = () => {
                 <X size={32} />
               </button>
               {['HOME', 'TRAVEL', 'GIFT', 'QA'].map((tab) => (
-                <button 
-                  key={tab} 
-                  onClick={() => navigateTo(tab)} 
+                <button
+                  key={tab}
+                  onClick={() => navigateTo(tab)}
                   className="text-3xl md:text-4xl text-center text-purple-900 mb-8 font-medium tracking-tight"
-                  
+
                 >
                   {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? ' Q&A' : tab}
                 </button>
@@ -250,14 +274,14 @@ const WeddingSite = () => {
           {/* MAIN NAVIGATION BAR */}
           <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
             <div className="max-w-6xl mx-auto flex justify-between items-center relative">
-              
+
               {/* LEFT SIDE: Mobile Menu / Desktop Logo */}
               <div className="flex items-center">
                 <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400 p-1">
                   <Menu size={24} />
                 </button>
-                <button 
-                  onClick={() => navigateTo('HOME')} 
+                <button
+                  onClick={() => navigateTo('HOME')}
                   className="hidden md:block text-purple-900 italic text-2xl hover:opacity-70 transition-opacity"
                 >
                   L & D
@@ -265,8 +289,8 @@ const WeddingSite = () => {
               </div>
 
               {/* CENTER: Mobile Logo / Desktop Links */}
-              <button 
-                onClick={() => navigateTo('HOME')} 
+              <button
+                onClick={() => navigateTo('HOME')}
                 className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-purple-900 italic text-xl"
               >
                 L & D
@@ -286,8 +310,8 @@ const WeddingSite = () => {
 
               {/* RIGHT SIDE: RSVP Button */}
               <div>
-                <button 
-                  onClick={() => navigateTo('RSVP')} 
+                <button
+                  onClick={() => navigateTo('RSVP')}
                   className="bg-purple-900 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
                 >
                   RSVP
