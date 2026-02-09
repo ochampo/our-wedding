@@ -238,9 +238,10 @@ const WeddingSite = () => {
                 <button 
                   key={tab} 
                   onClick={() => navigateTo(tab)} 
-                  className="text-3xl text-purple-900 font-sans font-bold hover:text-purple-400"
+                  className="text-3xl md:text-4xl text-center text-purple-900 mb-8 font-medium tracking-tight"
+                  
                 >
-                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab}
+                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? ' Q&A' : tab}
                 </button>
               ))}
             </div>
