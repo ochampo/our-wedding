@@ -130,9 +130,9 @@ const WeddingSite = () => {
 
         <div className="relative z-10 text-white space-y-8 mb-12">
           <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
-            <h1 className="text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+            <h1 className="px-4 text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
               Lorraine
-              <span className="font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span>
+              <span className="block sm:inline font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span>
               Daniel
             </h1>
             <div className="flex flex-col items-center gap-3 mt-4">
