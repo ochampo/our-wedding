@@ -8,44 +8,20 @@ const RenderTravel = () => {
   };
 
   return (
-    <main className="relative min-h-screen w-full">
+    <main className="relative min-h-screen w-full bg-slate-50">
 
-      {/* --- MOBILE BACKGROUNDS (3 Layers) --- */}
-
-      {/* 1. TOP FLOWER */}
-      <img
-        src={watercolor_floral}
-        alt="Background Top"
-        className="block md:hidden fixed top-0 left-0 w-full h-auto object-contain opacity-60 z-0"
-      />
-
-      {/* 2. MIDDLE FLOWER (The Fix)
-          - top-1/2: Moves it to the middle of the screen.
-          - -translate-y-1/2: Centers it perfectly vertical.
-          - scale-x-[-1]: Flips it horizontally so it doesn't look identical to the top one.
-      */}
-      <img
-        src={watercolor_floral}
-        alt="Background Middle"
-        className="block md:hidden fixed top-1/2 left-0 w-full h-auto object-contain opacity-50 z-0 -translate-y-1/2 scale-x-[-1]"
-      />
-
-      {/* 3. BOTTOM FLOWER */}
-      <img
-        src={watercolor_floral}
-        alt="Background Bottom"
-        className="block md:hidden fixed bottom-0 left-0 w-full h-auto object-contain opacity-60 z-0 rotate-180"
-      />
+      {/* --- MOBILE WALLPAPER (Fixed) --- */}
+      <div className="block md:hidden fixed inset-0 z-0 w-full h-full pointer-events-none">
+        <img src={watercolor_floral} alt="Top" className="absolute top-0 left-0 w-full h-auto object-cover opacity-60" />
+        <img src={watercolor_floral} alt="Mid" className="absolute top-1/2 left-0 w-full h-auto object-cover opacity-40 -translate-y-1/2 scale-x-[-1]" />
+        <img src={watercolor_floral} alt="Bot" className="absolute bottom-0 left-0 w-full h-auto object-cover opacity-70 rotate-180" />
+      </div>
 
       {/* --- DESKTOP BACKGROUND --- */}
-      <img
-        src={watercolor_floral}
-        alt="Background"
-        className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60"
-      />
+      <img src={watercolor_floral} alt="Background" className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60" />
 
       {/* --- MOBILE CONTENT --- */}
-      <div className="block md:hidden relative z-10 py-12 px-6 overflow-y-auto mt-20 mb-24">
+      <div className="block md:hidden relative z-10 py-12 px-6 mt-16 pb-32">
         <div className="bg-white/40 backdrop-blur-md rounded-3xl shadow-xl p-6 border border-white/60">
 
           <h2 className="text-4xl text-center text-purple-900 mb-6 font-serif italic" style={textGlow}>
@@ -53,25 +29,15 @@ const RenderTravel = () => {
           </h2>
 
           <div className="rounded-lg overflow-hidden shadow-sm mb-6 border border-white/50">
-            <img
-              src={marriottsanramon}
-              alt="Marriott San Ramon"
-              className="w-full h-48 object-cover opacity-100"
-            />
+            <img src={marriottsanramon} alt="Marriott San Ramon" className="w-full h-48 object-cover opacity-100" />
           </div>
 
           <h3 className="text-2xl text-center font-bold text-slate-900 mb-2" style={textGlow}>
             Marriott San Ramon
           </h3>
 
-          <a
-            href="https://www.google.com/maps/place/San+Ramon+Marriott/@37.7628816,-121.9678093,17z/data=!4m11!3m10!1s0x808ff299470b65af:0x9779a5c295fb341a!5m4!1s2026-04-17!2i4!4m1!1i2!8m2!3d37.7628774!4d-121.9652344!16s%2Fm%2F0myjcjn?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 text-lg text-slate-900 font-bold mb-6"
-            style={textGlow}
-          >
-
+          <a href="https://www.google.com/maps/place/San+Ramon+Marriott/@37.7628816,-121.9678093,17z/data=!4m11!3m10!1s0x808ff299470b65af:0x9779a5c295fb341a!5m4!1s2026-04-17!2i4!4m1!1i2!8m2!3d37.7628774!4d-121.9652344!16s%2Fm%2F0myjcjn?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-lg text-slate-900 font-bold mb-6" style={textGlow}>
+            <MapPin size={18} className="text-purple-900" />
             2600 Bishop Dr, San Ramon
           </a>
 
@@ -84,12 +50,7 @@ const RenderTravel = () => {
             </p>
           </div>
 
-          <a
-            href="https://example.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full bg-purple-900/90 backdrop-blur-sm text-white text-center py-4 rounded-xl font-bold text-lg shadow-lg active:scale-95 transition-transform"
-          >
+          <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="block w-full bg-purple-900/90 backdrop-blur-sm text-white text-center py-4 rounded-xl font-bold text-lg shadow-lg active:scale-95 transition-transform">
             BOOK ROOM
           </a>
         </div>

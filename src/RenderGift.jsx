@@ -8,40 +8,48 @@ const RenderGift = () => {
   };
 
   return (
-    <main className="relative min-h-screen w-full">
+    <main className="relative min-h-screen w-full bg-slate-50">
 
-      {/* --- MOBILE BACKGROUNDS --- */}
+      {/* --- MOBILE BACKGROUND (The "Wallpaper" Fix) ---
+          - fixed inset-0: Locks the flowers to the screen. They won't scroll away.
+          - z-0: Keeps them behind the content.
+      */}
+      <div className="block md:hidden fixed inset-0 z-0 w-full h-full pointer-events-none">
 
-      {/* 1. Top */}
-      <img
-        src={watercolor_floral}
-        alt="Background Top"
-        className="block md:hidden fixed top-0 left-0 w-full h-auto object-contain opacity-60 z-0"
-      />
+        {/* 1. Top Flower */}
+        <img
+          src={watercolor_floral}
+          alt="Flower Top"
+          className="absolute top-0 left-0 w-full h-auto object-cover opacity-60"
+        />
 
-      {/* 2. Middle (The Fix) */}
-      <img
-        src={watercolor_floral}
-        alt="Background Middle"
-        className="block md:hidden fixed top-1/2 left-0 w-full h-auto object-contain opacity-50 z-0 -translate-y-1/2 scale-x-[-1]"
-      />
+        {/* 2. Middle Flower (Fills the center gap) */}
+        <img
+          src={watercolor_floral}
+          alt="Flower Middle"
+          className="absolute top-1/2 left-0 w-full h-auto object-cover opacity-40 -translate-y-1/2 scale-x-[-1]"
+        />
 
-      {/* 3. Bottom */}
-      <img
-        src={watercolor_floral}
-        alt="Background Bottom"
-        className="block md:hidden fixed bottom-0 left-0 w-full h-auto object-contain opacity-60 z-0 rotate-180"
-      />
+        {/* 3. Bottom Flower (Fills the bottom gap) */}
+        <img
+          src={watercolor_floral}
+          alt="Flower Bottom"
+          className="absolute bottom-0 left-0 w-full h-auto object-cover opacity-70 rotate-180"
+        />
+      </div>
 
       {/* --- DESKTOP BACKGROUND --- */}
       <img
         src={watercolor_floral}
         alt="Background"
-        className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-50"
+        className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60"
       />
 
-      {/* --- MOBILE CONTENT --- */}
-      <div className="block md:hidden relative z-10 py-12 px-4 mt-32 mb-24">
+      {/* --- MOBILE CONTENT ---
+          - z-10: Sits ON TOP of the fixed flowers.
+          - pb-32: Adds space at bottom so you can scroll past the last QR code.
+      */}
+      <div className="block md:hidden relative z-10 py-12 px-4 mt-20 pb-32">
         <div className="bg-white/40 backdrop-blur-md rounded-3xl shadow-xl p-6 border border-white/60">
 
           <div className="flex justify-center mb-4">
