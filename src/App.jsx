@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { X, Menu } from 'lucide-react';
+import { X, Menu, Puzzle } from 'lucide-react';
 
 // --- CUSTOM COMPONENTS ---
 import WeddingCrossword from './WeddingCrossword';
@@ -14,6 +14,7 @@ import RenderStory from './RenderStory.jsx';
 import CurtainLogin from './CurtainLogin.jsx';
 import FallingHearts from './FallingHearts.jsx';
 import AddToCalendar from './AddToCalendar.jsx';
+import HeartLogo from './components/HeartLogo.jsx';
 import { parseTimeData } from './utils/dateHelpers';
 
 const WeddingSite = () => {
@@ -60,6 +61,26 @@ const WeddingSite = () => {
     navigate(routes[page] || '/');
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
+  };
+
+  // Scroll to crossword section
+  const scrollToCrossword = () => {
+    // If not on home page, navigate there first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation, then scroll
+      setTimeout(() => {
+        const element = document.getElementById('crossword-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById('crossword-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   // --- COUNTDOWN TIMER ---
@@ -208,7 +229,7 @@ const WeddingSite = () => {
       </section>
 
       {/* 4. GAMES SECTION */}
-      <section className="py-24 bg-white px-6">
+      <section id="crossword-section" className="py-24 bg-white px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-serif italic text-purple-900 mb-4">How Well Do You Know Us?</h2>
           <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-12">
@@ -276,26 +297,34 @@ const WeddingSite = () => {
           <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
             <div className="max-w-6xl mx-auto flex justify-between items-center relative">
 
-              {/* LEFT SIDE: Mobile Menu / Desktop Logo */}
-              <div className="flex items-center">
+              {/* LEFT SIDE: Mobile Menu / Desktop Logo + Game Icon */}
+              <div className="flex items-center gap-3">
                 <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400 p-1">
                   <Menu size={24} />
                 </button>
-                <button
-                  onClick={() => navigateTo('HOME')}
-                  className="hidden md:block text-purple-900 italic text-2xl hover:opacity-70 transition-opacity"
-                >
-                  L & D
-                </button>
+                <div className="hidden md:flex items-center gap-2">
+                  <HeartLogo size="desktop" onClick={() => navigateTo('HOME')} />
+                  <button
+                    onClick={scrollToCrossword}
+                    className="text-purple-400 hover:text-purple-600 hover:scale-110 transition-all p-1"
+                    title="Play the Crossword!"
+                  >
+                    <Puzzle size={18} />
+                  </button>
+                </div>
               </div>
 
-              {/* CENTER: Mobile Logo / Desktop Links */}
-              <button
-                onClick={() => navigateTo('HOME')}
-                className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-purple-900 italic text-xl"
-              >
-                L & D
-              </button>
+              {/* CENTER: Mobile Logo + Game Icon / Desktop Links */}
+              <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+                <HeartLogo size="mobile" onClick={() => navigateTo('HOME')} />
+                <button
+                  onClick={scrollToCrossword}
+                  className="text-purple-400 hover:text-purple-600 transition-all p-1"
+                  title="Play the Crossword!"
+                >
+                  <Puzzle size={16} />
+                </button>
+              </div>
 
               <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400 absolute left-1/2 -translate-x-1/2">
                 {['HOME', 'TRAVEL', 'QA', 'GIFT'].map((tab) => (
