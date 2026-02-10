@@ -9,55 +9,39 @@ const RenderGift = () => {
 
   return (
     <main className="relative min-h-screen w-full bg-slate-50">
+      
+      {/* --- MOBILE WALLPAPER (Flex Stack) --- */}
+      <div className="block md:hidden fixed inset-0 z-0 w-full h-[100svh] pointer-events-none flex flex-col justify-between">
+        
+        {/* 1. Top */}
+        <div className="w-full flex-1 relative">
+             <img src={watercolor_floral} alt="Top" className="w-full h-full object-cover opacity-60 object-top" />
+        </div>
+        
+        {/* 2. Middle */}
+        <div className="w-full flex-1 relative -my-10">
+             <img src={watercolor_floral} alt="Mid" className="w-full h-full object-cover opacity-40 scale-x-[-1]" />
+        </div>
 
-      {/* --- MOBILE BACKGROUND (The "Wallpaper" Fix) ---
-          - fixed inset-0: Locks the flowers to the screen. They won't scroll away.
-          - z-0: Keeps them behind the content.
-      */}
-      <div className="block md:hidden fixed inset-0 z-0 w-full h-full pointer-events-none">
-
-        {/* 1. Top Flower */}
-        <img
-          src={watercolor_floral}
-          alt="Flower Top"
-          className="absolute top-0 left-0 w-full h-auto object-cover opacity-60"
-        />
-
-        {/* 2. Middle Flower (Fills the center gap) */}
-        <img
-          src={watercolor_floral}
-          alt="Flower Middle"
-          className="absolute top-1/2 left-0 w-full h-auto object-cover opacity-40 -translate-y-1/2 scale-x-[-1]"
-        />
-
-        {/* 3. Bottom Flower (Fills the bottom gap) */}
-        <img
-          src={watercolor_floral}
-          alt="Flower Bottom"
-          className="absolute bottom-0 left-0 w-full h-auto object-cover opacity-70 rotate-180"
-        />
+        {/* 3. Bottom (Footer) */}
+        <div className="w-full h-auto relative">
+             <img src={watercolor_floral} alt="Bot" className="w-full h-auto object-cover opacity-80 rotate-180" />
+        </div>
       </div>
 
       {/* --- DESKTOP BACKGROUND --- */}
-      <img
-        src={watercolor_floral}
-        alt="Background"
-        className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60"
-      />
+      <img src={watercolor_floral} alt="Background" className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60" />
 
-      {/* --- MOBILE CONTENT ---
-          - z-10: Sits ON TOP of the fixed flowers.
-          - pb-32: Adds space at bottom so you can scroll past the last QR code.
-      */}
-      <div className="block md:hidden relative z-10 py-12 px-4 mt-20 pb-32">
+      {/* --- MOBILE CONTENT --- */}
+      <div className="block md:hidden relative z-10 py-12 px-4 mt-20 pb-40">
         <div className="bg-white/40 backdrop-blur-md rounded-3xl shadow-xl p-6 border border-white/60">
-
+          
           <div className="flex justify-center mb-4">
             <div className="p-3 bg-purple-100/80 rounded-full shadow-sm">
                <Gift className="text-purple-900" size={24} />
             </div>
           </div>
-
+          
           <h2 className="text-4xl text-center text-purple-900 mb-4 font-serif italic" style={textGlow}>Gift</h2>
           <p className="text-center text-slate-900 font-bold mb-8 text-sm" style={textGlow}>
             Your presence is the greatest gift! We kindly prefer a monetary contribution to start our next chapter.

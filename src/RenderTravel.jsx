@@ -10,20 +10,32 @@ const RenderTravel = () => {
   return (
     <main className="relative min-h-screen w-full bg-slate-50">
 
-      {/* --- MOBILE WALLPAPER (Fixed) --- */}
-      <div className="block md:hidden fixed inset-0 z-0 w-full h-full pointer-events-none">
-        <img src={watercolor_floral} alt="Top" className="absolute top-0 left-0 w-full h-auto object-cover opacity-60" />
-        <img src={watercolor_floral} alt="Mid" className="absolute top-1/2 left-0 w-full h-auto object-cover opacity-40 -translate-y-1/2 scale-x-[-1]" />
-        <img src={watercolor_floral} alt="Bot" className="absolute bottom-0 left-0 w-full h-auto object-cover opacity-70 rotate-180" />
+      {/* --- MOBILE WALLPAPER (Flex Stack - No Overlap) --- */}
+      <div className="block md:hidden fixed inset-0 z-0 w-full h-[100svh] pointer-events-none flex flex-col justify-between">
+        
+        {/* 1. Top Flower */}
+        <div className="w-full flex-1 relative">
+            <img src={watercolor_floral} alt="Top" className="w-full h-full object-cover opacity-60 object-top" />
+        </div>
+
+        {/* 2. Middle Flower (Flipped) */}
+        <div className="w-full flex-1 relative -my-10"> {/* Negative margin pulls them slightly closer to blend seams */}
+            <img src={watercolor_floral} alt="Mid" className="w-full h-full object-cover opacity-40 scale-x-[-1]" />
+        </div>
+        
+        {/* 3. Bottom Flower (Footer) */}
+        <div className="w-full h-auto relative">
+             <img src={watercolor_floral} alt="Bot" className="w-full h-auto object-cover opacity-80 rotate-180" />
+        </div>
       </div>
 
       {/* --- DESKTOP BACKGROUND --- */}
       <img src={watercolor_floral} alt="Background" className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60" />
 
       {/* --- MOBILE CONTENT --- */}
-      <div className="block md:hidden relative z-10 py-12 px-6 mt-16 pb-32">
+      <div className="block md:hidden relative z-10 py-12 px-6 mt-16 pb-40">
         <div className="bg-white/40 backdrop-blur-md rounded-3xl shadow-xl p-6 border border-white/60">
-
+          
           <h2 className="text-4xl text-center text-purple-900 mb-6 font-serif italic" style={textGlow}>
             Hotel
           </h2>
