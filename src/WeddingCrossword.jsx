@@ -3,7 +3,7 @@ import { PenTool, Check } from 'lucide-react';
 
 const WeddingCrossword = () => {
   // --- CONFIGURATION ---
-  
+
   // 1. THE VISUAL GRID (14x14)
   const solutionGrid = [
     ['F', 'R', 'E', 'M', 'O', 'N', 'T', '#', '#', '#', '#', '#', '#', '#'], // 0: FREMONT
@@ -19,21 +19,21 @@ const WeddingCrossword = () => {
     ['#', '#', '#', '#', '#', '#', '#', '#', 'A', '#', '#', '#', '#', '#'], // 10: A(BACKYARD)
     ['#', '#', '#', '#', '#', '#', '#', '#', 'R', '#', '#', '#', '#', '#'], // 11: R(BACKYARD)
     ['#', '#', '#', '#', '#', '#', '#', '#', 'D', 'O', 'N', 'U', 'T', 'S'], // 12: DONUTS, D(BACKYARD)
-    ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
+    ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
   ];
 
   // 2. ANSWER KEY
   const wordLocations = [
-    { dir: 'across', r: 0, c: 0, word: 'FREMONT' },   
-    { dir: 'across', r: 2, c: 6, word: 'COOKIES' },   
-    { dir: 'across', r: 4, c: 0, word: 'BRIDGES' },   
-    { dir: 'across', r: 6, c: 2, word: 'SALATHAI' },  
-    { dir: 'across', r: 9, c: 5, word: 'JULY' },      
-    { dir: 'across', r: 12, c: 8, word: 'DONUTS' },  
+    { dir: 'across', r: 0, c: 0, word: 'FREMONT' },
+    { dir: 'across', r: 2, c: 6, word: 'COOKIES' },
+    { dir: 'across', r: 4, c: 0, word: 'BRIDGES' },
+    { dir: 'across', r: 6, c: 2, word: 'SALATHAI' },
+    { dir: 'across', r: 9, c: 5, word: 'JULY' },
+    { dir: 'across', r: 12, c: 8, word: 'DONUTS' },
 
-    { dir: 'down',   r: 0, c: 6, word: 'TACOS' },     
-    { dir: 'down',   r: 2, c: 2, word: 'ARIES' },     
-    { dir: 'down',   r: 5, c: 8, word: 'BACKYARD' },  
+    { dir: 'down',   r: 0, c: 6, word: 'TACOS' },
+    { dir: 'down',   r: 2, c: 2, word: 'ARIES' },
+    { dir: 'down',   r: 5, c: 8, word: 'BACKYARD' },
   ];
 
   // 3. NUMBER MARKERS
@@ -69,7 +69,7 @@ const WeddingCrossword = () => {
   const [grid, setGrid] = useState(
     solutionGrid.map(row => row.map(cell => cell === '#' ? '#' : ''))
   );
-  const [direction, setDirection] = useState('across'); 
+  const [direction, setDirection] = useState('across');
   const [activeCell, setActiveCell] = useState({ r: null, c: null });
   const [status, setStatus] = useState('PLAYING');
   const inputRefs = useRef({});
@@ -77,7 +77,7 @@ const WeddingCrossword = () => {
   // --- CALCULATE CORRECT WORDS ---
   const getCorrectCells = () => {
     const correctSet = new Set();
-    
+
     wordLocations.forEach(({ dir, r, c, word }) => {
       let isWordComplete = true;
       const currentCoords = [];
@@ -85,7 +85,7 @@ const WeddingCrossword = () => {
       for (let i = 0; i < word.length; i++) {
         const checkR = dir === 'across' ? r : r + i;
         const checkC = dir === 'across' ? c + i : c;
-        
+
         if(checkR > 13 || checkC > 13) { isWordComplete = false; break; }
 
         const userVal = grid[checkR][checkC];
@@ -115,7 +115,7 @@ const WeddingCrossword = () => {
     }
 
     setActiveCell({ r, c });
-    
+
     const hasHorizontal = (c > 0 && solutionGrid[r][c-1] !== '#') || (c < 13 && solutionGrid[r][c+1] !== '#');
     const hasVertical = (r > 0 && solutionGrid[r-1][c] !== '#') || (r < 13 && solutionGrid[r+1][c] !== '#');
 
@@ -202,24 +202,16 @@ const WeddingCrossword = () => {
   };
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-24 animate-in fade-in duration-700">
-      <PenTool className="mx-auto text-purple-200 mb-6" size={40} />
-      <h2 className="text-5xl text-center text-purple-900 mb-8 font-light italic">Crossword</h2>
-      
+    <div className="w-full animate-in fade-in duration-700">
       <div className="bg-white p-2 md:p-8 rounded-3xl border border-purple-100 shadow-xl">
-        <div className="text-center mb-8">
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            Tap twice to switch direction
-          </p>
-        </div>
 
         {/* GRID - NOW 100% FLUID RESPONSIVE */}
         <div className="w-full max-w-lg mx-auto mb-10">
-          <div 
+          <div
             className="grid bg-purple-100 border-2 border-purple-900 shadow-md w-full aspect-square"
-            style={{ 
+            style={{
               // THIS IS THE FIX: Use fractions (fr) instead of pixels
-              gridTemplateColumns: `repeat(14, 1fr)`, 
+              gridTemplateColumns: `repeat(14, 1fr)`,
               gridTemplateRows: `repeat(14, 1fr)`,
               gap: '1px'
             }}
@@ -230,7 +222,7 @@ const WeddingCrossword = () => {
                 const cellNum = cellNumbers[`${r}-${c}`];
                 const isActive = activeCell.r === r && activeCell.c === c;
                 const isCorrect = correctCells.has(`${r}-${c}`);
-                
+
                 let isWordHighlight = false;
                 if (!isBlack && activeCell.r !== null) {
                    if (direction === 'across' && r === activeCell.r) isWordHighlight = true;
@@ -243,7 +235,7 @@ const WeddingCrossword = () => {
 
                 let bgClass = "bg-white";
                 if (isActive) bgClass = "bg-purple-100 ring-2 ring-inset ring-purple-300 z-20";
-                else if (isCorrect) bgClass = "bg-emerald-100"; 
+                else if (isCorrect) bgClass = "bg-emerald-100";
                 else if (isWordHighlight) bgClass = "bg-purple-50";
 
                 return (
@@ -281,7 +273,7 @@ const WeddingCrossword = () => {
             <ul className="space-y-3 text-xs md:text-sm text-slate-600 font-serif">
               {clues.across.map(c => (
                 <li key={c.num} className="flex gap-3">
-                  <span className="font-bold text-purple-900 shrink-0">{c.num}.</span> 
+                  <span className="font-bold text-purple-900 shrink-0">{c.num}.</span>
                   <span className="italic">{c.text}</span>
                 </li>
               ))}
@@ -292,7 +284,7 @@ const WeddingCrossword = () => {
             <ul className="space-y-3 text-xs md:text-sm text-slate-600 font-serif">
               {clues.down.map(c => (
                 <li key={c.num} className="flex gap-3">
-                  <span className="font-bold text-purple-900 shrink-0">{c.num}.</span> 
+                  <span className="font-bold text-purple-900 shrink-0">{c.num}.</span>
                   <span className="italic">{c.text}</span>
                 </li>
               ))}
@@ -304,7 +296,7 @@ const WeddingCrossword = () => {
           {status === 'SUCCESS' && (
              <div className="bg-emerald-100 text-emerald-800 p-4 rounded-xl text-sm font-bold mb-6 animate-pulse tracking-widest uppercase flex flex-col items-center justify-center gap-2">
                <div className="flex items-center gap-2">
-                 <Check size={18} /> 
+                 <Check size={18} />
                  <span>All Correct!</span>
                </div>
                <span className="text-xs opacity-75">You know us so well!</span>
@@ -315,8 +307,8 @@ const WeddingCrossword = () => {
               Check your spelling
             </div>
           )}
-          
-          <button 
+
+          <button
             onClick={checkAnswers}
             className="px-12 py-4 bg-purple-900 text-white rounded-full font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all active:scale-95"
           >
@@ -325,7 +317,7 @@ const WeddingCrossword = () => {
         </div>
 
       </div>
-    </main>
+    </div>
   );
 };
 

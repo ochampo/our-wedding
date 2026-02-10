@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { X, Menu, Puzzle } from 'lucide-react';
+import { X, Menu } from 'lucide-react';
 
 // --- CUSTOM COMPONENTS ---
 import WeddingCrossword from './WeddingCrossword';
@@ -63,26 +63,6 @@ const WeddingSite = () => {
     window.scrollTo(0, 0);
   };
 
-  // Scroll to crossword section
-  const scrollToCrossword = () => {
-    // If not on home page, navigate there first
-    if (location.pathname !== '/') {
-      navigate('/');
-      // Wait for navigation, then scroll
-      setTimeout(() => {
-        const element = document.getElementById('crossword-section');
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      const element = document.getElementById('crossword-section');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   // --- COUNTDOWN TIMER ---
   useEffect(() => {
     const targetDate = new Date("July 3, 2026 14:00:00").getTime();
@@ -133,7 +113,7 @@ const WeddingSite = () => {
   const renderHome = () => (
     <main className="animate-in fade-in duration-1000">
       {/* 1. HERO SECTION */}
-      <header className="h-screen w-full relative flex flex-col items-center justify-between py-16 text-center px-4 overflow-hidden">
+      <header className="h-screen w-full relative flex flex-col items-center justify-between py-12 md:py-16 text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="./CoverPhoto.jpg"
@@ -149,22 +129,22 @@ const WeddingSite = () => {
           </p>
         </div>
 
-        <div className="relative z-10 text-white space-y-8 mb-12">
+        <div className="relative z-10 text-white space-y-4 md:space-y-8 mt-16 md:mt-24">
           <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
-            <h1 className="px-4 text-6xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+            <h1 className="px-4 text-5xl md:text-9xl font-light italic leading-none drop-shadow-lg">
               Lorraine
-              <span className="block sm:inline font-sans font-thin text-4xl md:text-6xl align-middle mx-2 opacity-70">&</span>
+              <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-70">&</span>
               Daniel
             </h1>
-            <div className="flex flex-col items-center gap-3 mt-4">
-              <p className="text-4xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
+            <div className="flex flex-col items-center gap-2 md:gap-3 mt-3 md:mt-4">
+              <p className="text-3xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
                 July 3, 2026
               </p>
             </div>
           </div>
 
           {/* Countdown Display */}
-          <div className="grid grid-cols-4 gap-6 md:gap-12 max-w-lg mx-auto pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+          <div className="grid grid-cols-4 gap-4 md:gap-12 max-w-lg mx-auto pt-4 md:pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
             {[
               { label: 'Days', value: timeLeft.days },
               { label: 'Hrs', value: timeLeft.hours },
@@ -172,15 +152,34 @@ const WeddingSite = () => {
               { label: 'Secs', value: timeLeft.seconds }
             ].map((t, i) => (
               <div key={i} className="text-center">
-                <span className="block text-2xl md:text-4xl font-serif italic font-light">{t.value}</span>
-                <span className="block text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.label}</span>
+                <span className="block text-xl md:text-4xl font-serif italic font-light">{t.value}</span>
+                <span className="block text-[8px] md:text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="absolute bottom-6 left-0 right-0 text-center animate-bounce text-white/50">
-          <p className="text-[10px] uppercase tracking-widest">Scroll for Details</p>
+        <div className="relative z-10 pb-4 md:pb-8">
+          <div className="animate-bounce text-white flex flex-col items-center">
+            <p className="text-[8px] md:text-xs uppercase tracking-widest bg-black/30 px-3 py-1.5 md:px-4 md:py-2 rounded-full backdrop-blur-sm">
+              Scroll for Details
+            </p>
+
+            {/* Mobile: Simple chevron arrows */}
+            <div className="md:hidden mt-2 flex flex-col items-center">
+              <svg className="w-5 h-5 text-white/80 -mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+              <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+
+            {/* Desktop: Mouse scroll indicator */}
+            <div className="hidden md:flex mt-3 w-10 h-14 border-2 border-white/50 rounded-full justify-center pt-2">
+              <div className="w-2 h-4 bg-white/70 rounded-full animate-pulse" />
+            </div>
+          </div>
         </div>
       </header>
 
@@ -229,11 +228,11 @@ const WeddingSite = () => {
       </section>
 
       {/* 4. GAMES SECTION */}
-      <section id="crossword-section" className="py-24 bg-white px-6">
+      <section id="crossword-section" className="py-12 bg-white px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-serif italic text-purple-900 mb-4">How Well Do You Know Us?</h2>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-12">
-            Take the Wedding Crossword Challenge
+          <h2 className="text-3xl font-serif italic text-purple-900 mb-2">How Well Do You Know Us?</h2>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-8">
+            ✨ Test Your Knowledge — Can You Crack the Crossword? ✨
           </p>
           <WeddingCrossword />
         </div>
@@ -285,9 +284,8 @@ const WeddingSite = () => {
                   key={tab}
                   onClick={() => navigateTo(tab)}
                   className="text-3xl md:text-4xl text-center text-purple-900 mb-8 font-medium tracking-tight"
-
                 >
-                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? ' Q&A' : tab}
+                  {tab === 'HOME' ? 'THE WEDDING' : tab === 'QA' ? 'Q&A' : tab}
                 </button>
               ))}
             </div>
@@ -297,33 +295,19 @@ const WeddingSite = () => {
           <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-50 px-6 py-4">
             <div className="max-w-6xl mx-auto flex justify-between items-center relative">
 
-              {/* LEFT SIDE: Mobile Menu / Desktop Logo + Game Icon */}
-              <div className="flex items-center gap-3">
+              {/* LEFT SIDE: Mobile Menu / Desktop Logo */}
+              <div className="flex items-center">
                 <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-purple-400 p-1">
                   <Menu size={24} />
                 </button>
-                <div className="hidden md:flex items-center gap-2">
+                <div className="hidden md:block">
                   <HeartLogo size="desktop" onClick={() => navigateTo('HOME')} />
-                  <button
-                    onClick={scrollToCrossword}
-                    className="text-purple-400 hover:text-purple-600 hover:scale-110 transition-all p-1"
-                    title="Play the Crossword!"
-                  >
-                    <Puzzle size={18} />
-                  </button>
                 </div>
               </div>
 
-              {/* CENTER: Mobile Logo + Game Icon / Desktop Links */}
-              <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+              {/* CENTER: Mobile Logo / Desktop Links */}
+              <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <HeartLogo size="mobile" onClick={() => navigateTo('HOME')} />
-                <button
-                  onClick={scrollToCrossword}
-                  className="text-purple-400 hover:text-purple-600 transition-all p-1"
-                  title="Play the Crossword!"
-                >
-                  <Puzzle size={16} />
-                </button>
               </div>
 
               <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400 absolute left-1/2 -translate-x-1/2">
