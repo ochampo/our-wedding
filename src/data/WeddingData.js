@@ -9,7 +9,7 @@ export const LOCATIONS = [
     title: "The Ceremony",
     time: "2:00 PM - 3:00 PM",
     name: "Holy Spirit Church",
-    address: "41139 Fremont Blvd, Fremont, CA",
+    address: "37588 Fremont Blvd, Fremont, CA",
     mapLink: "https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA",
     icon: Gem, // This reference works because we imported Calendar above
     image: HolySpiritChurch

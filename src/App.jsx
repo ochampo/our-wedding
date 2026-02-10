@@ -40,7 +40,7 @@ const WeddingSite = () => {
     switch (path) {
       case '/': return 'HOME';
       case '/rsvp': return 'RSVP';
-      case '/travel': return 'TRAVEL';
+      case '/hotel': return 'HOTEL';
       case '/gift': return 'GIFT';
       case '/qa': return 'QA';
       default: return 'HOME';
@@ -54,7 +54,7 @@ const WeddingSite = () => {
     const routes = {
       'HOME': '/',
       'RSVP': '/rsvp',
-      'TRAVEL': '/travel',
+      'HOTEL': '/hotel',
       'GIFT': '/gift',
       'QA': '/qa'
     };
@@ -188,15 +188,10 @@ const WeddingSite = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
-            <p className="text-slate-500 text-sm tracking-wide">
+            <p className="text-slate-500 text-base tracking-wide">
               Please join us for the ceremony followed by the reception.
             </p>
-            <button
-              onClick={() => navigateTo('RSVP')}
-              className="bg-purple-900 text-white px-8 py-4 rounded-full mt-12 text-base font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
-            >
-              RSVP
-            </button>
+  
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
@@ -216,8 +211,15 @@ const WeddingSite = () => {
                 </div>
               );
             })}
+            <button
+              onClick={() => navigateTo('RSVP')}
+              className="bg-purple-900 text-white px-8 py-4 rounded-full mt-12 text-base font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
+            >
+              RSVP
+            </button>
           </div>
         </div>
+        
       </section>
 
       {/* 3. OUR STORY SECTION */}
@@ -244,7 +246,7 @@ const WeddingSite = () => {
     switch (currentPage) {
       case 'HOME': return renderHome();
       case 'RSVP': return <RenderRSVP allGuests={allGuests} rsvpMap={rsvpMap} googleScriptUrl={GOOGLE_URL} />;
-      case 'TRAVEL': return <RenderTravel />;
+      case 'HOTEL': return <RenderTravel />;
       case 'GIFT': return <RenderGift />;
       case 'QA': return <QA />;
       default: return renderHome();
@@ -279,7 +281,7 @@ const WeddingSite = () => {
               <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-purple-300">
                 <X size={32} />
               </button>
-              {['HOME', 'TRAVEL', 'GIFT', 'QA'].map((tab) => (
+              {['HOME', 'HOTEL', 'GIFT', 'QA', 'RSVP'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => navigateTo(tab)}
@@ -311,7 +313,7 @@ const WeddingSite = () => {
               </div>
 
               <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-400 absolute left-1/2 -translate-x-1/2">
-                {['HOME', 'TRAVEL', 'QA', 'GIFT'].map((tab) => (
+                {['HOME', 'HOTEL', 'QA', 'GIFT'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => navigateTo(tab)}
