@@ -191,7 +191,12 @@ const WeddingSite = () => {
             <p className="text-slate-500 text-base tracking-wide">
               Please join us for the ceremony followed by the reception.
             </p>
-  
+            <button
+              onClick={() => navigateTo('RSVP')}
+              className="bg-purple-900 text-white px-8 py-4 rounded-full mt-12 text-base font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
+            >
+              RSVP
+            </button>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
@@ -211,15 +216,8 @@ const WeddingSite = () => {
                 </div>
               );
             })}
-            <button
-              onClick={() => navigateTo('RSVP')}
-              className="bg-purple-900 text-white px-8 py-4 rounded-full mt-12 text-base font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
-            >
-              RSVP
-            </button>
           </div>
         </div>
-        
       </section>
 
       {/* 3. OUR STORY SECTION */}
