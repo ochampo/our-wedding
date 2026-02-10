@@ -2,16 +2,20 @@ import { MapPin } from 'lucide-react';
 import { Calendar, GlassWater } from 'lucide-react';
 import { LOCATIONS } from './data/WeddingData';
 import  LocationCard  from './components/LocationCard';
-import marriottsanramon from './components/images/marriottsanramon.jpeg'
+import marriottsanramon from './components/images/marriottsanramon.jpeg';
+import watercolor_floral from './components/images/watercolor_floral.jpg';
 const RenderTravel = () => {
 return (
     <main className="max-w-5xl mx-auto px-6 py-24 animate-in fade-in duration-700 flex flex-col justify-center">
+      <div
+  className="absolute top-0 left-0 h-full w-full bg-no-repeat bg-left"
+  style={{ backgroundImage: `url(${watercolor_floral})`, backgroundSize: "contain" }}
+  
+></div>
+ <div className="max-w-4xl mx-auto bg-white/70 backdrop-blur-sm py-16 px-8">
   <h2 className="text-5xl text-center text-purple-900 mb-6 font-light italic">
     Hotel
   </h2>
-
-  
-
   {/* Image */}
   <img
     src={marriottsanramon}
@@ -45,10 +49,11 @@ return (
     href="https://example.com"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-block text-xl font-bold text-purple-900 hover:underline text-center"
+    className="w-full text-center text-xl font-bold text-purple-900 hover:underline text-center"
   >
     BOOK YOUR ROOM HERE
   </a>
+  </div>
     </main>
   );
 };
