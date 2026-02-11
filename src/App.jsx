@@ -254,12 +254,13 @@ const WeddingSite = () => {
         </div>
       </section>
 
- {/* 3. OUR STORY SECTION */}
+{/* 3. OUR STORY SECTION */}
 <section className="relative py-24 px-6 overflow-hidden min-h-screen flex items-center justify-center">
 
   {/* --- BACKGROUND WALLPAPER --- */}
   <div className="absolute inset-0 z-0 pointer-events-none">
-    {/* A. MOBILE STACK (3 Flowers) */}
+    
+    {/* A. MOBILE STACK (Keep this as is, it's already optimized for scrolling) */}
     <div className="block md:hidden w-full h-full flex flex-col">
        <div className="flex-1 relative w-full overflow-hidden">
            <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-50 object-top" />
@@ -272,10 +273,19 @@ const WeddingSite = () => {
        </div>
     </div>
 
-    {/* B. DESKTOP SINGLE IMAGE */}
+    {/* B. DESKTOP SINGLE IMAGE (MIRRORED) */}
     <div className="hidden md:block w-full h-full">
-       <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-40" />
+       {/* ADDED: scale-x-[-1] 
+           This flips the image horizontally. 
+           Now the flowers will be on the opposite side of the section above it!
+       */}
+       <img 
+         src={watercolor_floral} 
+         alt="bg" 
+         className="w-full h-full object-cover opacity-40 rotate-180 scale-x-[-1]" 
+       />
     </div>
+
   </div>
 
   {/* --- CONTENT WRAPPER --- */}
@@ -311,7 +321,7 @@ const WeddingSite = () => {
           <img 
             src={watercolor_floral} 
             alt="Mid" 
-            className="w-full h-full object-cover opacity-30 scale-x-[-1]" 
+            className="w-full h-full object-cover opacity-30 rotate-360" 
           />
        </div>
 
@@ -329,7 +339,7 @@ const WeddingSite = () => {
     <img 
       src={watercolor_floral} 
       alt="Floral Background" 
-      className="hidden md:block w-full h-full object-cover opacity-50" 
+      className="hidden md:block w-full h-full object-cover opacity-50 rotate-180 scale-x-[-1] scale-y-[-1]" 
     />
   </div>
 
