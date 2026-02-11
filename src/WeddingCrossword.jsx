@@ -74,51 +74,38 @@ const WeddingCrossword = () => {
   const [status, setStatus] = useState('PLAYING');
   const inputRefs = useRef({});
 
-  // --- CALCULATE CORRECT WORDS ---
+  // --- LOGIC ---
   const getCorrectCells = () => {
     const correctSet = new Set();
-
     wordLocations.forEach(({ dir, r, c, word }) => {
       let isWordComplete = true;
       const currentCoords = [];
-
       for (let i = 0; i < word.length; i++) {
         const checkR = dir === 'across' ? r : r + i;
         const checkC = dir === 'across' ? c + i : c;
-
         if(checkR > 13 || checkC > 13) { isWordComplete = false; break; }
-
         const userVal = grid[checkR][checkC];
-        if (userVal !== word[i]) {
-          isWordComplete = false;
-        }
+        if (userVal !== word[i]) { isWordComplete = false; }
         currentCoords.push(`${checkR}-${checkC}`);
       }
-
       if (isWordComplete) {
         currentCoords.forEach(coord => correctSet.add(coord));
       }
     });
-
     return correctSet;
   };
 
   const correctCells = getCorrectCells();
 
-  // --- LOGIC ---
   const handleCellClick = (r, c) => {
     if (solutionGrid[r][c] === '#') return;
-
     if (activeCell.r === r && activeCell.c === c) {
       setDirection(prev => prev === 'across' ? 'down' : 'across');
       return;
     }
-
     setActiveCell({ r, c });
-
     const hasHorizontal = (c > 0 && solutionGrid[r][c-1] !== '#') || (c < 13 && solutionGrid[r][c+1] !== '#');
     const hasVertical = (r > 0 && solutionGrid[r-1][c] !== '#') || (r < 13 && solutionGrid[r+1][c] !== '#');
-
     if (hasVertical && !hasHorizontal) setDirection('down');
     else if (hasHorizontal && !hasVertical) setDirection('across');
   };
@@ -164,17 +151,13 @@ const WeddingCrossword = () => {
     const currentDir = overrideDir || direction;
     let nextR = r;
     let nextC = c;
-
     if (currentDir === 'across') nextC += offset;
     else nextR += offset;
-
     if (nextR < 0 || nextR > 13 || nextC < 0 || nextC > 13) return;
-
     if (solutionGrid[nextR][nextC] === '#') {
       moveFocus(nextR, nextC, offset, deleteOnArrive, currentDir);
       return;
     }
-
     setActiveCell({ r: nextR, c: nextC });
     const nextInput = inputRefs.current[`${nextR}-${nextC}`];
     if (nextInput) {
@@ -203,14 +186,22 @@ const WeddingCrossword = () => {
 
   return (
     <div className="w-full animate-in fade-in duration-700">
-      <div className="bg-white p-2 md:p-8 rounded-3xl border border-purple-100 shadow-xl">
+      
+      {/* GLASS CARD CONTAINER - bg-white/30 makes it very transparent */}
+      <div className="bg-white/30 backdrop-blur-xl p-2 md:p-8 rounded-3xl border border-white/40 shadow-2xl max-w-4xl mx-auto">
 
-        {/* GRID - NOW 100% FLUID RESPONSIVE */}
+        {/* HEADER ICON */}
+        <div className="text-center mb-6">
+            <div className="inline-block p-3 bg-purple-100/80 rounded-full mb-2 shadow-inner">
+               <PenTool className="text-purple-900" size={20} />
+            </div>
+        </div>
+
+        {/* GRID */}
         <div className="w-full max-w-lg mx-auto mb-10">
           <div
-            className="grid bg-purple-100 border-2 border-purple-900 shadow-md w-full aspect-square"
+            className="grid bg-purple-100/30 border-2 border-purple-900/30 shadow-inner w-full aspect-square"
             style={{
-              // THIS IS THE FIX: Use fractions (fr) instead of pixels
               gridTemplateColumns: `repeat(14, 1fr)`,
               gridTemplateRows: `repeat(14, 1fr)`,
               gap: '1px'
@@ -222,26 +213,27 @@ const WeddingCrossword = () => {
                 const cellNum = cellNumbers[`${r}-${c}`];
                 const isActive = activeCell.r === r && activeCell.c === c;
                 const isCorrect = correctCells.has(`${r}-${c}`);
-
                 let isWordHighlight = false;
                 if (!isBlack && activeCell.r !== null) {
-                   if (direction === 'across' && r === activeCell.r) isWordHighlight = true;
-                   if (direction === 'down' && c === activeCell.c) isWordHighlight = true;
+                    if (direction === 'across' && r === activeCell.r) isWordHighlight = true;
+                    if (direction === 'down' && c === activeCell.c) isWordHighlight = true;
                 }
 
+                // Black squares are now semi-transparent purple
                 if (isBlack) {
-                  return <div key={`${r}-${c}`} className="bg-purple-900 w-full h-full" />;
+                  return <div key={`${r}-${c}`} className="bg-purple-900/60 w-full h-full" />;
                 }
 
-                let bgClass = "bg-white";
+                // Make white cells slightly transparent
+                let bgClass = "bg-white/70"; 
                 if (isActive) bgClass = "bg-purple-100 ring-2 ring-inset ring-purple-300 z-20";
-                else if (isCorrect) bgClass = "bg-emerald-100";
-                else if (isWordHighlight) bgClass = "bg-purple-50";
+                else if (isCorrect) bgClass = "bg-emerald-100/90";
+                else if (isWordHighlight) bgClass = "bg-purple-50/80";
 
                 return (
                   <div key={`${r}-${c}`} className={`relative w-full h-full transition-colors duration-300 ${bgClass}`}>
                     {cellNum && (
-                      <span className={`absolute top-[1px] left-[1px] text-[6px] md:text-[9px] leading-none font-bold pointer-events-none z-10 ${isCorrect ? 'text-emerald-700' : 'text-purple-900'}`}>
+                      <span className={`absolute top-[1px] left-[1px] text-[6px] md:text-[9px] leading-none font-bold pointer-events-none z-10 ${isCorrect ? 'text-emerald-800' : 'text-purple-900'}`}>
                         {cellNum}
                       </span>
                     )}
@@ -256,7 +248,7 @@ const WeddingCrossword = () => {
                       className={`
                         w-full h-full text-center font-sans font-bold text-[9px] md:text-sm uppercase outline-none
                         caret-transparent cursor-pointer p-0 rounded-none bg-transparent
-                        ${isCorrect && !isActive ? 'text-emerald-800' : 'text-slate-800'}
+                        ${isCorrect && !isActive ? 'text-emerald-900' : 'text-slate-900'}
                       `}
                     />
                   </div>
@@ -267,10 +259,10 @@ const WeddingCrossword = () => {
         </div>
 
         {/* CLUES */}
-        <div className="grid md:grid-cols-2 gap-8 mb-10 pt-8 border-t border-purple-50">
+        <div className="grid md:grid-cols-2 gap-8 mb-10 pt-8 border-t border-purple-900/10">
           <div>
-            <h3 className="font-bold text-purple-900 text-xs uppercase tracking-widest mb-4 border-b border-purple-100 pb-2">Across</h3>
-            <ul className="space-y-3 text-xs md:text-sm text-slate-600 font-serif">
+            <h3 className="font-bold text-purple-900 text-xs uppercase tracking-widest mb-4 border-b border-purple-900/10 pb-2">Across</h3>
+            <ul className="space-y-3 text-xs md:text-sm text-slate-900 font-serif text-left font-medium">
               {clues.across.map(c => (
                 <li key={c.num} className="flex gap-3">
                   <span className="font-bold text-purple-900 shrink-0">{c.num}.</span>
@@ -280,8 +272,8 @@ const WeddingCrossword = () => {
             </ul>
           </div>
           <div>
-            <h3 className="font-bold text-purple-900 text-xs uppercase tracking-widest mb-4 border-b border-purple-100 pb-2">Down</h3>
-            <ul className="space-y-3 text-xs md:text-sm text-slate-600 font-serif">
+            <h3 className="font-bold text-purple-900 text-xs uppercase tracking-widest mb-4 border-b border-purple-900/10 pb-2">Down</h3>
+            <ul className="space-y-3 text-xs md:text-sm text-slate-900 font-serif text-left font-medium">
               {clues.down.map(c => (
                 <li key={c.num} className="flex gap-3">
                   <span className="font-bold text-purple-900 shrink-0">{c.num}.</span>
@@ -292,25 +284,25 @@ const WeddingCrossword = () => {
           </div>
         </div>
 
+        {/* ACTIONS */}
         <div className="text-center">
           {status === 'SUCCESS' && (
-             <div className="bg-emerald-100 text-emerald-800 p-4 rounded-xl text-sm font-bold mb-6 animate-pulse tracking-widest uppercase flex flex-col items-center justify-center gap-2">
+             <div className="bg-emerald-100/90 text-emerald-900 p-4 rounded-xl text-sm font-bold mb-6 animate-pulse tracking-widest uppercase flex flex-col items-center justify-center gap-2 shadow-sm">
                <div className="flex items-center gap-2">
                  <Check size={18} />
                  <span>All Correct!</span>
                </div>
-               <span className="text-xs opacity-75">You know us so well!</span>
              </div>
           )}
           {status === 'ERROR' && (
-            <div className="text-red-400 text-xs font-bold mb-4 uppercase tracking-widest">
+            <div className="bg-white/80 text-red-500 text-xs font-bold mb-4 uppercase tracking-widest inline-block px-4 py-2 rounded-full shadow-sm">
               Check your spelling
             </div>
           )}
 
           <button
             onClick={checkAnswers}
-            className="px-12 py-4 bg-purple-900 text-white rounded-full font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all active:scale-95"
+            className="px-12 py-4 bg-purple-900 text-white rounded-full font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-purple-800 transition-all active:scale-95 hover:-translate-y-0.5"
           >
             Check Answers
           </button>

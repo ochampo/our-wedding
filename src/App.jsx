@@ -16,6 +16,7 @@ import FallingHearts from './FallingHearts.jsx';
 import AddToCalendar from './AddToCalendar.jsx';
 import HeartLogo from './components/HeartLogo.jsx';
 import { parseTimeData } from './utils/dateHelpers';
+import watercolor_floral from './components/images/watercolor_floral.jpg';
 
 const WeddingSite = () => {
   const navigate = useNavigate();
@@ -183,36 +184,69 @@ const WeddingSite = () => {
         </div>
       </header>
 
-      {/* 2. LOCATIONS & TIMELINE SECTION */}
-      <section className="py-24 bg-white px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
-            <p className="text-slate-500 text-base tracking-wide">
-              Please join us for the ceremony followed by the reception.
-            </p>
-            <button
-              onClick={() => navigateTo('RSVP')}
-              className="bg-purple-900 text-white px-8 py-4 rounded-full mt-12 text-base font-bold uppercase tracking-widest shadow-md hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
-            >
-              RSVP
-            </button>
+{/* 2. LOCATIONS & TIMELINE SECTION */}
+      <section className="relative py-24 px-6 overflow-hidden min-h-screen">
+        
+        {/* --- BACKGROUND WALLPAPER --- */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {/* A. MOBILE STACK (3 Images to prevent stretching) */}
+          <div className="block md:hidden w-full h-full flex flex-col">
+             <div className="flex-1 relative w-full overflow-hidden">
+                 <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-50 object-top" />
+             </div>
+             <div className="flex-1 relative w-full overflow-hidden -mt-10">
+                 <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-30 scale-x-[-1]" />
+             </div>
+             <div className="h-auto relative w-full overflow-hidden -mt-10">
+                 <img src={watercolor_floral} alt="bg" className="w-full h-auto object-cover opacity-60 rotate-180" />
+             </div>
           </div>
 
+          {/* B. DESKTOP SINGLE IMAGE */}
+          <div className="hidden md:block w-full h-full">
+             <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-40" />
+          </div>
+        </div>
+
+        {/* --- CONTENT --- */}
+        <div className="relative z-10 max-w-5xl mx-auto">
+          
+          {/* HEADER (Wrapped in Glass Card for readability) */}
+          <div className="text-center mb-16">
+            <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60">
+                <h2 className="text-3xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
+                <p className="text-slate-600 text-base tracking-wide font-medium">
+                  Please join us for the ceremony followed by the reception.
+                </p>
+                <button
+                  onClick={() => navigateTo('RSVP')}
+                  className="bg-purple-900 text-white px-8 py-4 rounded-full mt-8 text-base font-bold uppercase tracking-widest shadow-lg hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
+                >
+                  RSVP
+                </button>
+            </div>
+          </div>
+
+          {/* GRID OF CARDS */}
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
             {LOCATIONS.map(loc => {
               const { startDate, endDate } = parseTimeData(loc.time);
               let title = loc.title.replace("The", "")
               return (
                 <div key={loc.id} className="flex flex-col items-center gap-6">
+                  {/* LocationCard usually has its own background, so it pops nicely here */}
                   <LocationCard data={loc} />
-                  <AddToCalendar
-                    title={` Lorraine & Daniel's Wedding ${title}`}
-                    description={loc.type === 'ceremony' ? "Join us for our nuptial mass." : "Dinner, drinks, and dancing!"}
-                    location={loc.address}
-                    startDate={startDate}
-                    endDate={endDate}
-                  />
+                  
+                  {/* Add To Calendar Button */}
+                  <div className="bg-white/60 backdrop-blur-sm p-2 rounded-xl">
+                      <AddToCalendar
+                        title={` Lorraine & Daniel's Wedding ${title}`}
+                        description={loc.type === 'ceremony' ? "Join us for our nuptial mass." : "Dinner, drinks, and dancing!"}
+                        location={loc.address}
+                        startDate={startDate}
+                        endDate={endDate}
+                      />
+                  </div>
                 </div>
               );
             })}
@@ -220,23 +254,101 @@ const WeddingSite = () => {
         </div>
       </section>
 
-      {/* 3. OUR STORY SECTION */}
-      <section className="py-18 bg-slate-50 border-y border-purple-50 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <RenderStory />
-        </div>
-      </section>
+ {/* 3. OUR STORY SECTION */}
+<section className="relative py-24 px-6 overflow-hidden min-h-screen flex items-center justify-center">
+
+  {/* --- BACKGROUND WALLPAPER --- */}
+  <div className="absolute inset-0 z-0 pointer-events-none">
+    {/* A. MOBILE STACK (3 Flowers) */}
+    <div className="block md:hidden w-full h-full flex flex-col">
+       <div className="flex-1 relative w-full overflow-hidden">
+           <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-50 object-top" />
+       </div>
+       <div className="flex-1 relative w-full overflow-hidden -mt-10">
+           <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-30 scale-x-[-1]" />
+       </div>
+       <div className="h-auto relative w-full overflow-hidden -mt-10">
+           <img src={watercolor_floral} alt="bg" className="w-full h-auto object-cover opacity-60 rotate-180" />
+       </div>
+    </div>
+
+    {/* B. DESKTOP SINGLE IMAGE */}
+    <div className="hidden md:block w-full h-full">
+       <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-40" />
+    </div>
+  </div>
+
+  {/* --- CONTENT WRAPPER --- */}
+  <div className="relative z-10 w-full max-w-3xl mx-auto text-center">
+    <RenderStory />
+  </div>
+
+</section>
+
 
       {/* 4. GAMES SECTION */}
-      <section id="crossword-section" className="py-12 bg-white px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-serif italic text-purple-900 mb-2">How Well Do You Know Us?</h2>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-8">
-            ✨ Test Your Knowledge — Can You Crack the Crossword? ✨
-          </p>
-          <WeddingCrossword />
-        </div>
-      </section>
+<section id="crossword-section" className="relative py-24 px-6 overflow-hidden min-h-screen">
+  
+  {/* --- BACKGROUND CONTAINER --- */}
+  <div className="absolute inset-0 z-0 pointer-events-none">
+    
+    {/* A. MOBILE BACKGROUND (The "Stack" Fix) 
+        - flex-col: Stacks images vertically
+        - h-full: Fills the entire section height
+    */}
+    <div className="block md:hidden w-full h-full flex flex-col justify-between">
+       {/* 1. Top Flower */}
+       <div className="w-full flex-1 relative">
+          <img 
+            src={watercolor_floral} 
+            alt="Top" 
+            className="w-full h-full object-cover opacity-50 object-top" 
+          />
+       </div>
+
+       {/* 2. Middle Flower (Flipped & Pulled up slightly to blend) */}
+       <div className="w-full flex-1 relative -my-10">
+          <img 
+            src={watercolor_floral} 
+            alt="Mid" 
+            className="w-full h-full object-cover opacity-30 scale-x-[-1]" 
+          />
+       </div>
+
+       {/* 3. Bottom Flower (Footer) */}
+       <div className="w-full h-auto relative">
+          <img 
+            src={watercolor_floral} 
+            alt="Bot" 
+            className="w-full h-auto object-cover opacity-60 rotate-180" 
+          />
+       </div>
+    </div>
+
+    {/* B. DESKTOP BACKGROUND (Single Image) */}
+    <img 
+      src={watercolor_floral} 
+      alt="Floral Background" 
+      className="hidden md:block w-full h-full object-cover opacity-50" 
+    />
+  </div>
+
+  {/* --- CONTENT (Relative z-10 makes it sit ON TOP of the image) --- */}
+  <div className="relative z-10 max-w-4xl mx-auto text-center">
+    <div className="inline-block p-4 bg-white/80 backdrop-blur-md rounded-full mb-6 shadow-sm border border-purple-100/50">
+        <h2 className="text-3xl font-serif italic text-purple-900">How Well Do You Know Us?</h2>
+    </div>
+    
+    <div className="mb-8">
+      <p className="text-[10px] uppercase tracking-[0.3em] text-purple-900 font-bold bg-white/60 inline-block px-6 py-3 rounded-full backdrop-blur-sm border border-white/50 shadow-sm">
+        ✨ Test Your Knowledge — Can You Crack the Crossword? ✨
+      </p>
+    </div>
+    
+    {/* The Crossword Component (Transparent) */}
+    <WeddingCrossword />
+  </div>
+</section>
     </main>
   );
 
