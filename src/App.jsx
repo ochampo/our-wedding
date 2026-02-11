@@ -383,7 +383,7 @@ const WeddingSite = () => {
 
       {isAuthenticated && (
         <div className="animate-in fade-in duration-1000">
-          <div className="h-3 bg-purple-200 opacity-40" />
+          
 
           {/* MOBILE OVERLAY MENU */}
           {isMenuOpen && (
