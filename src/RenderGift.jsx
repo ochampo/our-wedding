@@ -43,8 +43,8 @@ const RenderGift = () => {
           </div>
           
           <h2 className="text-4xl text-center text-purple-900 mb-4 font-serif italic" style={textGlow}>Gift</h2>
-          <p className="text-center text-slate-900 font-bold mb-8 text-sm" style={textGlow}>
-            Your presence is the greatest gift! We kindly prefer a monetary contribution to start our next chapter.
+          <p className="text-center text-slate-900 mb-8 text-sm" style={textGlow}>
+            Your presence at our wedding is the greatest gift of all! If you would like to give something more, we kindly prefer a monetary gift to help us start our next chapter together. Thank you so much for your generosity and love.
           </p>
 
           <div className="space-y-6">
@@ -77,8 +77,8 @@ const RenderGift = () => {
       <div className="hidden md:flex relative z-10 min-h-screen flex-col justify-center items-center py-12">
         <div className="w-full max-w-4xl bg-white/20 backdrop-blur-sm rounded-3xl shadow-2xl p-12 border border-white/30">
           <h2 className="text-6xl text-center text-purple-900 mb-6 font-light italic" style={textGlow}>Gift</h2>
-          <p className="text-center text-slate-900 text-xl mb-12 max-w-2xl mx-auto font-bold" style={textGlow}>
-            Your presence is the greatest gift! We kindly prefer a monetary contribution to help us start our next chapter.
+          <p className="text-center text-slate-900 text-xl mb-12 max-w-2xl mx-auto" style={textGlow}>
+            Your presence at our wedding is the greatest gift of all! If you would like to give something more, we kindly prefer a monetary gift to help us start our next chapter together. Thank you so much for your generosity and love.
           </p>
           <div className="grid grid-cols-2 gap-8 max-w-3xl mx-auto">
             <div className="bg-white/40 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg text-center hover:-translate-y-1 transition-transform">

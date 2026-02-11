@@ -44,21 +44,21 @@ const RenderTravel = () => {
             <img src={marriottsanramon} alt="Marriott San Ramon" className="w-full h-48 object-cover opacity-100" />
           </div>
 
-          <h3 className="text-2xl text-center font-bold text-slate-900 mb-2" style={textGlow}>
+          <h3 className="text-2xl text-center text-slate-900 mb-2" style={textGlow}>
             Marriott San Ramon
           </h3>
 
-          <a href="https://www.google.com/maps/place/San+Ramon+Marriott/@37.7628816,-121.9678093,17z/data=!4m11!3m10!1s0x808ff299470b65af:0x9779a5c295fb341a!5m4!1s2026-04-17!2i4!4m1!1i2!8m2!3d37.7628774!4d-121.9652344!16s%2Fm%2F0myjcjn?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-lg text-slate-900 font-bold mb-6" style={textGlow}>
+          <a href="https://www.google.com/maps/place/San+Ramon+Marriott/@37.7628816,-121.9678093,17z/data=!4m11!3m10!1s0x808ff299470b65af:0x9779a5c295fb341a!5m4!1s2026-04-17!2i4!4m1!1i2!8m2!3d37.7628774!4d-121.9652344!16s%2Fm%2F0myjcjn?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-lg text-slate-900 mb-6 hover:underline" style={textGlow}>
             <MapPin size={18} className="text-purple-900" />
             2600 Bishop Dr, San Ramon
           </a>
 
           <div className="space-y-4 mb-8 text-center">
-            <p className="text-lg text-slate-900 font-bold" style={textGlow}>
-              Room block available: <br/><span className="text-purple-900">July 3rd</span>.
+            <p className="text-lg text-slate-900 " style={textGlow}>
+               A room block is available for the night of July 3rd.
             </p>
-            <p className="text-lg text-slate-900 font-bold" style={textGlow}>
-              Book by <span className="text-purple-900">June 1st</span> for the group rate.
+            <p className="text-lg text-slate-900" style={textGlow}>
+              Book by <span className="text-purple-900">June 5th</span> for the group rate.
             </p>
           </div>
 
@@ -75,11 +75,18 @@ const RenderTravel = () => {
           <div className="rounded-xl overflow-hidden shadow-lg mb-8 border-2 border-white/60">
             <img src={marriottsanramon} alt="Marriott San Ramon" className="w-full h-64 object-cover" />
           </div>
-          <h2 className="text-4xl text-center font-bold mb-2 text-slate-900" style={textGlow}>Marriott San Ramon</h2>
-          <p className="text-xl text-center text-slate-900 font-bold mb-8" style={textGlow}>2600 Bishop Dr, San Ramon, CA 94583</p>
+          <h2 className="text-4xl text-center mb-2 text-slate-900" style={textGlow}>Marriott San Ramon</h2>
+           <a
+    href="https://www.google.com/maps/place/San+Ramon+Marriott/@37.7628816,-121.9678093,17z/data=!4m11!3m10!1s0x808ff299470b65af:0x9779a5c295fb341a!5m4!1s2026-04-17!2i4!4m1!1i2!8m2!3d37.7628774!4d-121.9652344!16s%2Fm%2F0myjcjn?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block text-xl text-center font-light hover:underline mb-4"
+  >
+    2600 Bishop Dr, San Ramon, CA 94583
+  </a>
           <div className="text-center space-y-4 mb-10">
-            <p className="text-xl text-slate-900 font-bold" style={textGlow}>A room block is available for the night of July 3rd.</p>
-            <p className="text-xl text-slate-900 font-bold" style={textGlow}>Be sure to book by <span className="text-purple-900">June 1st</span> to get the group rate.</p>
+            <p className="text-xl text-slate-900 f" style={textGlow}>A room block is available for the night of July 3rd.</p>
+            <p className="text-xl text-slate-900 " style={textGlow}>Be sure to book by <span className="text-purple-900">June 5th</span> to get the group rate.</p>
           </div>
           <div className="text-center">
             <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="inline-block bg-purple-900/90 text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-purple-800 transition-all shadow-lg">BOOK YOUR ROOM</a>
