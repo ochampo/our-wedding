@@ -55,13 +55,13 @@ const WeddingCrossword = () => {
       { num: 3, text: "The month we say 'I do'" },
       { num: 4, text: "Lorraine's favorite dessert" },
       { num: 6, text: "The reception venue" },
-      { num: 7, text: "City where we met" },
+      { num: 7, text: "The city where we met" },
       { num: 8, text: "Where was our first date?" },
     ],
     down: [
       { num: 2, text: "We share this zodiac sign" },
       { num: 5, text: "Where did the proposal take place?" },
-      { num: 9, text: "What is our favorite Food?" },
+      { num: 9, text: "What is our favorite food?" },
     ]
   };
 
@@ -265,22 +265,22 @@ const WeddingCrossword = () => {
         <div className="grid md:grid-cols-2 gap-8 mb-10 pt-8 border-t border-purple-900/10">
           <div>
             <h3 className="font-bold text-purple-900 text-xs uppercase tracking-widest mb-4 border-b border-purple-900/10 pb-2">Across</h3>
-            <ul className="space-y-3 text-xs md:text-sm text-slate-900 font-serif text-left font-medium">
+            <ul className="space-y-3 text-xs md:text-base text-slate-900 font-serif text-left font-medium">
               {clues.across.map(c => (
                 <li key={c.num} className="flex gap-3">
                   <span className="font-bold text-purple-900 shrink-0">{c.num}.</span>
-                  <span className="italic">{c.text}</span>
+                  <span>{c.text}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div>
             <h3 className="font-bold text-purple-900 text-xs uppercase tracking-widest mb-4 border-b border-purple-900/10 pb-2">Down</h3>
-            <ul className="space-y-3 text-xs md:text-sm text-slate-900 font-serif text-left font-medium">
+            <ul className="space-y-3 text-xs md:text-base text-slate-900 font-serif text-left font-medium">
               {clues.down.map(c => (
                 <li key={c.num} className="flex gap-3">
                   <span className="font-bold text-purple-900 shrink-0">{c.num}.</span>
-                  <span className="italic">{c.text}</span>
+                  <span>{c.text}</span>
                 </li>
               ))}
             </ul>

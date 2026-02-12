@@ -62,7 +62,7 @@ const RenderTravel = () => {
             </p>
           </div>
 
-          <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="block w-full bg-purple-900/90 backdrop-blur-sm text-white text-center py-4 rounded-xl font-bold text-lg shadow-lg active:scale-95 transition-transform">
+          <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1770859259138&key=GRP&app=resvlink&_branch_match_id=1536236514237964114&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi3OyczLtgdK2ALZZSCOWmaKraG5uYGFqaWRqaWhsYVadmqlrXtQgFpdUWpaKlB3Xnp8UlF%2BeXFqka1zRlF%2BbioASgIVZ2AAAAA%3D" target="_blank" rel="noopener noreferrer" className="block w-full bg-purple-900/90 backdrop-blur-sm text-white text-center py-4 rounded-xl font-bold text-lg shadow-lg active:scale-95 transition-transform">
             BOOK ROOM
           </a>
         </div>

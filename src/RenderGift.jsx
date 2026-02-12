@@ -51,6 +51,8 @@ const RenderGift = () => {
             {/* Daniel Mobile */}
             <div className="bg-white/40 p-6 rounded-2xl text-center border border-white/50 shadow-sm">
               <p className="text-purple-900 font-bold text-lg mb-2" style={textGlow}>Daniel</p>
+                            <p className="text-purple-600 font-bold text-base mb-2" style={textGlow}>@ochampo</p>
+
               <div className="bg-white p-2 rounded-lg inline-block mb-3 shadow-sm border border-slate-100">
                 <QRCodeSVG value="https://venmo.com/u/ochampo" size={120} fgColor="#4C1D95" />
               </div>
@@ -62,6 +64,8 @@ const RenderGift = () => {
             {/* Lorraine Mobile */}
             <div className="bg-white/40 p-6 rounded-2xl text-center border border-white/50 shadow-sm">
               <p className="text-purple-900 font-bold text-lg mb-2" style={textGlow}>Lorraine</p>
+               <p className="text-purple-600 font-bold text-base mb-2" style={textGlow}>@lorrainegoveas</p>
+
               <div className="bg-white p-2 rounded-lg inline-block mb-3 shadow-sm border border-slate-100">
                 <QRCodeSVG value="https://venmo.com/u/lorrainegoveas" size={120} fgColor="#4C1D95" />
               </div>
@@ -82,12 +86,16 @@ const RenderGift = () => {
           </p>
           <div className="grid grid-cols-2 gap-8 max-w-3xl mx-auto">
             <div className="bg-white/40 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg text-center hover:-translate-y-1 transition-transform">
-              <p className="text-purple-900 text-2xl mb-4 font-bold" style={textGlow}>Daniel</p>
+              <p className="text-purple-900 text-2xl mb-2 font-bold" style={textGlow}>Daniel</p>
+            <p className="text-purple-600 font-bold text-xl mb-2" style={textGlow}>@ochampo</p>
+
               <div className="bg-white p-4 rounded-xl mb-6 shadow-sm inline-block"><QRCodeSVG value="https://venmo.com/u/ochampo" size={140} fgColor="#4C1D95" /></div>
               <a href="https://venmo.com/u/ochampo" target="_blank" rel="noopener noreferrer" className="block w-full"><button className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold shadow-md hover:bg-purple-800">HONEYMOON FUND</button></a>
             </div>
             <div className="bg-white/40 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg text-center hover:-translate-y-1 transition-transform">
-              <p className="text-purple-900 text-2xl mb-4 font-bold" style={textGlow}>Lorraine</p>
+              <p className="text-purple-900 text-2xl mb-2 font-bold" style={textGlow}>Lorraine</p>
+                <p className="text-purple-600 font-bold text-xl mb-2" style={textGlow}>@lorrainegoveas</p>
+
               <div className="bg-white p-4 rounded-xl mb-6 shadow-sm inline-block"><QRCodeSVG value="https://venmo.com/u/lorrainegoveas" size={140} fgColor="#4C1D95" /></div>
               <a href="https://venmo.com/u/lorrainegoveas" target="_blank" rel="noopener noreferrer" className="block w-full"><button className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold shadow-md hover:bg-purple-800">HOME FUND</button></a>
             </div>
