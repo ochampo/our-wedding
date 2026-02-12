@@ -17,6 +17,7 @@ import AddToCalendar from './AddToCalendar.jsx';
 import HeartLogo from './components/HeartLogo.jsx';
 import { parseTimeData } from './utils/dateHelpers';
 import watercolor_floral from './components/images/watercolor_floral.jpg';
+import RenderSchedule from './RenderSchedule.jsx';
 
 const WeddingSite = () => {
   const navigate = useNavigate();
@@ -213,7 +214,7 @@ const WeddingSite = () => {
           
           {/* HEADER (Wrapped in Glass Card for readability) */}
           <div className="text-center mb-16">
-            <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60">
+            <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60 mb-8">
                 <h2 className="text-3xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
                 <p className="text-slate-600 text-base tracking-wide font-medium">
                   Please join us for the ceremony followed by the reception.
@@ -225,32 +226,10 @@ const WeddingSite = () => {
                   RSVP
                 </button>
             </div>
-          </div>
+                            <RenderSchedule/>
 
-          {/* GRID OF CARDS */}
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-center">
-            {LOCATIONS.map(loc => {
-              const { startDate, endDate } = parseTimeData(loc.time);
-              let title = loc.title.replace("The", "")
-              return (
-                <div key={loc.id} className="flex flex-col items-center gap-6">
-                  {/* LocationCard usually has its own background, so it pops nicely here */}
-                  <LocationCard data={loc} />
-                  
-                  {/* Add To Calendar Button */}
-                  <div className="bg-white/60 backdrop-blur-sm p-2 rounded-xl">
-                      <AddToCalendar
-                        title={` Lorraine & Daniel's Wedding ${title}`}
-                        description={loc.type === 'ceremony' ? "Join us for our nuptial mass." : "Dinner, drinks, and dancing!"}
-                        location={loc.address}
-                        startDate={startDate}
-                        endDate={endDate}
-                      />
-                  </div>
-                </div>
-              );
-            })}
           </div>
+       
         </div>
       </section>
 

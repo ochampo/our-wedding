@@ -236,7 +236,7 @@ const WeddingCrossword = () => {
                 return (
                   <div key={`${r}-${c}`} className={`relative w-full h-full transition-colors duration-300 ${bgClass}`}>
                     {cellNum && (
-                      <span className={`absolute top-[1px] left-[1px] text-[6px] md:text-[9px] leading-none font-bold pointer-events-none z-10 ${isCorrect ? 'text-emerald-800' : 'text-purple-900'}`}>
+                      <span className={`absolute top-[1px] left-[1px] text-[10px] md:text-[20px] leading-none font-bold pointer-events-none z-10 ${isCorrect ? 'text-emerald-800' : 'text-purple-900'}`}>
                         {cellNum}
                       </span>
                     )}

@@ -89,7 +89,7 @@ const RenderTravel = () => {
             <p className="text-xl text-slate-900 " style={textGlow}>Be sure to book by <span className="text-purple-900">June 5th</span> to get the group rate.</p>
           </div>
           <div className="text-center">
-            <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="inline-block bg-purple-900/90 text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-purple-800 transition-all shadow-lg">BOOK YOUR ROOM</a>
+            <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1770859259138&key=GRP&app=resvlink&_branch_match_id=1536236514237964114&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi3OyczLtgdK2ALZZSCOWmaKraG5uYGFqaWRqaWhsYVadmqlrXtQgFpdUWpaKlB3Xnp8UlF%2BeXFqka1zRlF%2BbioASgIVZ2AAAAA%3D" target="_blank" rel="noopener noreferrer" className="inline-block bg-purple-900/90 text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-purple-800 transition-all shadow-lg">BOOK YOUR ROOM</a>
           </div>
         </div>
       </div>

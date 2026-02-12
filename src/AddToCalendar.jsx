@@ -72,7 +72,7 @@ END:VCALENDAR`.trim();
         href={googleUrl}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center gap-2 px-5 py-3 bg-purple-100 hover:bg-purple-200 text-purple-900 rounded-l-full border-r border-purple-200 font-bold uppercase tracking-widest text-xs transition-colors"
+        className="flex items-center gap-2 px-5 py-3 bg-purple-300 hover:bg-purple-200 text-purple-900 rounded-l-full border-r border-purple-200 font-bold uppercase tracking-widest text-xs transition-colors"
       >
         <Calendar size={16} />
         Google Calendar
@@ -82,7 +82,7 @@ END:VCALENDAR`.trim();
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-3 bg-purple-100 hover:bg-purple-200 text-purple-900 rounded-r-full transition-colors"
+        className="px-3 py-3 bg-purple-300 hover:bg-purple-200 text-purple-900 rounded-r-full transition-colors"
       >
         <ChevronDown size={16} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
