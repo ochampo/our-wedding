@@ -195,6 +195,9 @@ const WeddingCrossword = () => {
             <div className="inline-block p-3 bg-purple-100/80 rounded-full mb-2 shadow-inner">
                <PenTool className="text-purple-900" size={20} />
             </div>
+          <h2 className="text-3xl font-serif italic text-purple-900 mb-4">How Well Do You Know Us?</h2>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-purple-900 font-bold mb-8">✨ Test Your Knowledge — Can You Crack the Crossword? ✨</p>
+
         </div>
 
         {/* GRID */}

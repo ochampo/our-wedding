@@ -345,17 +345,9 @@ const WeddingSite = () => {
 
   {/* --- CONTENT (Relative z-10 makes it sit ON TOP of the image) --- */}
   <div className="relative z-10 max-w-4xl mx-auto text-center">
-    <div className="inline-block p-4 bg-white/80 backdrop-blur-md rounded-full mb-6 shadow-sm border border-purple-100/50">
-        <h2 className="text-3xl font-serif italic text-purple-900">How Well Do You Know Us?</h2>
-    </div>
-    
-    <div className="mb-8">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-purple-900 font-bold bg-white/60 inline-block px-6 py-3 rounded-full backdrop-blur-sm border border-white/50 shadow-sm">
-        ✨ Test Your Knowledge — Can You Crack the Crossword? ✨
-      </p>
-    </div>
     
     {/* The Crossword Component (Transparent) */}
+    
     <WeddingCrossword />
   </div>
 </section>
