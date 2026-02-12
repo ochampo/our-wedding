@@ -10,13 +10,16 @@ const RenderSchedule = () => {
   const textGlow = {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.9), 0 0 4px rgba(255, 255, 255, 1)'
   };
-       const { ceremonyStartTime, ceremonyEndTime } = parseTimeData("2:00 PM - 3:00 PM");
-        const { receptionStartTime, receptionEndTime } = parseTimeData("5:30 PM - 10:30 PM");
+    const { startDate: ceremonyStartTime, endDate: ceremonyEndTime } = parseTimeData("2:00 PM - 3:00 PM");
+    const { startDate: receptionStartTime, endDate: receptionEndTime } = parseTimeData("5:30 PM - 10:30 PM");
+       
+        
 
 
 
   return (
     <main className="relative min-h-screen w-full">
+    
 
       {/* --- MOBILE WALLPAPER (Flex Stack - No Overlap) --- */}
 
@@ -47,6 +50,7 @@ const RenderSchedule = () => {
                         location={"37588 Fremont Blvd, Fremont, CA 94536"}
                         startDate={ceremonyStartTime}
                         endDate={ceremonyEndTime}
+                        
                       />
         </div>
 

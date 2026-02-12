@@ -31,9 +31,6 @@ const AddToCalendar = ({
   // 1. Google Calendar Link (Explicitly set to Pacific Time)
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}&ctz=${timezone}`;
 
-  // 2. Outlook Link
-  const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&startdt=${start}&enddt=${end}&subject=${encodeURIComponent(title)}&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-
   // 3. Apple / iCal (.ics file)
   const handleDownloadICS = () => {
     const icsContent = `
@@ -57,7 +54,7 @@ END:VCALENDAR`.trim();
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', 'event-pacific-time.ics');
+    link.setAttribute('download', `${title}.ics`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -95,16 +92,6 @@ END:VCALENDAR`.trim();
                 Other Calendars
             </span>
             
-            <a
-              href={outlookUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-900 transition-colors"
-            >
-              <Mail size={14} />
-              Outlook
-            </a>
             
             <button
               onClick={handleDownloadICS}
