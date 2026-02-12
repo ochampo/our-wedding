@@ -1,10 +1,10 @@
 import { BookOpen } from "lucide-react";
 
 const RenderStory = () => (
-  <main className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+  <div className="w-full animate-in fade-in duration-700">
     
     {/* GLASS CARD CONTAINER */}
-    <div className="bg-white/80 backdrop-blur-md p-6 md:p-12 rounded-3xl border border-white/60 shadow-xl">
+    <div className="bg-white/30 backdrop-blur-xl p-2 md:p-8 rounded-3xl border border-white/40 shadow-2xl max-w-4xl mx-auto">
       
       <BookOpen className="mx-auto text-purple-900 mb-6" size={40} />
       <h2 className="text-4xl md:text-5xl text-center text-purple-900 mb-12 font-light italic">Our Story</h2>
@@ -36,7 +36,7 @@ const RenderStory = () => (
 
       </div>
     </div>
-  </main>
+  </div>
 );
 
 export default RenderStory;
