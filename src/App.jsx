@@ -112,227 +112,131 @@ const WeddingSite = () => {
   };
 
   // --- SUB-RENDER COMPONENTS ---
-  const renderHome = () => (
-    <main className="animate-in fade-in duration-1000">
-      {/* 1. HERO SECTION */}
-      <header className="h-screen w-full relative flex flex-col items-center justify-between py-12 md:py-16 text-center px-4 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="./CoverPhoto.jpg"
-            alt="Lorraine and Daniel"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
-        </div>
-
-        <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-300">
-          <p className="tracking-[0.5em] uppercase text-[10px] md:text-base font-sans font-semibold text-white/90">
-            We're getting married
-          </p>
-        </div>
-
-        <div className="relative z-10 text-white space-y-4 md:space-y-8 mt-16 md:mt-24">
-          <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
-            <h1 className="px-4 text-5xl md:text-9xl font-light italic leading-none drop-shadow-lg">
-              Lorraine
-              <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-70">&</span>
-              Daniel
-            </h1>
-            <div className="flex flex-col items-center gap-2 md:gap-3 mt-3 md:mt-4">
-              <p className="text-3xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
-                July 3, 2026
-              </p>
-            </div>
-          </div>
-
-          {/* Countdown Display */}
-          <div className="grid grid-cols-4 gap-4 md:gap-12 max-w-lg mx-auto pt-4 md:pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
-            {[
-              { label: 'Days', value: timeLeft.days },
-              { label: 'Hrs', value: timeLeft.hours },
-              { label: 'Mins', value: timeLeft.minutes },
-              { label: 'Secs', value: timeLeft.seconds }
-            ].map((t, i) => (
-              <div key={i} className="text-center">
-                <span className="block text-xl md:text-4xl font-serif italic font-light">{t.value}</span>
-                <span className="block text-[8px] md:text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative z-10 pb-4 md:pb-8">
-          <div className="animate-bounce text-white flex flex-col items-center">
-            <p className="text-[8px] md:text-xs uppercase tracking-widest bg-black/30 px-3 py-1.5 md:px-4 md:py-2 rounded-full backdrop-blur-sm">
-              Scroll for Details
-            </p>
-
-            {/* Mobile: Simple chevron arrows */}
-            <div className="md:hidden mt-2 flex flex-col items-center">
-              <svg className="w-5 h-5 text-white/80 -mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-              <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-
-            {/* Desktop: Mouse scroll indicator */}
-            <div className="hidden md:flex mt-3 w-10 h-14 border-2 border-white/50 rounded-full justify-center pt-2">
-              <div className="w-2 h-4 bg-white/70 rounded-full animate-pulse" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-{/* 2. LOCATIONS & TIMELINE SECTION */}
-      <section className="relative py-24 px-6 overflow-hidden min-h-screen">
-        
-        {/* --- BACKGROUND WALLPAPER --- */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* A. MOBILE STACK (3 Images to prevent stretching) */}
-          <div className="block md:hidden w-full h-full flex flex-col">
-             <div className="flex-1 relative w-full overflow-hidden">
-                 <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-50 object-top" />
-             </div>
-             <div className="flex-1 relative w-full overflow-hidden -mt-10">
-                 <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-30 scale-x-[-1]" />
-             </div>
-             <div className="h-auto relative w-full overflow-hidden -mt-10">
-                 <img src={watercolor_floral} alt="bg" className="w-full h-auto object-cover opacity-60 rotate-180" />
-             </div>
-          </div>
-
-          {/* B. DESKTOP SINGLE IMAGE */}
-          <div className="hidden md:block w-full h-full">
-             <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-40" />
-          </div>
-        </div>
-
-        {/* --- CONTENT --- */}
-        <div className="relative z-10 max-w-5xl mx-auto">
-          
-          {/* HEADER (Wrapped in Glass Card for readability) */}
-          <div className="text-center mb-16">
-            <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60 mb-8">
-                <h2 className="text-3xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
-                <p className="text-slate-600 text-base tracking-wide font-medium">
-                  Please join us for the ceremony followed by the reception.
-                </p>
-                <button
-                  onClick={() => navigateTo('RSVP')}
-                  className="bg-purple-900 text-white px-8 py-4 rounded-full mt-8 text-base font-bold uppercase tracking-widest shadow-lg hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
-                >
-                  RSVP
-                </button>
-            </div>
-                            <RenderSchedule/>
-
-          </div>
-       
-        </div>
-      </section>
-
-{/* 3. OUR STORY SECTION */}
-<section className="relative py-24 px-6 overflow-hidden min-h-screen flex items-center justify-center">
-
-  {/* --- BACKGROUND WALLPAPER --- */}
-  <div className="absolute inset-0 z-0 pointer-events-none">
+const renderHome = () => (
+  <main className="relative animate-in fade-in duration-1000 bg-slate-50">
     
-    {/* A. MOBILE STACK (Keep this as is, it's already optimized for scrolling) */}
-    <div className="block md:hidden w-full h-full flex flex-col">
-       <div className="flex-1 relative w-full overflow-hidden">
-           <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-50 object-top" />
-       </div>
-       <div className="flex-1 relative w-full overflow-hidden -mt-10">
-           <img src={watercolor_floral} alt="bg" className="w-full h-full object-cover opacity-30 scale-x-[-1]" />
-       </div>
-       <div className="h-auto relative w-full overflow-hidden -mt-10">
-           <img src={watercolor_floral} alt="bg" className="w-full h-auto object-cover opacity-60 rotate-180" />
-       </div>
+    {/* --- 1. GLOBAL BACKGROUNDS --- */}
+    
+    {/* DESKTOP: One big fixed image (Unchanged) */}
+    <div className="hidden md:block fixed inset-0 z-0 pointer-events-none">
+      <img 
+        src={watercolor_floral} 
+        alt="Wedding Background" 
+        className="w-full h-full object-cover opacity-60" 
+      />
     </div>
 
-    {/* B. DESKTOP SINGLE IMAGE (MIRRORED) */}
-    <div className="hidden md:block w-full h-full">
-       {/* ADDED: scale-x-[-1] 
-           This flips the image horizontally. 
-           Now the flowers will be on the opposite side of the section above it!
-       */}
-       <img 
-         src={watercolor_floral} 
-         alt="bg" 
-         className="w-full h-full object-cover opacity-40 rotate-180 scale-x-[-1]" 
-       />
-    </div>
-
-  </div>
-
-  {/* --- CONTENT WRAPPER --- */}
-  <div className="relative z-10 w-full max-w-3xl mx-auto text-center">
-    <RenderStory />
-  </div>
-
-</section>
-
-
-      {/* 4. GAMES SECTION */}
-<section id="crossword-section" className="relative py-24 px-6 overflow-hidden min-h-screen">
-  
-  {/* --- BACKGROUND CONTAINER --- */}
-  <div className="absolute inset-0 z-0 pointer-events-none">
-    
-    {/* A. MOBILE BACKGROUND (The "Stack" Fix) 
-        - flex-col: Stacks images vertically
-        - h-full: Fills the entire section height
+    {/* MOBILE: Tiled Wallpaper (Scaled to 50%) 
+        - '50%' means the image fits twice across the screen width.
     */}
-    <div className="block md:hidden w-full h-full flex flex-col justify-between">
-       {/* 1. Top Flower */}
-       <div className="w-full flex-1 relative">
-          <img 
-            src={watercolor_floral} 
-            alt="Top" 
-            className="w-full h-full object-cover opacity-50 object-top" 
-          />
-       </div>
-
-       {/* 2. Middle Flower (Flipped & Pulled up slightly to blend) */}
-       <div className="w-full flex-1 relative -my-10">
-          <img 
-            src={watercolor_floral} 
-            alt="Mid" 
-            className="w-full h-full object-cover opacity-30 rotate-360" 
-          />
-       </div>
-
-       {/* 3. Bottom Flower (Footer) */}
-       <div className="w-full h-auto relative">
-          <img 
-            src={watercolor_floral} 
-            alt="Bot" 
-            className="w-full h-auto object-cover opacity-60 rotate-180" 
-          />
-       </div>
+    <div 
+      className="block md:hidden fixed inset-0 z-0 pointer-events-none opacity-60"
+      style={{
+        backgroundImage: `url(${watercolor_floral})`,
+        backgroundRepeat: 'repeat',
+        backgroundSize: '320%' // Scaled to half width
+      }}
+    >
+       {/* Subtle white wash to ensure text readability */}
+       <div className="absolute inset-0 bg-white/30" />
     </div>
 
-    {/* B. DESKTOP BACKGROUND (Single Image) */}
-    <img 
-      src={watercolor_floral} 
-      alt="Floral Background" 
-      className="hidden md:block w-full h-full object-cover opacity-50 rotate-180 scale-x-[-1] scale-y-[-1]" 
-    />
-  </div>
 
-  {/* --- CONTENT (Relative z-10 makes it sit ON TOP of the image) --- */}
-  <div className="relative z-10 max-w-4xl mx-auto text-center">
-    
-    {/* The Crossword Component (Transparent) */}
-    
-    <WeddingCrossword />
-  </div>
-</section>
-    </main>
-  );
+    {/* --- 2. HERO SECTION --- */}
+    <header className="h-screen w-full relative z-20 flex flex-col items-center justify-between py-12 md:py-16 text-center px-4 overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="./CoverPhoto.jpg"
+          alt="Lorraine and Daniel"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+      </div>
 
+      <div className="relative z-10 text-white space-y-4 md:space-y-8 mt-16 md:mt-24">
+        <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
+          <h1 className="px-4 text-5xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+            Lorraine
+            <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-70">&</span>
+            Daniel
+          </h1>
+          <div className="flex flex-col items-center gap-2 md:gap-3 mt-3 md:mt-4">
+            <p className="text-3xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
+              July 3, 2026
+            </p>
+          </div>
+        </div>
+
+        {/* Countdown */}
+        <div className="grid grid-cols-4 gap-4 md:gap-12 max-w-lg mx-auto pt-4 md:pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+          {[
+            { label: 'Days', value: timeLeft.days },
+            { label: 'Hrs', value: timeLeft.hours },
+            { label: 'Mins', value: timeLeft.minutes },
+            { label: 'Secs', value: timeLeft.seconds }
+          ].map((t, i) => (
+            <div key={i} className="text-center">
+              <span className="block text-xl md:text-4xl font-serif italic font-light">{t.value}</span>
+              <span className="block text-[8px] md:text-[9px] uppercase tracking-widest text-white/70 mt-1">{t.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 pb-4 md:pb-8">
+        <div className="animate-bounce text-white flex flex-col items-center">
+          <p className="text-[8px] md:text-xs uppercase tracking-widest bg-black/30 px-3 py-1.5 md:px-4 md:py-2 rounded-full backdrop-blur-sm">
+            Scroll for Details
+          </p>
+          <div className="hidden md:flex mt-3 w-10 h-14 border-2 border-white/50 rounded-full justify-center pt-2">
+            <div className="w-2 h-4 bg-white/70 rounded-full animate-pulse" />
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    {/* --- 3. ITINERARY SECTION --- */}
+    <section className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
+      <div className="w-full max-w-5xl text-center">
+        
+        {/* Title Box - Matches Desktop Style */}
+        <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60 mb-12">
+          <h2 className="text-4xl md:text-5xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
+          <p className="text-slate-700 text-lg tracking-wide font-medium mb-6">
+            Please join us for the ceremony followed by the reception.
+          </p>
+          <button
+            onClick={() => navigateTo('RSVP')}
+            className="bg-purple-900 text-white px-8 py-4 rounded-full mt-4 text-base font-bold uppercase tracking-widest shadow-lg hover:bg-purple-800 hover:scale-105 transition-all transform active:scale-95"
+          >
+            RSVP
+          </button>
+        </div>
+
+        <RenderSchedule />
+      </div>
+    </section>
+
+
+    {/* --- 4. OUR STORY SECTION --- */}
+    <section className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
+      <div className="w-full max-w-3xl">
+        <RenderStory />
+      </div>
+    </section>
+
+
+    {/* --- 5. GAMES SECTION --- */}
+    <section id="crossword-section" className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
+      <div className="w-full max-w-4xl text-center">
+        <h2 className="text-3xl font-light italic text-purple-900 mb-8">Crossword Puzzle</h2>
+        <WeddingCrossword />
+      </div>
+    </section>
+
+  </main>
+);
   const renderContent = () => {
     switch (currentPage) {
       case 'HOME': return renderHome();

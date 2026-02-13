@@ -18,7 +18,7 @@ const RenderSchedule = () => {
 
 
   return (
-    <main className="relative min-h-screen w-full">
+    <div className="w-full animate-in fade-in duration-700">
     
 
       {/* --- MOBILE WALLPAPER (Flex Stack - No Overlap) --- */}
@@ -81,7 +81,7 @@ const RenderSchedule = () => {
                       />
         </div>
         </div>
-    </main>
+    </div>
   );
 };
 
