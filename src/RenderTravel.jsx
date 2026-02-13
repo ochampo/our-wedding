@@ -11,23 +11,17 @@ const RenderTravel = () => {
     <main className="relative min-h-screen w-full bg-slate-50">
 
       {/* --- MOBILE WALLPAPER (Flex Stack - No Overlap) --- */}
-      <div className="block md:hidden fixed inset-0 z-0 w-full h-[100svh] pointer-events-none flex flex-col justify-between">
+      <div 
+      className="block md:hidden fixed inset-0 z-0 pointer-events-none opacity-60"
+      style={{
+        backgroundImage: `url(${watercolor_floral})`,
+        backgroundRepeat: 'repeat',
+        backgroundSize: '320%' 
+      }}
+    >
+       <div className="absolute inset-0 bg-white/30" />
+    </div> 
         
-        {/* 1. Top Flower */}
-        <div className="w-full flex-1 relative">
-            <img src={watercolor_floral} alt="Top" className="w-full h-full object-cover opacity-60 object-top" />
-        </div>
-
-        {/* 2. Middle Flower (Flipped) */}
-        <div className="w-full flex-1 relative -my-10"> {/* Negative margin pulls them slightly closer to blend seams */}
-            <img src={watercolor_floral} alt="Mid" className="w-full h-full object-cover opacity-40 scale-x-[-1]" />
-        </div>
-        
-        {/* 3. Bottom Flower (Footer) */}
-        <div className="w-full h-auto relative">
-             <img src={watercolor_floral} alt="Bot" className="w-full h-auto object-cover opacity-80 rotate-180" />
-        </div>
-      </div>
 
       {/* --- DESKTOP BACKGROUND --- */}
       <img src={watercolor_floral} alt="Background" className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60" />
