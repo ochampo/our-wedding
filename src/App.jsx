@@ -115,9 +115,11 @@ const WeddingSite = () => {
 const renderHome = () => (
   <main className="relative animate-in fade-in duration-1000 bg-slate-50">
     
-    {/* --- 1. GLOBAL BACKGROUNDS --- */}
+    {/* =========================================
+        1. GLOBAL BACKGROUNDS
+       ========================================= */}
     
-    {/* DESKTOP: One big fixed image (Unchanged) */}
+    {/* DESKTOP: One big fixed image */}
     <div className="hidden md:block fixed inset-0 z-0 pointer-events-none">
       <img 
         src={watercolor_floral} 
@@ -126,49 +128,62 @@ const renderHome = () => (
       />
     </div>
 
-    {/* MOBILE: Tiled Wallpaper (Scaled to 50%) 
-        - '50%' means the image fits twice across the screen width.
-    */}
+    {/* MOBILE: Tiled Wallpaper (50% Scaling) */}
     <div 
       className="block md:hidden fixed inset-0 z-0 pointer-events-none opacity-60"
       style={{
         backgroundImage: `url(${watercolor_floral})`,
         backgroundRepeat: 'repeat',
-        backgroundSize: '320%' // Scaled to half width
+        backgroundSize: '320%' 
       }}
     >
-       {/* Subtle white wash to ensure text readability */}
        <div className="absolute inset-0 bg-white/30" />
     </div>
 
 
-    {/* --- 2. HERO SECTION --- */}
-    <header className="h-screen w-full relative z-20 flex flex-col items-center justify-between py-12 md:py-16 text-center px-4 overflow-hidden">
+    {/* =========================================
+        2. HERO SECTION
+       ========================================= */}
+    <header className="h-screen w-full relative z-20 flex flex-col justify-end items-center pb-12 text-center px-4 overflow-hidden">
+      
+      {/* Background Photo */}
       <div className="absolute inset-0 z-0">
         <img
           src="./CoverPhoto.jpg"
           alt="Lorraine and Daniel"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+        {/* Gradient to make text pop */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
       </div>
 
-      <div className="relative z-10 text-white space-y-4 md:space-y-8 mt-16 md:mt-24">
+      {/* --- MAIN TEXT CONTENT --- 
+          mb-16: This pushes the text block UP away from the scroll indicator.
+          If you want it higher, change to mb-24. If lower, mb-8.
+      */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto text-white space-y-6 mb-16 md:mb-24">
+        
+        {/* Top Label */}
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+          <p className="tracking-[0.5em] uppercase text-[10px] md:text-sm font-sans font-semibold text-white/90 mb-2">
+            We're getting married
+          </p>
+        </div>
+
+        {/* Names & Date */}
         <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
-          <h1 className="px-4 text-5xl md:text-9xl font-light italic leading-none drop-shadow-lg">
+          <h1 className="text-5xl md:text-9xl font-light italic leading-none drop-shadow-xl">
             Lorraine
-            <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-70">&</span>
+            <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-80">&</span>
             Daniel
           </h1>
-          <div className="flex flex-col items-center gap-2 md:gap-3 mt-3 md:mt-4">
-            <p className="text-3xl md:text-6xl font-serif italic tracking-wide text-white drop-shadow-md">
-              July 3, 2026
-            </p>
-          </div>
+          <p className="text-3xl md:text-6xl font-serif italic tracking-wide mt-4 drop-shadow-md">
+            July 3, 2026
+          </p>
         </div>
 
         {/* Countdown */}
-        <div className="grid grid-cols-4 gap-4 md:gap-12 max-w-lg mx-auto pt-4 md:pt-8 animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+        <div className="grid grid-cols-4 gap-4 md:gap-12 max-w-lg mx-auto pt-6 animate-in slide-in-from-bottom-8 duration-1000 delay-700 border-t border-white/20 mt-6">
           {[
             { label: 'Days', value: timeLeft.days },
             { label: 'Hrs', value: timeLeft.hours },
@@ -181,26 +196,30 @@ const renderHome = () => (
             </div>
           ))}
         </div>
+
       </div>
 
-      <div className="relative z-10 pb-4 md:pb-8">
-        <div className="animate-bounce text-white flex flex-col items-center">
-          <p className="text-[8px] md:text-xs uppercase tracking-widest bg-black/30 px-3 py-1.5 md:px-4 md:py-2 rounded-full backdrop-blur-sm">
-            Scroll for Details
-          </p>
-          <div className="hidden md:flex mt-3 w-10 h-14 border-2 border-white/50 rounded-full justify-center pt-2">
-            <div className="w-2 h-4 bg-white/70 rounded-full animate-pulse" />
-          </div>
-        </div>
+      {/* --- SCROLL INDICATOR (Restored!) --- 
+          This sits at the very bottom (pb-12) independent of the text above.
+      */}
+      <div className="relative z-10 animate-bounce flex flex-col items-center">
+        <p className="text-[8px] md:text-xs uppercase tracking-widest bg-black/30 px-3 py-1.5 rounded-full backdrop-blur-sm text-white mb-2">
+          Scroll for Details
+        </p>
+        {/* Simple Chevron Arrow */}
+        <div className="w-5 h-5 border-b-2 border-r-2 border-white transform rotate-45" />
       </div>
+
     </header>
 
 
-    {/* --- 3. ITINERARY SECTION --- */}
+    {/* =========================================
+        3. ITINERARY SECTION
+       ========================================= */}
     <section className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
       <div className="w-full max-w-5xl text-center">
         
-        {/* Title Box - Matches Desktop Style */}
+        {/* Title Box */}
         <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60 mb-12">
           <h2 className="text-4xl md:text-5xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
           <p className="text-slate-700 text-lg tracking-wide font-medium mb-6">
@@ -219,7 +238,9 @@ const renderHome = () => (
     </section>
 
 
-    {/* --- 4. OUR STORY SECTION --- */}
+    {/* =========================================
+        4. OUR STORY SECTION
+       ========================================= */}
     <section className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
       <div className="w-full max-w-3xl">
         <RenderStory />
@@ -227,7 +248,9 @@ const renderHome = () => (
     </section>
 
 
-    {/* --- 5. GAMES SECTION --- */}
+    {/* =========================================
+        5. GAMES SECTION
+       ========================================= */}
     <section id="crossword-section" className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
       <div className="w-full max-w-4xl text-center">
         <h2 className="text-3xl font-light italic text-purple-900 mb-8">Crossword Puzzle</h2>
