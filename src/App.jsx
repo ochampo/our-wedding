@@ -147,15 +147,17 @@ const renderHome = () => (
     <header className="h-screen w-full relative z-20 flex flex-col justify-end items-center pb-12 text-center px-4 overflow-hidden">
       
       {/* Background Photo */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="./CoverPhoto.jpg"
-          alt="Lorraine and Daniel"
-          className="w-full h-full object-cover"
-        />
-        {/* Gradient to make text pop */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-      </div>
+<div className="absolute inset-0 z-0">
+  <img
+    src="./CoverPhoto.jpg"
+    alt="Lorraine and Daniel"
+    // BEST PRACTICE: Subtle brightness boost, don't overdo it
+    className="w-full h-full object-cover brightness-125"
+  />
+  
+  {/* BEST PRACTICE: A lighter gradient, but keeping it present for safety */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+</div>
 
       {/* --- MAIN TEXT CONTENT --- 
           mb-16: This pushes the text block UP away from the scroll indicator.
@@ -257,8 +259,10 @@ const renderHome = () => (
         <WeddingCrossword />
       </div>
     </section>
+ 
 
   </main>
+
 );
   const renderContent = () => {
     switch (currentPage) {
@@ -274,6 +278,7 @@ const renderHome = () => (
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden relative">
       <FallingHearts />
+      
 
       <style>{`
         .curtain-texture {
@@ -356,6 +361,9 @@ const renderHome = () => (
           </nav>
 
           {renderContent()}
+             <div className="absolute inset-0 pointer-events-none z-0">
+            <FallingHearts />
+            </div>
 
           <footer className="py-20 text-center text-slate-300 text-[10px] tracking-[0.6em] uppercase font-sans">
             <p>© 2026 Lorraine Goveas & Daniel Ocampo</p>
