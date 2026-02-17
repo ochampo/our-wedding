@@ -321,7 +321,13 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                         <p className="font-bold text-purple-900 font-serif italic text-xl opacity-80 mb-2">{member.name}</p>
                         <span className={`text-xs font-bold px-2 py-1 rounded-md uppercase tracking-wider ${member.existingRSVP.attendance === 'yes' ? 'bg-green-100 text-green-800' : 'bg-slate-200 text-slate-500'}`}>
                             {getAttendanceLabel(member.existingRSVP.attendance)}
+                            
                         </span>
+                        <div className="text-sm text-slate-800 pl-3 border-l-2 border-purple-300 mt-2 font-medium">
+                                <p>Plate: {member.existingRSVP.food}</p>
+                                {member.existingRSVP.dietary !== "None" && <p className="italic text-xs mt-1">Dietary: {member.existingRSVP.dietary}</p>}
+                                {member.existingRSVP.music !== "None" && <p className="italic text-xs mt-1">🎵 {member.existingRSVP.music}</p>}
+                        </div>
                     </div>
                   )
               }
