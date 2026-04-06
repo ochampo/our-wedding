@@ -1,6 +1,7 @@
 import { QRCodeSVG } from 'qrcode.react';
 import { Gift } from 'lucide-react';
 import watercolor_floral from './components/images/watercolor_floral.jpg';
+import config from './config/weddingConfig';
 
 const RenderGift = () => {
   const textGlow = {
@@ -9,14 +10,14 @@ const RenderGift = () => {
 
   return (
     <main className="relative min-h-screen w-full bg-slate-50">
-      
+
       {/* --- MOBILE WALLPAPER (Flex Stack) --- */}
-         <div 
+         <div
       className="block md:hidden fixed inset-0 z-0 pointer-events-none opacity-60"
       style={{
         backgroundImage: `url(${watercolor_floral})`,
         backgroundRepeat: 'repeat',
-        backgroundSize: '320%' 
+        backgroundSize: '320%'
       }}
     >
        <div className="absolute inset-0 bg-white/30" />
@@ -27,44 +28,31 @@ const RenderGift = () => {
       {/* --- MOBILE CONTENT --- */}
       <div className="block md:hidden relative z-10 py-12 px-4 mt-20 pb-40">
         <div className="bg-white/40 backdrop-blur-md rounded-3xl shadow-xl p-6 border border-white/60">
-          
+
           <div className="flex justify-center mb-4">
             <div className="p-3 bg-purple-100/80 rounded-full shadow-sm">
                <Gift className="text-purple-900" size={24} />
             </div>
           </div>
-          
+
           <h2 className="text-4xl text-center text-purple-900 mb-4 font-serif italic" style={textGlow}>Gift</h2>
           <p className="text-center text-slate-900 mb-8 text-sm" style={textGlow}>
             Your presence at our wedding is the greatest gift of all! If you would like to give something more, we kindly prefer a monetary gift to help us start our next chapter together. Thank you so much for your generosity and love.
           </p>
 
           <div className="space-y-6">
-            {/* Daniel Mobile */}
-            <div className="bg-white/40 p-6 rounded-2xl text-center border border-white/50 shadow-sm">
-              <p className="text-purple-900 font-bold text-lg mb-2" style={textGlow}>Daniel</p>
-                            <p className="text-purple-600 font-bold text-base mb-2" style={textGlow}>@ochampo</p>
-
-              <div className="bg-white p-2 rounded-lg inline-block mb-3 shadow-sm border border-slate-100">
-                <QRCodeSVG value="https://venmo.com/u/ochampo" size={120} fgColor="#4C1D95" />
+            {config.payment.map((p) => (
+              <div key={p.handle} className="bg-white/40 p-6 rounded-2xl text-center border border-white/50 shadow-sm">
+                <p className="text-purple-900 font-bold text-lg mb-2" style={textGlow}>{p.name}</p>
+                <p className="text-purple-600 font-bold text-base mb-2" style={textGlow}>{p.handle}</p>
+                <div className="bg-white p-2 rounded-lg inline-block mb-3 shadow-sm border border-slate-100">
+                  <QRCodeSVG value={p.url} size={120} fgColor="#4C1D95" />
+                </div>
+                <a href={p.url} className="block w-full bg-purple-900/90 backdrop-blur-sm text-white py-3 rounded-xl font-bold text-sm mt-2 shadow-md">
+                  {p.fundLabel}
+                </a>
               </div>
-              <a href="https://venmo.com/u/ochampo" className="block w-full bg-purple-900/90 backdrop-blur-sm text-white py-3 rounded-xl font-bold text-sm mt-2 shadow-md">
-                Honeymoon Fund
-              </a>
-            </div>
-
-            {/* Lorraine Mobile */}
-            <div className="bg-white/40 p-6 rounded-2xl text-center border border-white/50 shadow-sm">
-              <p className="text-purple-900 font-bold text-lg mb-2" style={textGlow}>Lorraine</p>
-               <p className="text-purple-600 font-bold text-base mb-2" style={textGlow}>@lorrainegoveas</p>
-
-              <div className="bg-white p-2 rounded-lg inline-block mb-3 shadow-sm border border-slate-100">
-                <QRCodeSVG value="https://venmo.com/u/lorrainegoveas" size={120} fgColor="#4C1D95" />
-              </div>
-              <a href="https://venmo.com/u/lorrainegoveas" className="block w-full bg-purple-900/90 backdrop-blur-sm text-white py-3 rounded-xl font-bold text-sm mt-2 shadow-md">
-                Home Fund
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -77,20 +65,14 @@ const RenderGift = () => {
             Your presence at our wedding is the greatest gift of all! If you would like to give something more, we kindly prefer a monetary gift to help us start our next chapter together. Thank you so much for your generosity and love.
           </p>
           <div className="grid grid-cols-2 gap-8 max-w-3xl mx-auto">
-            <div className="bg-white/40 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg text-center hover:-translate-y-1 transition-transform">
-              <p className="text-purple-900 text-2xl mb-2 font-bold" style={textGlow}>Daniel</p>
-            <p className="text-purple-600 font-bold text-xl mb-2" style={textGlow}>@ochampo</p>
-
-              <div className="bg-white p-4 rounded-xl mb-6 shadow-sm inline-block"><QRCodeSVG value="https://venmo.com/u/ochampo" size={140} fgColor="#4C1D95" /></div>
-              <a href="https://venmo.com/u/ochampo" target="_blank" rel="noopener noreferrer" className="block w-full"><button className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold shadow-md hover:bg-purple-800">HONEYMOON FUND</button></a>
-            </div>
-            <div className="bg-white/40 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg text-center hover:-translate-y-1 transition-transform">
-              <p className="text-purple-900 text-2xl mb-2 font-bold" style={textGlow}>Lorraine</p>
-                <p className="text-purple-600 font-bold text-xl mb-2" style={textGlow}>@lorrainegoveas</p>
-
-              <div className="bg-white p-4 rounded-xl mb-6 shadow-sm inline-block"><QRCodeSVG value="https://venmo.com/u/lorrainegoveas" size={140} fgColor="#4C1D95" /></div>
-              <a href="https://venmo.com/u/lorrainegoveas" target="_blank" rel="noopener noreferrer" className="block w-full"><button className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold shadow-md hover:bg-purple-800">HOME FUND</button></a>
-            </div>
+            {config.payment.map((p) => (
+              <div key={p.handle} className="bg-white/40 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg text-center hover:-translate-y-1 transition-transform">
+                <p className="text-purple-900 text-2xl mb-2 font-bold" style={textGlow}>{p.name}</p>
+                <p className="text-purple-600 font-bold text-xl mb-2" style={textGlow}>{p.handle}</p>
+                <div className="bg-white p-4 rounded-xl mb-6 shadow-sm inline-block"><QRCodeSVG value={p.url} size={140} fgColor="#4C1D95" /></div>
+                <a href={p.url} target="_blank" rel="noopener noreferrer" className="block w-full"><button className="w-full py-3 bg-purple-900 text-white rounded-xl font-bold shadow-md hover:bg-purple-800">{p.fundLabel.toUpperCase()}</button></a>
+              </div>
+            ))}
           </div>
         </div>
       </div>

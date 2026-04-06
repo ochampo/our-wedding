@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Loader, Heart, Eye, EyeOff } from 'lucide-react';
 import SHA256 from 'crypto-js/sha256';
+import config from './config/weddingConfig';
 
 // Your specific image path
 import WeddingArchBg from './components/images/Floral/curtain4.png';
@@ -22,7 +23,7 @@ const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
     if (isLoading) return;
 
     const inputHash = SHA256(input.toLowerCase().trim()).toString();
-    const SECRET_HASH = "dfa3569a46b1a13c24c9f385da140f4763a3fbb70f8eebe0f29ba535145d32ca";
+    const SECRET_HASH = config.auth.secretHash;
 
     if (inputHash === SECRET_HASH) {
       onLogin();
@@ -81,7 +82,7 @@ const CurtainLogin = ({ onLogin, isLoading, isOpen }) => {
             <Heart className="text-pink-900/60 mb-4 animate-pulse" size={24} />
 
             <h1 className="font-serif italic text-3xl text-gray-900 tracking-widest mb-2 drop-shadow-sm">
-              Lorraine & Daniel
+              {config.couple.displayName}
             </h1>
             <p className="text-[10px] text-gray-700 uppercase tracking-[0.4em] mb-8 font-sans font-semibold">
               Please enter passcode

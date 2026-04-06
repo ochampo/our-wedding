@@ -1,7 +1,8 @@
 // src/utils/dateHelpers.js
 
-// Define your wedding date once here so it's easy to change later
-const WEDDING_DATE = "July 3, 2026"; 
+import config from '../config/weddingConfig';
+
+const WEDDING_DATE = config.dates.weddingDate;
 
 /**
  * Converts a time string like "2:00 PM" or "5:30 PM - 10:30 PM"

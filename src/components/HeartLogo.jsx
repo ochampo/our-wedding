@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import config from '../config/weddingConfig';
 
 const HeartLogo = ({ size = 'desktop', onClick }) => {
   const [animate, setAnimate] = useState(false);
@@ -151,7 +152,7 @@ const HeartLogo = ({ size = 'desktop', onClick }) => {
               fill="white"
               fontWeight="400"
             >
-              L
+              {config.couple.bride.initial}
             </text>
           </g>
 
@@ -172,7 +173,7 @@ const HeartLogo = ({ size = 'desktop', onClick }) => {
               fill="white"
               fontWeight="400"
             >
-              D
+              {config.couple.groom.initial}
             </text>
           </g>
 

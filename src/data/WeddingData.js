@@ -1,29 +1,30 @@
-// src/weddingData.js
-import { Gem, PartyPopper } from 'lucide-react'; // Import your icons here!
-import HolySpiritChurch from "../components/images/holyspirit.jpeg"; // Import the image
-import Bridges from "../components/images/theBridges.jpg"; // Import the image
+import { Gem, PartyPopper } from 'lucide-react';
+import HolySpiritChurch from "../components/images/holyspirit.jpeg";
+import Bridges from "../components/images/theBridges.jpg";
+import config from '../config/weddingConfig';
+
 export const LOCATIONS = [
   {
     id: 'ceremony',
     type: 'ceremony',
     title: "The Ceremony",
-    time: "2:00 PM - 3:00 PM",
-    name: "Holy Spirit Church",
-    address: "37588 Fremont Blvd, Fremont, CA",
-    mapLink: "https://www.google.com/maps/search/?api=1&query=Holy+Spirit+Church+41139+Fremont+Blvd+Fremont+CA",
-    icon: Gem, // This reference works because we imported Calendar above
+    time: config.ceremony.timeRange,
+    name: config.ceremony.name,
+    address: config.ceremony.address,
+    mapLink: config.ceremony.mapUrl,
+    icon: Gem,
     image: HolySpiritChurch
   },
   {
     id: 'reception',
     type: 'reception',
     title: "The Reception",
-    time: "5:30 PM - 10:30 PM",
-    name: "The Bridges Golf Club",
-    subName: "Garden Pavillion Room",
-    address: "9000 S Gale Ridge Rd, San Ramon",
-    mapLink: "https://www.google.com/maps/search/?api=1&query=The+Bridges+Golf+Club+9000+S+Gale+Ridge+Rd+San+Ramon",
-    icon: PartyPopper, 
+    time: config.reception.timeRange,
+    name: config.reception.name,
+    subName: config.reception.subVenue,
+    address: config.reception.address,
+    mapLink: config.reception.mapUrl,
+    icon: PartyPopper,
     image: Bridges
   }
 ];

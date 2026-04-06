@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock, Music } from 'lucide-react';
-import watercolor_floral from './components/images/watercolor_floral.jpg'; // Ensure this path is correct!
+import watercolor_floral from './components/images/watercolor_floral.jpg';
+import config from './config/weddingConfig';
 
 const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   // --- STATE (UNCHANGED) ---
@@ -177,12 +178,12 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
     <main className="relative min-h-screen w-full bg-slate-50">
 
       {/* --- MOBILE WALLPAPER (Fixed & Flex Stacked) --- */}
-      <div 
+      <div
       className="block md:hidden fixed inset-0 z-0 pointer-events-none opacity-60"
       style={{
         backgroundImage: `url(${watercolor_floral})`,
         backgroundRepeat: 'repeat',
-        backgroundSize: '320%' 
+        backgroundSize: '320%'
       }}
     >
        <div className="absolute inset-0 bg-white/30" />
@@ -190,18 +191,18 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
       {/* --- DESKTOP BACKGROUND --- */}
       <img src={watercolor_floral} alt="Background" className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-60" />
 
-      {/* --- CONTENT CONTAINER --- 
+      {/* --- CONTENT CONTAINER ---
           - Added 'pb-40' to allow scrolling past the bottom on mobile
       */}
       <div className="relative z-10 max-w-xl mx-auto py-24 px-6 pb-40">
-        
+
         {/* HEADER */}
         <div className="text-center mb-12">
             <div className="inline-block p-4 bg-white/40 backdrop-blur-md rounded-full mb-6 shadow-sm border border-white/50">
                 <Heart className="text-purple-900" size={32} />
             </div>
             <h2 className="text-6xl text-purple-900 font-serif italic mb-4" style={textGlow}>RSVP</h2>
-            <p className="text-purple-900  text-lg" style={textGlow}>Kindly RSVP by April 10th for our reception</p>
+            <p className="text-purple-900  text-lg" style={textGlow}>Kindly RSVP by {config.dates.rsvpDeadline} for our reception</p>
         </div>
 
         {/* --- VIEW 1: SEARCH --- */}
@@ -300,7 +301,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                   <p className="text-xs mt-2 font-bold">Please check your connection and try again.</p>
               </div>
             )}
-            
+
             <div className="flex justify-between items-center border-b border-purple-100/50 pb-4">
               <div className="flex items-center gap-2">
                 <Users className="text-purple-900" size={20} />
@@ -321,7 +322,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                         <p className="font-bold text-purple-900 font-serif italic text-xl opacity-80 mb-2">{member.name}</p>
                         <span className={`text-xs font-bold px-2 py-1 rounded-md uppercase tracking-wider ${member.existingRSVP.attendance === 'yes' ? 'bg-green-100 text-green-800' : 'bg-slate-200 text-slate-500'}`}>
                             {getAttendanceLabel(member.existingRSVP.attendance)}
-                            
+
                         </span>
                         <div className="text-sm text-slate-800 pl-3 border-l-2 border-purple-300 mt-2 font-medium">
                                 <p>Plate: {member.existingRSVP.food}</p>
@@ -355,22 +356,18 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                               <select name={`food-${idx}`} className="w-full py-2 pl-8 bg-transparent border-b border-purple-200 outline-none font-sans text-slate-800 text-sm font-medium cursor-pointer" required={isSelected && isAttending} defaultValue="">
                                 <option value="" disabled>Select Entrée...</option>
                                 {member.smallMeal ? (
-                                  <>
-                                    <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
-                                    <option value="No Meal">No Meal</option>
-                                  </>
+                                  config.menu.kidsOptions.map((opt) => (
+                                    <option key={opt.label} value={opt.label}>{opt.label}</option>
+                                  ))
                                 ) : (
-                                  <>
-                                    <option value="Filet Mignon">Filet Mignon</option>
-                                    <option value="Pan Seared Filet of Salmon">Salmon</option>
-                                    <option value="Spinach and Cheese Ravioli (V)">Spinach and Cheese Ravioli (V)</option>
-                                    <option value="Chicken Tenders (Kids)">Chicken Tenders (Kids)</option>
-                                  </>
+                                  config.menu.adultOptions.map((opt) => (
+                                    <option key={opt.label} value={opt.label}>{opt.displayLabel || opt.label}</option>
+                                  ))
                                 )}
                               </select>
-                              
+
                               <input name={`dietary-${idx}`} className="w-full py-2 mt-4 bg-transparent border-b border-purple-200 outline-none font-sans text-sm text-slate-800 placeholder:text-slate-400" placeholder="Dietary Restrictions (Optional)" />
-                              
+
                               <div className="relative mt-4">
                                 <Music className="absolute left-0 top-2 text-purple-300" size={16} />
                                 <input name={`music-${idx}`} className="w-full py-2 pl-8 bg-transparent border-b border-purple-200 outline-none font-sans text-sm text-slate-800 placeholder:text-slate-400" placeholder="Song Request (Optional)" />
@@ -381,7 +378,7 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
                 </div>
               );
             })}
-            
+
             <button type="submit" disabled={status === "SENDING"} className="w-full py-5 bg-purple-900 text-white rounded-full font-bold tracking-[0.3em] text-[12px] uppercase shadow-xl hover:bg-purple-800 transition-all disabled:opacity-50 hover:-translate-y-0.5 active:scale-95">
               {status === "SENDING" ? "Submitting..." : "Confirm RSVP"}
             </button>

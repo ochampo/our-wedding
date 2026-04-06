@@ -11,11 +11,13 @@ import RenderRSVP from './RenderRSVP.jsx';
 import { LOCATIONS } from './data/WeddingData';
 import LocationCard from './components/LocationCard';
 import RenderStory from './RenderStory.jsx';
+import RsvpDashboard from './components/RsvpDashboard';
 import CurtainLogin from './CurtainLogin.jsx';
 import FallingHearts from './FallingHearts.jsx';
 import AddToCalendar from './AddToCalendar.jsx';
 import HeartLogo from './components/HeartLogo.jsx';
 import { parseTimeData } from './utils/dateHelpers';
+import config from './config/weddingConfig';
 import watercolor_floral from './components/images/watercolor_floral.jpg';
 import RenderSchedule from './RenderSchedule.jsx';
 
@@ -45,6 +47,7 @@ const WeddingSite = () => {
       case '/hotel': return 'HOTEL';
       case '/gift': return 'GIFT';
       case '/qa': return 'QA';
+      case '/dashboard': return 'DASHBOARD';
       default: return 'HOME';
     }
   };
@@ -67,7 +70,7 @@ const WeddingSite = () => {
 
   // --- COUNTDOWN TIMER ---
   useEffect(() => {
-    const targetDate = new Date("July 3, 2026 14:00:00").getTime();
+    const targetDate = new Date(config.dates.weddingDateTime).getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -111,30 +114,39 @@ const WeddingSite = () => {
     });
   };
 
+  // --- DASHBOARD: auto-load data and bypass login ---
+  const isDashboard = currentPage === 'DASHBOARD';
+
+  useEffect(() => {
+    if (isDashboard) {
+      loadWeddingData();
+    }
+  }, [isDashboard]);
+
   // --- SUB-RENDER COMPONENTS ---
 const renderHome = () => (
   <main className="relative animate-in fade-in duration-1000 bg-slate-50">
-    
+
     {/* =========================================
         1. GLOBAL BACKGROUNDS
        ========================================= */}
-    
+
     {/* DESKTOP: One big fixed image */}
     <div className="hidden md:block fixed inset-0 z-0 pointer-events-none">
-      <img 
-        src={watercolor_floral} 
-        alt="Wedding Background" 
-        className="w-full h-full object-cover opacity-60" 
+      <img
+        src={watercolor_floral}
+        alt="Wedding Background"
+        className="w-full h-full object-cover opacity-60"
       />
     </div>
 
     {/* MOBILE: Tiled Wallpaper (50% Scaling) */}
-    <div 
+    <div
       className="block md:hidden fixed inset-0 z-0 pointer-events-none opacity-60"
       style={{
         backgroundImage: `url(${watercolor_floral})`,
         backgroundRepeat: 'repeat',
-        backgroundSize: '320%' 
+        backgroundSize: '320%'
       }}
     >
        <div className="absolute inset-0 bg-white/30" />
@@ -145,7 +157,7 @@ const renderHome = () => (
         2. HERO SECTION
        ========================================= */}
     <header className="h-screen w-full relative z-20 flex flex-col justify-end items-center pb-12 text-center px-4 overflow-hidden">
-      
+
       {/* Background Photo */}
 <div className="absolute inset-0 z-0">
   <img
@@ -154,17 +166,17 @@ const renderHome = () => (
     // BEST PRACTICE: Subtle brightness boost, don't overdo it
     className="w-full h-full object-cover brightness-125"
   />
-  
+
   {/* BEST PRACTICE: A lighter gradient, but keeping it present for safety */}
   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 </div>
 
-      {/* --- MAIN TEXT CONTENT --- 
+      {/* --- MAIN TEXT CONTENT ---
           mb-16: This pushes the text block UP away from the scroll indicator.
           If you want it higher, change to mb-24. If lower, mb-8.
       */}
       <div className="relative z-10 w-full max-w-4xl mx-auto text-white space-y-6 mb-16 md:mb-24">
-        
+
         {/* Top Label */}
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
           <p className="tracking-[0.5em] uppercase text-[10px] md:text-sm font-sans font-semibold text-white/90 mb-2">
@@ -175,12 +187,12 @@ const renderHome = () => (
         {/* Names & Date */}
         <div className="animate-in slide-in-from-bottom-4 duration-1000 delay-500">
           <h1 className="text-5xl md:text-9xl font-light italic leading-none drop-shadow-xl">
-            Lorraine
-            <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-80">&</span>
-            Daniel
+            {config.couple.bride.first}
+              <span className="block sm:inline font-sans font-thin text-3xl md:text-6xl align-middle mx-2 opacity-80">&</span>
+              {config.couple.groom.first}
           </h1>
           <p className="text-3xl md:text-6xl font-serif italic tracking-wide mt-4 drop-shadow-md">
-            July 3, 2026
+            {config.dates.weddingDate}
           </p>
         </div>
 
@@ -201,7 +213,7 @@ const renderHome = () => (
 
       </div>
 
-      {/* --- SCROLL INDICATOR (Restored!) --- 
+      {/* --- SCROLL INDICATOR (Restored!) ---
           This sits at the very bottom (pb-12) independent of the text above.
       */}
       <div className="relative z-10 animate-bounce flex flex-col items-center">
@@ -220,7 +232,7 @@ const renderHome = () => (
        ========================================= */}
     <section className="relative py-12 md:py-24 px-4 md:px-6 z-10 flex justify-center">
       <div className="w-full max-w-5xl text-center">
-        
+
         {/* Title Box */}
         <div className="inline-block p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-sm border border-white/60 mb-12">
           <h2 className="text-4xl md:text-5xl font-light italic text-purple-900 mb-4">The Wedding Itinerary</h2>
@@ -259,7 +271,7 @@ const renderHome = () => (
         <WeddingCrossword />
       </div>
     </section>
- 
+
 
   </main>
 
@@ -275,10 +287,36 @@ const renderHome = () => (
     }
   };
 
+  // --- DASHBOARD STANDALONE VIEW ---
+  if (isDashboard) {
+    return (
+      <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif px-4 py-12">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-light italic text-purple-900 mb-2">
+              {config.couple.displayName}
+              </h1>
+              <p className="text-slate-500 text-sm uppercase tracking-widest font-sans font-bold">
+                {config.dates.weddingDate}
+            </p>
+          </div>
+          {Object.keys(rsvpMap).length === 0 ? (
+            <div className="text-center py-20">
+              <div className="inline-block w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin" />
+              <p className="text-slate-500 mt-4 text-sm uppercase tracking-widest font-sans">Loading RSVP data…</p>
+            </div>
+          ) : (
+            <RsvpDashboard rsvpMap={rsvpMap} />
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#FDFCFE] text-slate-800 font-serif overflow-x-hidden relative">
       <FallingHearts />
-      
+
 
       <style>{`
         .curtain-texture {
@@ -296,7 +334,7 @@ const renderHome = () => (
 
       {isAuthenticated && (
         <div className="animate-in fade-in duration-1000">
-          
+
 
           {/* MOBILE OVERLAY MENU */}
           {isMenuOpen && (
@@ -366,7 +404,7 @@ const renderHome = () => (
             </div>
 
           <footer className="py-20 text-center text-slate-300 text-[10px] tracking-[0.6em] uppercase font-sans">
-            <p>© 2026 Lorraine Goveas & Daniel Ocampo</p>
+            <p>© {config.dates.copyrightYear} {config.couple.fullNames}</p>
           </footer>
         </div>
       )}
