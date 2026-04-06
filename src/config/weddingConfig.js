@@ -18,6 +18,7 @@ const weddingConfig = {
     weddingDate: "July 3, 2026",
     weddingDateTime: "July 3, 2026 14:00:00",
     rsvpDeadline: "April 10th",
+    rsvpDeadlineDate: "2026-04-10",
     hotelBookingDeadline: "June 5th",
     hotelNightDate: "July 3rd",
     copyrightYear: "2026",

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock, Music } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Heart, Search, Check, Users, X, CalendarCheck, Utensils, Square, CheckSquare, Clock, Music, XCircle } from 'lucide-react';
 import watercolor_floral from './components/images/watercolor_floral.jpg';
 import config from './config/weddingConfig';
 
@@ -169,6 +169,11 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   const showSummaryView = isPartyComplete || status === "SUCCESS";
   const getAttendanceLabel = (val) => val === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines';
 
+  const isRsvpClosed = useMemo(() => {
+    const deadline = new Date(config.dates.rsvpDeadlineDate + 'T23:59:59');
+    return new Date() > deadline;
+  }, []);
+
   // --- STYLES ---
   const textGlow = {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.9), 0 0 4px rgba(255, 255, 255, 1)'
@@ -196,17 +201,32 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
       */}
       <div className="relative z-10 max-w-xl mx-auto py-24 px-6 pb-40">
 
+        {/* CLOSED BANNER */}
+        {isRsvpClosed && (
+          <div className="mb-8 p-4 bg-red-100/90 backdrop-blur-md border border-red-300 rounded-2xl shadow-lg flex items-center gap-3 animate-in fade-in duration-500">
+            <XCircle className="text-red-600 shrink-0" size={24} />
+            <div>
+              <p className="text-red-800 font-bold text-sm">The RSVP window is now closed.</p>
+              <p className="text-red-700 text-xs mt-0.5">The deadline was {config.dates.rsvpDeadline}. Please contact us directly if you need to make changes.</p>
+            </div>
+          </div>
+        )}
+
         {/* HEADER */}
         <div className="text-center mb-12">
-            <div className="inline-block p-4 bg-white/40 backdrop-blur-md rounded-full mb-6 shadow-sm border border-white/50">
-                <Heart className="text-purple-900" size={32} />
+            <div className={`inline-block p-4 backdrop-blur-md rounded-full mb-6 shadow-sm border ${isRsvpClosed ? 'bg-slate-200/60 border-slate-300' : 'bg-white/40 border-white/50'}`}>
+                <Heart className={isRsvpClosed ? 'text-slate-400' : 'text-purple-900'} size={32} />
             </div>
-            <h2 className="text-6xl text-purple-900 font-serif italic mb-4" style={textGlow}>RSVP</h2>
-            <p className="text-purple-900  text-lg" style={textGlow}>Kindly RSVP by {config.dates.rsvpDeadline} for our reception</p>
+            <h2 className={`text-6xl font-serif italic mb-4 ${isRsvpClosed ? 'text-slate-400' : 'text-purple-900'}`} style={textGlow}>RSVP</h2>
+            {isRsvpClosed ? (
+              <p className="text-slate-500 text-lg" style={textGlow}>RSVPs are no longer being accepted</p>
+            ) : (
+              <p className="text-purple-900 text-lg" style={textGlow}>Kindly RSVP by {config.dates.rsvpDeadline} for our reception</p>
+            )}
         </div>
 
         {/* --- VIEW 1: SEARCH --- */}
-        {selectedPartyData.length === 0 && (
+        {selectedPartyData.length === 0 && !isRsvpClosed && (
           <div className="space-y-6">
             <div className="flex gap-2">
                 <div className="relative flex-1 bg-white/60 backdrop-blur-md rounded-2xl shadow-xl border border-white/60">
