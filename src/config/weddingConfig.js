@@ -24,6 +24,15 @@ const weddingConfig = {
     copyrightYear: "2026",
   },
 
+  rsvp: {
+    // Master override for RSVP availability.
+    // - forceOpen: true   => RSVP stays open even past rsvpDeadlineDate
+    // - forceClosed: true => RSVP stays closed even before deadline
+    // - both false        => deadline date controls open/closed (default)
+    forceOpen: true,
+    forceClosed: false,
+  },
+
   timezone: "America/Los_Angeles",
 
   ceremony: {

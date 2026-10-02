@@ -170,6 +170,8 @@ const RenderRSVP = ({ allGuests, rsvpMap, googleScriptUrl }) => {
   const getAttendanceLabel = (val) => val === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines';
 
   const isRsvpClosed = useMemo(() => {
+    if (config.rsvp?.forceOpen) return false;
+    if (config.rsvp?.forceClosed) return true;
     const deadline = new Date(config.dates.rsvpDeadlineDate + 'T23:59:59');
     return new Date() > deadline;
   }, []);
